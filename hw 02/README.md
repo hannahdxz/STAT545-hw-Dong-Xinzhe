@@ -7,7 +7,7 @@ September 24, 2017
 
 * Here is the [link](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2002/hw-02_Rmarkdown.md) to the rendered .md file.
 * At first I had some difficulty creating a folder for all the files of my hw02. The I figure out I can do it through **Files>New folder** in R studio.
-* I also struggled a little while about creating a README for my hw02 folder, then I fight out that I can do it by **creating a Rmardown file, change the output to github_document, and name it README**.
+* I also struggled a little while about creating a README for my hw02 folder, then I figure out that I can do it by **creating a Rmardown file, change the output to github_document, and name it README**.
 * The exploration of the gapminder data went smoothly. We covered everything in class.
 * I find this [ggplot tutorial](https://github.com/jennybc/ggplot2-tutorial/blob/master/gapminder-ggplot2-univariate-quantitative.md) very helpful.
 * Here is a [markdown cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) I refer to when working with Rmarkdown. 
