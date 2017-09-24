@@ -1,0 +1,6 @@
+---
+title: "readme"
+author: "Xinzhe Dong"
+date: "September 24, 2017"
+output: github_document
+---
