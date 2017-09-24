@@ -12,7 +12,7 @@ library(gapminder)
 library(tidyverse)
 library(knitr)
 library(kableExtra)
-
+ 
 gapminder
 str(gapminder)
 ```
