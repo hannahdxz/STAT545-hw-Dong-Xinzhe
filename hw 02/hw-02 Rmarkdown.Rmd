@@ -6,86 +6,153 @@ output:
   html_document: 
     keep_md: yes
 ---
-
+## 1. load the packages
 ```{r}
 library(gapminder)
 library(tidyverse)
 library(knitr)
 library(kableExtra)
- 
+library(ggplot2)
+```
+
+
+## 2. Explore the gapminder object:
+```{r}
 gapminder
 str(gapminder)
+ncol(gapminder)
+nrow(gapminder)
+length(gapminder)
+dim(gapminder)
+names(gapminder)
 ```
-1. It is a data.frame.
-2. Classes ‘tbl_df’, ‘tbl’ and 'data.frame'
-3. 6 variables/columns
-4. 1704 rows/obs.
-5. I can use str(), ncol(), nrow(), length(), dim(), names().
-6. Country is factor, continent is factor, year is integer, lifeExp is number, pop is integer, gdpPercap is num.
 
+* It is a data.frame.
+* Classes ‘tbl_df’, ‘tbl’ and 'data.frame'
+* There are 6 variables/columns.
+* There are 1704 rows/obs.
+* I can use str(), ncol(), nrow(), length(), dim(), names() to get facts about “extent” or “size”. 
+    + The function str() displays the dimension of the data frame, the datatype for each    variable, (abbreviated) contents of the variables. It gives us a basic understanding of the data frame.
+    + The functions ncol(), nrow(), length(), dim() and names() return much simpler results, they are useful if we just need the information about dimension of the dataset. The functions ncol(), nrow(), length(), dim() return the number of rows or columns in the dataframe; the function names() return the names of the variables. 
+* Country is factor, continent is factor, year is integer, lifeExp is number, pop is integer, gdpPercap is num.
+
+
+## 3. Explore individual variables
+#### (1) explore the categorical variable "continent"
 ```{r}
 cont <- gapminder$continent
 class(cont)
 summary(cont)
 levels(cont)
 nlevels(cont)
+plot(cont)
+```
+* This categorical variable has 5 levels.
+* The possible values for continent are: "Africa", "Americas", "Asia", "Europe", "Oceania".
+* Among the five levels, "Africa" has the largest number of observations, and "Oceania" has the smallest number of observations.
 
+#### (2) explore the quantitative variable "lifeExp"
+```{r}
 lifeex <- gapminder$lifeExp
 summary(lifeex)
+max(summary(lifeex))-min(summary(lifeex))
+boxplot(lifeex)
+hist(lifeex)
 ```
+* The five-number summary for "lifeExp" is: 23.60(Min), 48.20(1st Qu.), 60.71(Median),    70.85(3rd Qu.), 82.60(Max).
+* The range is 59.
+* The histogram of "lifeExp" is left-skewed. The interval 70-75 contains the most observations.
 
-Let’s try to make a basic scatterplot of year vs. lifeExp.
+## 4. Explore various plot types
+#### A scatterplot of year vs. lifeExp.
 ```{r}
 ggplot(gapminder, aes(x=year, y=lifeExp)) +
-    geom_point()
+    geom_point(aes(color=continent),alpha=0.5)
 ```
 
-histogram of lifeExp
+#### A density plot of lifeExp
 ```{r}
-ggplot(gapminder, aes(x = lifeExp)) +
-  geom_histogram()
+ggplot(gapminder, aes(x = lifeExp, color = continent)) + geom_density()
 ```
 
-A boxplot of lifeExp and one continents
+#### A boxplot of lifeExp and continents
 ```{r}
-ggplot(gapminder, aes(x = continent, y = lifeExp)) + geom_boxplot()
-
+ggplot(gapminder, aes(x = continent, y = lifeExp, color=continent)) + geom_boxplot()
 ```
 
-Use filter() to create data subsets that you want to plot.
+
+## 5. Use filter(), select() and %>%
+
+#### Use filter() to create data subsets of all entries occuring from 1980 to 1999.
 ```{r}
-filter(gapminder, year <= 1999, year >= 1960)
-
+subdata <- filter(gapminder, year <= 1999, year >= 1980)
 ```
 
-Practice piping together filter() and select(). Possibly even piping into ggplot().
+#### Practice piping together filter(), select() and ggplot().
+##### a density plot of gdpPercap
 ```{r}
-gapminder%>%
- select(year, lifeExp)%>%
-filter(year <= 1999, year >= 1960)%>%
-  ggplot(aes(x=year, y=lifeExp)) +
-    geom_point()
+subdata%>%
+ select(continent, gdpPercap)%>%
+  ggplot(aes(x=gdpPercap,color=continent)) +
+    geom_density()
 
 ```
 
-This only gives part of the data.
+
+## 6. I want to do more!
+#### Evaluate this code and describe the result.
 ```{r}
 filter(gapminder, country == c("Rwanda", "Afghanistan"))
-
 ```
+The analyst did not succeed, this only gives part of the data.
 
+The followings are correct way to do this.
 ```{r}
 filter(gapminder, (country=="Rwanda"|country=="Afghanistan"))
-
-```
-
-```{r}
 filter(gapminder, country %in% c("Rwanda", "Afghanistan"))
-
 ```
 
+#### Present numerical tables in a more attractive form
+##### A table of entries of Australia
 ```{r}
 gapminder%>%
     filter(country == "Australia")%>%
-  knitr::kable()
+    kable("html",caption="Entries of Australia")%>%
+    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+
 ```
+
+#### Use more of the dplyr functions for operating on a single table.
+##### 1. Use arrange() to order the data frame by year, then descending by population.
+```{r}
+arrange(gapminder, year,desc(pop))
+```
+
+##### 2. Use mutate() to get GDP by multiplying GPD per capita with population.
+```{r}
+mutate(gapminder, gdp = gdpPercap * pop)
+```
+
+##### 3. Get a statistical summary of gdp for each continent using mutate(), group_by(), and summarize(). 
+```{r}
+gapminder %>% 
+  mutate(gdp = gdpPercap * pop) %>%
+  group_by(continent) %>% 
+    summarize(mean_gdp=mean(gdp), sd_gdp=sd(gdp))
+```
+
+#### Adapt exercises from the chapters in the “Explore” section of R for Data Science to the Gapminder dataset.
+A plot for two categorical variables. (We regard the "year" variable as categorical here)
+```{r}
+gapminder %>% 
+  count(continent, year) %>%  
+  ggplot(mapping = aes(x = continent, y = year)) +
+    geom_tile(mapping = aes(fill = n))
+```
+
+We can tell from this plot that:
+
+* Each continent has different number of count(observations). 
+* Africa has the largest number of observations, and Oceania has the least number of observations. 
+* The count does not vary with the year. 
+
