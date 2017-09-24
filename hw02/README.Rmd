@@ -1,8 +1,0 @@
----
-title: "Readme"
-author: "Xinzhe Dong"
-date: "September 24, 2017"
-output: github_document
----
-
-This is a readme file for hw 02.
