@@ -1,0 +1,91 @@
+---
+title: "hw 02"
+author: "Xinzhe Dong"
+date: "September 22, 2017"
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+```{r}
+library(gapminder)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+
+gapminder
+str(gapminder)
+```
+1. It is a data.frame.
+2. Classes ‘tbl_df’, ‘tbl’ and 'data.frame'
+3. 6 variables/columns
+4. 1704 rows/obs.
+5. I can use str(), ncol(), nrow(), length(), dim(), names().
+6. Country is factor, continent is factor, year is integer, lifeExp is number, pop is integer, gdpPercap is num.
+
+```{r}
+cont <- gapminder$continent
+class(cont)
+summary(cont)
+levels(cont)
+nlevels(cont)
+
+lifeex <- gapminder$lifeExp
+summary(lifeex)
+```
+
+Let’s try to make a basic scatterplot of year vs. lifeExp.
+```{r}
+ggplot(gapminder, aes(x=year, y=lifeExp)) +
+    geom_point()
+```
+
+histogram of lifeExp
+```{r}
+ggplot(gapminder, aes(x = lifeExp)) +
+  geom_histogram()
+```
+
+A boxplot of lifeExp and one continents
+```{r}
+ggplot(gapminder, aes(x = continent, y = lifeExp)) + geom_boxplot()
+
+```
+
+Use filter() to create data subsets that you want to plot.
+```{r}
+filter(gapminder, year <= 1999, year >= 1960)
+
+```
+
+Practice piping together filter() and select(). Possibly even piping into ggplot().
+```{r}
+gapminder%>%
+ select(year, lifeExp)%>%
+filter(year <= 1999, year >= 1960)%>%
+  ggplot(aes(x=year, y=lifeExp)) +
+    geom_point()
+
+```
+
+This only gives part of the data.
+```{r}
+filter(gapminder, country == c("Rwanda", "Afghanistan"))
+
+```
+
+```{r}
+filter(gapminder, (country=="Rwanda"|country=="Afghanistan"))
+
+```
+
+```{r}
+filter(gapminder, country %in% c("Rwanda", "Afghanistan"))
+
+```
+
+```{r}
+gapminder%>%
+    filter(country == "Australia")%>%
+  knitr::kable()
+```
