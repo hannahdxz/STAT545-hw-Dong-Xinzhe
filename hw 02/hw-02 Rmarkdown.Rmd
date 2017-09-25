@@ -13,6 +13,7 @@ library(tidyverse)
 library(knitr)
 library(kableExtra)
 library(ggplot2)
+library(forcats)
 ```
 
 
@@ -155,4 +156,13 @@ We can tell from this plot that:
 * Each continent has different number of count(observations). 
 * Africa has the largest number of observations, and Oceania has the least number of observations. 
 * The count does not vary with the year. 
+
+
+For bar plots, we can use fct_infreq() to order levels in increasing frequency. Let's try it with the factor "continent".
+```{r}
+gapminder %>%
+  mutate(continent = continent %>% fct_infreq() %>% fct_rev()) %>%
+  ggplot(aes(continent)) +
+    geom_bar()
+```
 
