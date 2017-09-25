@@ -159,7 +159,8 @@ library(forcats)</code></pre>
 ##  9 Afghanistan      Asia  1992  41.674 16317921  649.3414
 ## 10 Afghanistan      Asia  1997  41.763 22227415  635.3414
 ## # ... with 1,694 more rows</code></pre>
-<pre class="r"><code>str(gapminder)</code></pre>
+<pre class="r"><code># a quick look at the data
+str(gapminder)</code></pre>
 <pre><code>## Classes 'tbl_df', 'tbl' and 'data.frame':    1704 obs. of  6 variables:
 ##  $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
@@ -167,7 +168,8 @@ library(forcats)</code></pre>
 ##  $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
 ##  $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
 ##  $ gdpPercap: num  779 821 853 836 740 ...</code></pre>
-<pre class="r"><code>ncol(gapminder)</code></pre>
+<pre class="r"><code># get the dimensions
+ncol(gapminder)</code></pre>
 <pre><code>## [1] 6</code></pre>
 <pre class="r"><code>nrow(gapminder)</code></pre>
 <pre><code>## [1] 1704</code></pre>
@@ -177,9 +179,22 @@ library(forcats)</code></pre>
 <pre><code>## [1] 1704    6</code></pre>
 <pre class="r"><code>names(gapminder)</code></pre>
 <pre><code>## [1] &quot;country&quot;   &quot;continent&quot; &quot;year&quot;      &quot;lifeExp&quot;   &quot;pop&quot;       &quot;gdpPercap&quot;</code></pre>
+<pre class="r"><code># get type of variables
+typeof(gapminder$country)</code></pre>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<pre class="r"><code>typeof(gapminder$continent)</code></pre>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<pre class="r"><code>typeof(gapminder$year)</code></pre>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<pre class="r"><code>typeof(gapminder$lifeExp)</code></pre>
+<pre><code>## [1] &quot;double&quot;</code></pre>
+<pre class="r"><code>typeof(gapminder$pop)</code></pre>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<pre class="r"><code>typeof(gapminder$gdpPercap)</code></pre>
+<pre><code>## [1] &quot;double&quot;</code></pre>
 <ul>
 <li>It is a data.frame.</li>
-<li>Classes ‘tbl_df’, ‘tbl’ and ‘data.frame’</li>
+<li>Classes: ‘tbl_df’, ‘tbl’ and ‘data.frame’</li>
 <li>There are 6 variables/columns.</li>
 <li>There are 1704 rows/obs.</li>
 <li>I can use str(), ncol(), nrow(), length(), dim(), names() to get facts about “extent” or “size”.
@@ -187,7 +202,7 @@ library(forcats)</code></pre>
 <li>The function str() displays the dimension of the data frame, the datatype for each variable, (abbreviated) contents of the variables. It gives us a basic understanding of the data frame.</li>
 <li>The functions ncol(), nrow(), length(), dim() and names() return much simpler results, they are useful if we just need the information about dimension of the dataset. The functions ncol(), nrow(), length(), dim() return the number of rows or columns in the dataframe; the function names() return the names of the variables.</li>
 </ul></li>
-<li>Country is factor, continent is factor, year is integer, lifeExp is number, pop is integer, gdpPercap is num.</li>
+<li>Country is “integer”, continent is “integer”, year is “integer”, lifeExp is “double”, pop is “integer”, gdpPercap is “double”.</li>
 </ul>
 </div>
 <div id="explore-individual-variables" class="section level2">
@@ -278,7 +293,7 @@ summary(lifeex)</code></pre>
 ## 10      Rwanda    Africa  1982  46.218  5507565  881.5706
 ## 11      Rwanda    Africa  1992  23.599  7290203  737.0686
 ## 12      Rwanda    Africa  2002  43.413  7852401  785.6538</code></pre>
-<p>The analyst did not succeed, this only gives part of the data.</p>
+<p>The analyst did not succeed, this only returns half of the data. Because the analyst is actually trying to match countries with c(“Rwanda”, “Afghanistan”), so this code compare the fist country with “Rwanda”, second with “Afghanistan”, then third with “Rwanda”, forth with “Afghanistan”, and so on. Thus this code will lose half of the countries named “Rwanda” and “Afghanistan”.</p>
 <p>The followings are correct ways to do this.</p>
 <pre class="r"><code>filter(gapminder, (country==&quot;Rwanda&quot;|country==&quot;Afghanistan&quot;))</code></pre>
 <pre><code>## # A tibble: 24 x 6

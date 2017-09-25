@@ -20,22 +20,32 @@ library(forcats)
 ## 2. Explore the gapminder object:
 ```{r}
 gapminder
+# a quick look at the data
 str(gapminder)
+# get the dimensions
 ncol(gapminder)
 nrow(gapminder)
 length(gapminder)
 dim(gapminder)
 names(gapminder)
+# get type of variables
+typeof(gapminder$country)
+typeof(gapminder$continent)
+typeof(gapminder$year)
+typeof(gapminder$lifeExp)
+typeof(gapminder$pop)
+typeof(gapminder$gdpPercap)
+
 ```
 
 * It is a data.frame.
-* Classes ‘tbl_df’, ‘tbl’ and 'data.frame'
+* Classes: ‘tbl_df’, ‘tbl’ and 'data.frame'
 * There are 6 variables/columns.
 * There are 1704 rows/obs.
 * I can use str(), ncol(), nrow(), length(), dim(), names() to get facts about “extent” or “size”. 
     + The function str() displays the dimension of the data frame, the datatype for each    variable, (abbreviated) contents of the variables. It gives us a basic understanding of the data frame.
     + The functions ncol(), nrow(), length(), dim() and names() return much simpler results, they are useful if we just need the information about dimension of the dataset. The functions ncol(), nrow(), length(), dim() return the number of rows or columns in the dataframe; the function names() return the names of the variables. 
-* Country is factor, continent is factor, year is integer, lifeExp is number, pop is integer, gdpPercap is num.
+* Country is "integer", continent is "integer", year is "integer", lifeExp is "double", pop is "integer", gdpPercap is "double".
 
 
 ## 3. Explore individual variables
@@ -105,7 +115,7 @@ subdata%>%
 ```{r}
 filter(gapminder, country == c("Rwanda", "Afghanistan"))
 ```
-The analyst did not succeed, this only gives part of the data.
+The analyst did not succeed, this only returns half of the data. Because the analyst is actually trying to match countries with c("Rwanda", "Afghanistan"), so this code compare the fist country with "Rwanda", second with "Afghanistan", then third with "Rwanda", forth with "Afghanistan", and so on. Thus this code will lose half of the countries named "Rwanda" and "Afghanistan".
 
 The followings are correct ways to do this.
 ```{r}
