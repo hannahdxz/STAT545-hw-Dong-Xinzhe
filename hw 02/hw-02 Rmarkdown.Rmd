@@ -166,3 +166,11 @@ gapminder %>%
     geom_bar()
 ```
 
+
+We can try facet the plot by a single categorial variable, using facet_wrap(), then we can get subplots that each display one subset of the data. Let's try it with "continent" to get a plot of lifeex vs. year for each continent.
+```{r}
+ggplot(data = gapminder) + 
+  geom_point(mapping = aes(x = year, y = lifeex)) + 
+  facet_wrap(~ continent, nrow = 2)
+```
+
