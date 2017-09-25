@@ -30,6 +30,7 @@ library(tidyverse)
 library(knitr)
 library(kableExtra)
 library(ggplot2)
+library(forcats)
 ```
 
 
@@ -275,7 +276,7 @@ filter(gapminder, country == c("Rwanda", "Afghanistan"))
 ```
 The analyst did not succeed, this only gives part of the data.
 
-The followings are correct way to do this.
+The followings are correct ways to do this.
 
 ```r
 filter(gapminder, (country=="Rwanda"|country=="Afghanistan"))
@@ -523,4 +524,27 @@ We can tell from this plot that:
 * Each continent has different number of count(observations). 
 * Africa has the largest number of observations, and Oceania has the least number of observations. 
 * The count does not vary with the year. 
+
+
+For bar plots, we can use fct_infreq() to order levels in increasing frequency. Let's try it with the factor "continent".
+
+```r
+gapminder %>%
+  mutate(continent = continent %>% fct_infreq() %>% fct_rev()) %>%
+  ggplot(aes(continent)) +
+    geom_bar(width = 0.8)
+```
+
+![](hw-02_Rmarkdown_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
+
+
+We can try facet the plot by a single categorial variable, using facet_wrap(), then we can get subplots that each display one subset of the data. Let's try it with "continent" to get a plot of lifeex vs. year for each continent.
+
+```r
+ggplot(data = gapminder) + 
+  geom_point(mapping = aes(x = year, y = lifeex)) + 
+  facet_wrap(~ continent, nrow = 2)
+```
+
+![](hw-02_Rmarkdown_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
 

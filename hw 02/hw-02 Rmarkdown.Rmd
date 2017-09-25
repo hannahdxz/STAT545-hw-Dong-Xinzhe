@@ -163,7 +163,7 @@ For bar plots, we can use fct_infreq() to order levels in increasing frequency. 
 gapminder %>%
   mutate(continent = continent %>% fct_infreq() %>% fct_rev()) %>%
   ggplot(aes(continent)) +
-    geom_bar()
+    geom_bar(width = 0.8)
 ```
 
 
