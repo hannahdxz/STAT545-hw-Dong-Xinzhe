@@ -1,4 +1,4 @@
-This is the README for hw02.
+This is the README for hw02
 ================
 Xinzhe Dong
 September 24, 2017
