@@ -114,7 +114,7 @@ names(gapminder)
 ```
 
 ```r
-# get type of variables
+# get data type of each variable
 typeof(gapminder$country)
 ```
 
@@ -215,7 +215,7 @@ plot(cont)
 
 ![](hw-02_Rmarkdown_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 * This categorical variable has 5 levels.
-* The possible values for continent are: "Africa", "Americas", "Asia", "Europe", "Oceania".
+* The possible values for continent are: "Africa", "Americas", "Asia", "Europe", and "Oceania".
 * Among the five levels, "Africa" has the largest number of observations, and "Oceania" has the smallest number of observations.
 
 #### (2) explore the quantitative variable "lifeExp"
@@ -231,11 +231,11 @@ summary(lifeex)
 ```
 
 ```r
-max(summary(lifeex))-min(summary(lifeex))
+max(lifeex)-min(lifeex)
 ```
 
 ```
-## [1] 59
+## [1] 59.004
 ```
 
 ```r
@@ -254,10 +254,10 @@ hist(lifeex)
 * The histogram of "lifeExp" is left-skewed. The interval 70-75 contains the most observations.
 
 ## 4. Explore various plot types
-#### A scatterplot of year vs. lifeExp.
+#### A scatterplot of lifeExp vs. gdpPercap
 
 ```r
-ggplot(gapminder, aes(x=year, y=lifeExp)) +
+ggplot(gapminder, aes(x=gdpPercap, y=lifeExp)) +
     geom_point(aes(color=continent),alpha=0.5)
 ```
 
