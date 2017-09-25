@@ -508,6 +508,7 @@ gapminder %>%
 ```
 
 #### Adapt exercises from the chapters in the “Explore” section of R for Data Science to the Gapminder dataset.
+##### (1)
 A plot for two categorical variables. (We regard the "year" variable as categorical here)
 
 ```r
@@ -525,7 +526,7 @@ We can tell from this plot that:
 * Africa has the largest number of observations, and Oceania has the least number of observations. 
 * The count does not vary with the year. 
 
-
+#####(2)
 For bar plots, we can use fct_infreq() to order levels in increasing frequency. Let's try it with the factor "continent".
 
 ```r
@@ -537,7 +538,7 @@ gapminder %>%
 
 ![](hw-02_Rmarkdown_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
 
-
+#####(3)
 We can try facet the plot by a single categorial variable, using facet_wrap(), then we can get subplots that each display one subset of the data. Let's try it with "continent" to get a plot of lifeex vs. year for each continent.
 
 ```r
