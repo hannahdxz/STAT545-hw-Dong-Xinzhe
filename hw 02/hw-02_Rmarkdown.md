@@ -263,13 +263,22 @@ ggplot(gapminder, aes(x=gdpPercap, y=lifeExp)) +
 
 ![](hw-02_Rmarkdown_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
+#### A scatterplot of lifeExp vs. year
+
+```r
+ggplot(gapminder, aes(x=year, y=lifeExp)) +
+    geom_point(aes(color=continent),alpha=0.5)
+```
+
+![](hw-02_Rmarkdown_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+
 #### A density plot of lifeExp
 
 ```r
 ggplot(gapminder, aes(x = lifeExp, color = continent)) + geom_density()
 ```
 
-![](hw-02_Rmarkdown_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+![](hw-02_Rmarkdown_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
 
 #### A boxplot of lifeExp and continents
 
@@ -277,7 +286,7 @@ ggplot(gapminder, aes(x = lifeExp, color = continent)) + geom_density()
 ggplot(gapminder, aes(x = continent, y = lifeExp, color=continent)) + geom_boxplot()
 ```
 
-![](hw-02_Rmarkdown_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+![](hw-02_Rmarkdown_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
 
 
 ## 5. Use filter(), select() and %>%
@@ -298,7 +307,7 @@ subdata%>%
     geom_density()
 ```
 
-![](hw-02_Rmarkdown_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+![](hw-02_Rmarkdown_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 
 
 ## 6. I want to do more!
@@ -569,7 +578,7 @@ gapminder %>%
     geom_tile(mapping = aes(fill = n))
 ```
 
-![](hw-02_Rmarkdown_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
+![](hw-02_Rmarkdown_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
 
 We can tell from this plot that:
 
@@ -588,7 +597,7 @@ gapminder %>%
     geom_bar(width = 0.8)
 ```
 
-![](hw-02_Rmarkdown_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
+![](hw-02_Rmarkdown_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
 
 ##### (3)
 
@@ -600,5 +609,5 @@ ggplot(data = gapminder) +
   facet_wrap(~ continent, nrow = 2)
 ```
 
-![](hw-02_Rmarkdown_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
+![](hw-02_Rmarkdown_files/figure-html/unnamed-chunk-19-1.png)<!-- -->
 

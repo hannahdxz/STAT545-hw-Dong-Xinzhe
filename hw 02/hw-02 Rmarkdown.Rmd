@@ -81,6 +81,12 @@ ggplot(gapminder, aes(x=gdpPercap, y=lifeExp)) +
     geom_point(aes(color=continent),alpha=0.5)
 ```
 
+#### A scatterplot of lifeExp vs. year
+```{r}
+ggplot(gapminder, aes(x=year, y=lifeExp)) +
+    geom_point(aes(color=continent),alpha=0.5)
+```
+
 #### A density plot of lifeExp
 ```{r}
 ggplot(gapminder, aes(x = lifeExp, color = continent)) + geom_density()
