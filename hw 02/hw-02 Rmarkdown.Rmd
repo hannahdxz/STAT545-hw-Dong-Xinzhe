@@ -107,7 +107,7 @@ filter(gapminder, country == c("Rwanda", "Afghanistan"))
 ```
 The analyst did not succeed, this only gives part of the data.
 
-The followings are correct way to do this.
+The followings are correct ways to do this.
 ```{r}
 filter(gapminder, (country=="Rwanda"|country=="Afghanistan"))
 filter(gapminder, country %in% c("Rwanda", "Afghanistan"))
