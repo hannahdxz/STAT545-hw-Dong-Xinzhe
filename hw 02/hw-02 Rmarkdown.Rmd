@@ -43,7 +43,7 @@ typeof(gapminder$gdpPercap)
 * There are 6 variables/columns.
 * There are 1704 rows/obs.
 * I can use str(), ncol(), nrow(), length(), dim(), names() to get facts about “extent” or “size”. 
-    + The function str() displays the dimension of the data frame, the datatype for each    variable, (abbreviated) contents of the variables. It gives us a basic understanding of the data frame.
+    + The function str() displays the dimension of the data frame, the class for each    variable, (abbreviated) contents of the variables. It gives us a basic understanding of the data frame.
     + The functions ncol(), nrow(), length(), dim() and names() return much simpler results, they are useful if we just need the information about dimension of the dataset. The functions ncol(), nrow(), length(), dim() return the number of rows or columns in the dataframe; the function names() return the names of the variables. 
 * Country is "integer", continent is "integer", year is "integer", lifeExp is "double", pop is "integer", gdpPercap is "double".
 
@@ -92,7 +92,7 @@ ggplot(gapminder, aes(x=year, y=lifeExp)) +
 ggplot(gapminder, aes(x = lifeExp, color = continent)) + geom_density()
 ```
 
-#### A boxplot of lifeExp and continents
+#### A boxplot of lifeExp and continent
 ```{r}
 ggplot(gapminder, aes(x = continent, y = lifeExp, color=continent)) + geom_boxplot()
 ```
@@ -102,13 +102,14 @@ ggplot(gapminder, aes(x = continent, y = lifeExp, color=continent)) + geom_boxpl
 
 #### Use filter() to create data subsets of all entries occuring from 1980 to 1999.
 ```{r}
-subdata <- filter(gapminder, year <= 1999, year >= 1980)
+filter(gapminder, year <= 1999, year >= 1980)
 ```
 
 #### Practice piping together filter(), select() and ggplot().
-##### a density plot of gdpPercap
+##### a density plot of gdpPercap of all entries occuring from 1980 to 1999
 ```{r}
-subdata%>%
+gapminder%>%
+  filter(year <= 1999, year >= 1980)%>%
  select(continent, gdpPercap)%>%
   ggplot(aes(x=gdpPercap,color=continent)) +
     geom_density()

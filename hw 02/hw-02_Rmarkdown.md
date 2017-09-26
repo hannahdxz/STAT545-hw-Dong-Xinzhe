@@ -167,7 +167,7 @@ typeof(gapminder$gdpPercap)
 * There are 6 variables/columns.
 * There are 1704 rows/obs.
 * I can use str(), ncol(), nrow(), length(), dim(), names() to get facts about “extent” or “size”. 
-    + The function str() displays the dimension of the data frame, the datatype for each    variable, (abbreviated) contents of the variables. It gives us a basic understanding of the data frame.
+    + The function str() displays the dimension of the data frame, the class for each    variable, (abbreviated) contents of the variables. It gives us a basic understanding of the data frame.
     + The functions ncol(), nrow(), length(), dim() and names() return much simpler results, they are useful if we just need the information about dimension of the dataset. The functions ncol(), nrow(), length(), dim() return the number of rows or columns in the dataframe; the function names() return the names of the variables. 
 * Country is "integer", continent is "integer", year is "integer", lifeExp is "double", pop is "integer", gdpPercap is "double".
 
@@ -280,7 +280,7 @@ ggplot(gapminder, aes(x = lifeExp, color = continent)) + geom_density()
 
 ![](hw-02_Rmarkdown_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
 
-#### A boxplot of lifeExp and continents
+#### A boxplot of lifeExp and continent
 
 ```r
 ggplot(gapminder, aes(x = continent, y = lifeExp, color=continent)) + geom_boxplot()
@@ -294,14 +294,32 @@ ggplot(gapminder, aes(x = continent, y = lifeExp, color=continent)) + geom_boxpl
 #### Use filter() to create data subsets of all entries occuring from 1980 to 1999.
 
 ```r
-subdata <- filter(gapminder, year <= 1999, year >= 1980)
+filter(gapminder, year <= 1999, year >= 1980)
+```
+
+```
+## # A tibble: 568 x 6
+##        country continent  year lifeExp      pop gdpPercap
+##         <fctr>    <fctr> <int>   <dbl>    <int>     <dbl>
+##  1 Afghanistan      Asia  1982  39.854 12881816  978.0114
+##  2 Afghanistan      Asia  1987  40.822 13867957  852.3959
+##  3 Afghanistan      Asia  1992  41.674 16317921  649.3414
+##  4 Afghanistan      Asia  1997  41.763 22227415  635.3414
+##  5     Albania    Europe  1982  70.420  2780097 3630.8807
+##  6     Albania    Europe  1987  72.000  3075321 3738.9327
+##  7     Albania    Europe  1992  71.581  3326498 2497.4379
+##  8     Albania    Europe  1997  72.950  3428038 3193.0546
+##  9     Algeria    Africa  1982  61.368 20033753 5745.1602
+## 10     Algeria    Africa  1987  65.799 23254956 5681.3585
+## # ... with 558 more rows
 ```
 
 #### Practice piping together filter(), select() and ggplot().
-##### a density plot of gdpPercap
+##### a density plot of gdpPercap of all entries occuring from 1980 to 1999
 
 ```r
-subdata%>%
+gapminder%>%
+  filter(year <= 1999, year >= 1980)%>%
  select(continent, gdpPercap)%>%
   ggplot(aes(x=gdpPercap,color=continent)) +
     geom_density()
