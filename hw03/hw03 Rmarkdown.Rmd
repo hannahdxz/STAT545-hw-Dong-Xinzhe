@@ -1,0 +1,114 @@
+---
+title: "hw03"
+author: "Xinzhe Dong"
+date: "September 26, 2017"
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+### load the packages
+
+```{r}
+library(gapminder)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(forcats)
+```
+
+
+### 1. Get the maximum and minimum of GDP per capita for all continents.
+
+```{r}
+gapminder %>% 
+  group_by(continent) %>% 
+  summarize(min_gdpPercap=min(gdpPercap), max_gdpPercap=max(gdpPercap))
+```
+
+Plot the max and min values
+```{r}
+gapminder %>% 
+  group_by(continent) %>% 
+  summarize(min_gdpPercap=min(gdpPercap), max_gdpPercap=max(gdpPercap))%>%
+  ggplot(aes(x = continent)) + 
+  geom_point(aes(y = min_gdpPercap)) +
+  geom_point(aes(y = max_gdpPercap)) +
+  labs(y="Max & Min gdpPercap") 
+
+```
+
+
+
+### 2. Look at the spread of GDP per capita within the continents.
+
+```{r}
+# A density plot of gdpPercap
+ggplot(gapminder, aes(x = gdpPercap, color = continent)) + geom_density()
+
+# boxplots of GDP per capita for all continents. 
+ggplot(gapminder, aes(x = continent, y = gdpPercap)) + geom_boxplot()
+```
+
+
+### 3. Compute a weighted mean, weighting by population, of life expectancy for different years. 
+
+```{r}
+gapminder %>% 
+  group_by(year) %>% 
+  summarize(mean_lifeex=weighted.mean(lifeExp,pop))
+```
+
+Plot the weighted mean of life expectancy vs. year.
+```{r}
+gapminder %>% 
+  group_by(year) %>% 
+  summarize(mean_lifeex=weighted.mean(lifeExp,pop)) %>%
+  ggplot(aes(x = year, y = mean_lifeex)) + geom_line()
+```
+
+
+### 4. How is life expectancy changing over time on different continents?
+
+```{r}
+ggplot(data = gapminder) + 
+  geom_point(mapping = aes(x = year, y = lifeExp)) + 
+  facet_wrap(~ continent, nrow = 2)
+```
+
+
+### 5. Report the absolute and/or relative abundance of countries with low life expectancy over time by continent: 
+
+Compute a mean of life expectancy worldwide. Then determine how many countries on each continent have a life expectancy less than the mean life expectancy, for each year.
+
+Note:
+
+* If there is no value for a continent on that year. then it means there is no country that year on that continent has a life expectancy less than the mean life expectancy.
+* For example: There is no value for the continent "Oceania" in any year, which means Oceania does not have any country which has a life expectancy less than the mean life expectancy during the whole data collection period.
+
+```{r}
+average_age <- mean(gapminder$lifeExp)
+gapminder %>% 
+  filter(lifeExp<average_age) %>%
+    group_by(continent,year) %>% 
+    summarize(No._countries_with_low_lifeExp=length(country))
+```
+
+
+Plot the number of countries with low life expectancy over time by continent.
+
+```{r}
+gapminder %>% 
+  filter(lifeExp<average_age) %>%
+    group_by(continent,year) %>% 
+    summarize(No._countries_with_low_lifeExp=length(country)) %>%
+    ggplot(aes(x = year, y = No._countries_with_low_lifeExp)) + geom_line() +
+      facet_wrap(~ continent, nrow = 2)
+```
+
+Note: 
+
+* There is not graph for Oceania, because Oceania does not have any country which has a life expectancy less than the mean life expectancy during the whole data collection period.
+
+* For Americas and Europe, the number of countries with low life expectancy decreases to zero after a time, so the line on their graph is shorter compare to the line on the graph of Africa and Asia.
