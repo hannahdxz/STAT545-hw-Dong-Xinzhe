@@ -42,21 +42,21 @@ library(forcats)
 ```r
 gapminder %>% 
   group_by(continent) %>% 
-  summarize(min_gdpPercap=min(gdpPercap), max_gdpPercap=max(gdpPercap))
+  summarize(min_gdpPercap=min(gdpPercap), max_gdpPercap=max(gdpPercap), range = max_gdpPercap - min_gdpPercap)
 ```
 
 ```
-## # A tibble: 5 x 3
-##   continent min_gdpPercap max_gdpPercap
-##      <fctr>         <dbl>         <dbl>
-## 1    Africa      241.1659      21951.21
-## 2  Americas     1201.6372      42951.65
-## 3      Asia      331.0000     113523.13
-## 4    Europe      973.5332      49357.19
-## 5   Oceania    10039.5956      34435.37
+## # A tibble: 5 x 4
+##   continent min_gdpPercap max_gdpPercap     range
+##      <fctr>         <dbl>         <dbl>     <dbl>
+## 1    Africa      241.1659      21951.21  21710.05
+## 2  Americas     1201.6372      42951.65  41750.02
+## 3      Asia      331.0000     113523.13 113192.13
+## 4    Europe      973.5332      49357.19  48383.66
+## 5   Oceania    10039.5956      34435.37  24395.77
 ```
 
-Plot the max and min values
+#### Plot the max and min of GDP per capita for all continents.
 
 ```r
 gapminder %>% 
@@ -65,10 +65,18 @@ gapminder %>%
   ggplot(aes(x = continent)) + 
   geom_point(aes(y = min_gdpPercap)) +
   geom_point(aes(y = max_gdpPercap)) +
-  labs(y="Max & Min gdpPercap") 
+  labs(y="Max & Min gdpPercap", title= "Plot of max & min of gdpPercap for all continents") 
 ```
 
 ![](hw03_Rmarkdown_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+
+#### We observe the followings:
+
+* 1. Both the maximum and minimum of GDP per capita for Africa is the smallest among the five continents.
+
+* 2. Asia has the largest range of GDP per capita.
+
+* 3. Oceania has the largest minimum gdpPercap.
 
 
 
@@ -77,17 +85,30 @@ gapminder %>%
 
 ```r
 # A density plot of gdpPercap
-ggplot(gapminder, aes(x = gdpPercap, color = continent)) + geom_density()
+ggplot(gapminder, aes(x = gdpPercap, color = continent)) + geom_density() +
+    labs(title= "Density plot of gdpPercap within the continents") 
 ```
 
 ![](hw03_Rmarkdown_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 ```r
 # boxplots of GDP per capita for all continents. 
-ggplot(gapminder, aes(x = continent, y = gdpPercap)) + geom_boxplot()
+ggplot(gapminder, aes(x = continent, y = gdpPercap)) + geom_boxplot() +
+      labs(title= "Boxplot of gdpPercap within the continents") 
 ```
 
 ![](hw03_Rmarkdown_files/figure-html/unnamed-chunk-4-2.png)<!-- -->
+
+#### From the above two plots, we observe that:
+
+* 1. Oceania has the largest median of gdpPercap among the five continents. Europe has the second largest median of gdpPercap among the five continents.
+
+* 2. Africa has the smallest median of gdpPercap among the five continents.
+
+* 3. The gdpPercap of Asia is more widely spreaded than the other continents.
+
+* 4. The gdpPercap of the five countries are all skewed to the right. The distribution  of gdpPercap of Oceania is closer to the normal distribution. 
+
 
 
 ### 3. Compute a weighted mean, weighting by population, of life expectancy for different years. 
@@ -117,16 +138,22 @@ gapminder %>%
 ## 12  2007    68.91909
 ```
 
-Plot the weighted mean of life expectancy vs. year.
+#### Plot the weighted mean of life expectancy vs. year.
 
 ```r
 gapminder %>% 
   group_by(year) %>% 
   summarize(mean_lifeex=weighted.mean(lifeExp,pop)) %>%
-  ggplot(aes(x = year, y = mean_lifeex)) + geom_line()
+  ggplot(aes(x = year, y = mean_lifeex)) + geom_line() +
+      labs(title= "Plot of weighted mean of life expectancy vs. year") 
 ```
 
 ![](hw03_Rmarkdown_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+
+#### From the plot, we can tell that:
+
+The weighted mean of life expectancy from 1952 to 2007 is increasing at a relatively constant rate. 
+
 
 
 ### 4. How is life expectancy changing over time on different continents?
@@ -135,20 +162,21 @@ gapminder %>%
 ```r
 ggplot(data = gapminder) + 
   geom_point(mapping = aes(x = year, y = lifeExp)) + 
-  facet_wrap(~ continent, nrow = 2)
+  facet_wrap(~ continent, nrow = 2) + 
+        labs(title= "Plot of life expectancy over time on different continents") 
 ```
 
 ![](hw03_Rmarkdown_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+
+#### From the plot, we can tell that:
+
+The life expectancy is increasing over time on different continents.
+
 
 
 ### 5. Report the absolute and/or relative abundance of countries with low life expectancy over time by continent: 
 
 Compute a mean of life expectancy worldwide. Then determine how many countries on each continent have a life expectancy less than the mean life expectancy, for each year.
-
-Note:
-
-* If there is no value for a continent on that year. then it means there is no country that year on that continent has a life expectancy less than the mean life expectancy.
-* For example: There is no value for the continent "Oceania" in any year, which means Oceania does not have any country which has a life expectancy less than the mean life expectancy during the whole data collection period.
 
 
 ```r
@@ -177,8 +205,13 @@ gapminder %>%
 ## # ... with 30 more rows
 ```
 
+#### Note:
 
-Plot the number of countries with low life expectancy over time by continent.
+* If there is no value for a continent on that year. then it means there is no country that year on that continent has a life expectancy less than the mean life expectancy.
+
+* For example: There is no value for the continent "Oceania" in any year, which means Oceania does not have any country which has a life expectancy less than the mean life expectancy during the whole data collection period.
+
+#### Plot the number of countries with low life expectancy over time by continent.
 
 
 ```r
@@ -187,13 +220,16 @@ gapminder %>%
     group_by(continent,year) %>% 
     summarize(No._countries_with_low_lifeExp=length(country)) %>%
     ggplot(aes(x = year, y = No._countries_with_low_lifeExp)) + geom_line() +
-      facet_wrap(~ continent, nrow = 2)
+      facet_wrap(~ continent, nrow = 2) +
+          labs(title= "Plot of number of countries with low life expectancy over time by continent") 
 ```
 
 ![](hw03_Rmarkdown_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
 
-Note: 
+#### From the plots, we can tell that:
 
-* There is not graph for Oceania, because Oceania does not have any country which has a life expectancy less than the mean life expectancy during the whole data collection period.
+* 1. The number of countries with low life expectancy is decreasing over time in each continent.
 
-* For Americas and Europe, the number of countries with low life expectancy decreases to zero after a time, so the line on their graph is shorter compare to the line on the graph of Africa and Asia.
+* 2. There is not plot for Oceania, because Oceania does not have any country which has a life expectancy less than the mean life expectancy during the whole data collection period.
+
+* 3. For Americas and Europe, the number of countries with low life expectancy decreases to zero after a time, so the line on their graph is shorter compare to the line on the graph of Africa and Asia.
