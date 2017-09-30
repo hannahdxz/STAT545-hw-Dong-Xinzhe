@@ -197,7 +197,6 @@ ggplot(gtbl, aes(x = continent, y = gdpPercap, color = continent)) +
 ```
 </div>
 <div class="clearer"></div>
-
 <style type="text/css">
 .twoC {width: 100%}
 .clearer {clear: both}
