@@ -9,7 +9,7 @@ output:
 
 ### load the packages
 
-```{r}
+```{r echo=FALSE}
 library(gapminder)
 library(tidyverse)
 library(knitr)
@@ -41,17 +41,22 @@ gapminder %>%
 
 #### We observe the followings:
 
-* 1. Both the maximum and minimum of GDP per capita for Africa is the smallest among the five continents.
+* Both the maximum and minimum of GDP per capita for Africa is the smallest among the five continents.
 
-* 2. Asia has the largest range of GDP per capita.
+* Asia has the largest range of GDP per capita, and the largest maximum of GDP per capita.
 
-* 3. Oceania has the largest minimum gdpPercap.
+* Oceania has the largest minimum gdpPercap.
 
 
 
 ### 2. Look at the spread of GDP per capita within the continents.
 
 ```{r}
+# Statistical summary of gdpPercap within continents
+gapminder%>%
+  group_by(continent)%>%
+  summarize(min_gdpPercap=min(gdpPercap), first_q=quantile(gdpPercap)[2], median_gdpPercap=median(gdpPercap), third_q=quantile(gdpPercap)[4], max_gdpPercap=max(gdpPercap))
+
 # A density plot of gdpPercap
 ggplot(gapminder, aes(x = gdpPercap, color = continent)) + geom_density() +
     labs(title= "Density plot of gdpPercap within the continents") 
@@ -65,13 +70,13 @@ ggplot(gapminder, aes(x = continent, y = gdpPercap)) + geom_boxplot() +
 
 #### From the above two plots, we observe that:
 
-* 1. Oceania has the largest median of gdpPercap among the five continents. Europe has the second largest median of gdpPercap among the five continents.
+* Oceania has the largest median of gdpPercap among the five continents. Europe has the second largest median of gdpPercap among the five continents.
 
-* 2. Africa has the smallest median of gdpPercap among the five continents.
+* Africa has the smallest median of gdpPercap among the five continents.
 
-* 3. The gdpPercap of Asia is more widely spreaded than the other continents.
+* The gdpPercap of Asia is more widely spreaded than the other continents.
 
-* 4. The gdpPercap of the five countries are all skewed to the right. The distribution  of gdpPercap of Oceania is closer to the normal distribution. 
+* The gdpPercap of the five countries are all skewed to the right. The distribution  of gdpPercap of Oceania is closer to the normal distribution. 
 
 
 
@@ -95,12 +100,19 @@ gapminder %>%
 
 #### From the plot, we can tell that:
 
-The weighted mean of life expectancy from 1952 to 2007 is increasing at a relatively constant rate. 
+The weighted mean of life expectancy from 1952 to 2007 is increasing at an approximately constant rate. 
 
 
 
 ### 4. How is life expectancy changing over time on different continents?
+#### Calculate the mean life expectancy over time on different continents
+```{r}
+gapminder %>%
+  group_by(continent,year)%>%
+  summarize(mean_lifeExp = mean(lifeExp))
+```
 
+#### Plot life expectancy vs. year on different continents
 ```{r}
 p1 <- ggplot(data = gapminder) + 
   geom_point(mapping = aes(x = year, y = lifeExp)) + 
@@ -113,9 +125,9 @@ p1 + theme_bw() +
           strip.text = element_text(size=14, face="bold"))
 ```
 
-#### From the plot, we can tell that:
+#### We can tell that:
 
-The life expectancy is increasing over time on different continents.
+The life expectancy is increasing over time on all the continents.
 
 
 
@@ -152,11 +164,11 @@ gapminder %>%
 
 #### From the plots, we can tell that:
 
-* 1. The number of countries with low life expectancy is decreasing over time in each continent.
+* The number of countries with low life expectancy is decreasing over time in each continent.
 
-* 2. There is not plot for Oceania, because Oceania does not have any country which has a life expectancy less than the mean life expectancy during the whole data collection period.
+* There is not plot for Oceania, because Oceania does not have any country which has a life expectancy less than the mean life expectancy during the whole data collection period.
 
-* 3. For Americas and Europe, the number of countries with low life expectancy decreases to zero after a time, so the line on their graph is shorter compare to the line on the graph of Africa and Asia.
+* For Americas and Europe, the number of countries with low life expectancy decreases to zero after a time, so the line on their graph is shorter compare to the line on the graph of Africa and Asia.
 
 
 ### 6. But I want to do more!

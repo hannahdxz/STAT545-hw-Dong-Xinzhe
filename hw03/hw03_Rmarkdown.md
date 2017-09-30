@@ -5,11 +5,6 @@ September 26, 2017
 ### load the packages
 
 
-```r
-library(gapminder)
-library(tidyverse)
-```
-
 ```
 ## Loading tidyverse: ggplot2
 ## Loading tidyverse: tibble
@@ -26,14 +21,6 @@ library(tidyverse)
 ```
 ## filter(): dplyr, stats
 ## lag():    dplyr, stats
-```
-
-```r
-library(knitr)
-library(kableExtra)
-library(ggplot2)
-library(forcats)
-library(pander)
 ```
 
 
@@ -73,16 +60,35 @@ gapminder %>%
 
 #### We observe the followings:
 
-* 1. Both the maximum and minimum of GDP per capita for Africa is the smallest among the five continents.
+* Both the maximum and minimum of GDP per capita for Africa is the smallest among the five continents.
 
-* 2. Asia has the largest range of GDP per capita.
+* Asia has the largest range of GDP per capita, and the largest maximum of GDP per capita.
 
-* 3. Oceania has the largest minimum gdpPercap.
+* Oceania has the largest minimum gdpPercap.
 
 
 
 ### 2. Look at the spread of GDP per capita within the continents.
 
+
+```r
+# Statistical summary of gdpPercap within continents
+gapminder%>%
+  group_by(continent)%>%
+  summarize(min_gdpPercap=min(gdpPercap), first_q=quantile(gdpPercap)[2], median_gdpPercap=median(gdpPercap), third_q=quantile(gdpPercap)[4], max_gdpPercap=max(gdpPercap))
+```
+
+```
+## # A tibble: 5 x 6
+##   continent min_gdpPercap   first_q median_gdpPercap   third_q
+##      <fctr>         <dbl>     <dbl>            <dbl>     <dbl>
+## 1    Africa      241.1659   761.247         1192.138  2377.417
+## 2  Americas     1201.6372  3427.779         5465.510  7830.210
+## 3      Asia      331.0000  1056.993         2646.787  8549.256
+## 4    Europe      973.5332  7213.085        12081.749 20461.386
+## 5   Oceania    10039.5956 14141.859        17983.304 22214.117
+## # ... with 1 more variables: max_gdpPercap <dbl>
+```
 
 ```r
 # A density plot of gdpPercap
@@ -102,13 +108,13 @@ ggplot(gapminder, aes(x = continent, y = gdpPercap)) + geom_boxplot() +
 
 #### From the above two plots, we observe that:
 
-* 1. Oceania has the largest median of gdpPercap among the five continents. Europe has the second largest median of gdpPercap among the five continents.
+* Oceania has the largest median of gdpPercap among the five continents. Europe has the second largest median of gdpPercap among the five continents.
 
-* 2. Africa has the smallest median of gdpPercap among the five continents.
+* Africa has the smallest median of gdpPercap among the five continents.
 
-* 3. The gdpPercap of Asia is more widely spreaded than the other continents.
+* The gdpPercap of Asia is more widely spreaded than the other continents.
 
-* 4. The gdpPercap of the five countries are all skewed to the right. The distribution  of gdpPercap of Oceania is closer to the normal distribution. 
+* The gdpPercap of the five countries are all skewed to the right. The distribution  of gdpPercap of Oceania is closer to the normal distribution. 
 
 
 
@@ -153,12 +159,38 @@ gapminder %>%
 
 #### From the plot, we can tell that:
 
-The weighted mean of life expectancy from 1952 to 2007 is increasing at a relatively constant rate. 
+The weighted mean of life expectancy from 1952 to 2007 is increasing at an approximately constant rate. 
 
 
 
 ### 4. How is life expectancy changing over time on different continents?
+#### Calculate the mean life expectancy over time on different continents
 
+```r
+gapminder %>%
+  group_by(continent,year)%>%
+  summarize(mean_lifeExp = mean(lifeExp))
+```
+
+```
+## # A tibble: 60 x 3
+## # Groups:   continent [?]
+##    continent  year mean_lifeExp
+##       <fctr> <int>        <dbl>
+##  1    Africa  1952     39.13550
+##  2    Africa  1957     41.26635
+##  3    Africa  1962     43.31944
+##  4    Africa  1967     45.33454
+##  5    Africa  1972     47.45094
+##  6    Africa  1977     49.58042
+##  7    Africa  1982     51.59287
+##  8    Africa  1987     53.34479
+##  9    Africa  1992     53.62958
+## 10    Africa  1997     53.59827
+## # ... with 50 more rows
+```
+
+#### Plot life expectancy vs. year on different continents
 
 ```r
 p1 <- ggplot(data = gapminder) + 
@@ -172,11 +204,11 @@ p1 + theme_bw() +
           strip.text = element_text(size=14, face="bold"))
 ```
 
-![](hw03_Rmarkdown_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+![](hw03_Rmarkdown_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
 
-#### From the plot, we can tell that:
+#### We can tell that:
 
-The life expectancy is increasing over time on different continents.
+The life expectancy is increasing over time on all the continents.
 
 
 
@@ -230,15 +262,15 @@ gapminder %>%
           labs(title= "Plot of number of countries with low life expectancy over time by continent") 
 ```
 
-![](hw03_Rmarkdown_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+![](hw03_Rmarkdown_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 
 #### From the plots, we can tell that:
 
-* 1. The number of countries with low life expectancy is decreasing over time in each continent.
+* The number of countries with low life expectancy is decreasing over time in each continent.
 
-* 2. There is not plot for Oceania, because Oceania does not have any country which has a life expectancy less than the mean life expectancy during the whole data collection period.
+* There is not plot for Oceania, because Oceania does not have any country which has a life expectancy less than the mean life expectancy during the whole data collection period.
 
-* 3. For Americas and Europe, the number of countries with low life expectancy decreases to zero after a time, so the line on their graph is shorter compare to the line on the graph of Africa and Asia.
+* For Americas and Europe, the number of countries with low life expectancy decreases to zero after a time, so the line on their graph is shorter compare to the line on the graph of Africa and Asia.
 
 
 ### 6. But I want to do more!
@@ -272,7 +304,7 @@ Asia               7902.150           2646.787
 Europe            14469.476          12081.749
 Oceania           18621.609          17983.304
 
-![](hw03_Rmarkdown_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
+![](hw03_Rmarkdown_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
 </div>
 <div class="clearer"></div>
 
