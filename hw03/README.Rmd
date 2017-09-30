@@ -5,4 +5,5 @@ date: "September 30, 2017"
 output: github_document
 ---
 
-Here is [the link](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw03/hw03_Rmarkdown.md) to the rendered .md file 
+
+Here is [the link](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw03/hw03_Rmarkdown.md) to the rendered .md file. 
