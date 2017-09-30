@@ -305,15 +305,6 @@ Europe            14469.476          12081.749
 Oceania           18621.609          17983.304
 
 ![](hw03_Rmarkdown_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
-</div>
-<div class="clearer"></div>
-
-<style type="text/css">
-.twoC {width: 100%}
-.clearer {clear: both}
-.twoC .table {max-width: 50%; float: right}
-.twoC img {max-width: 50%; float: left}
-</style>
 
 #### (2) Try a table helper package (pander)
 

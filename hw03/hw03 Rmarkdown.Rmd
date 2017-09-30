@@ -195,15 +195,6 @@ knitr::kable(tbl1)
 ggplot(gtbl, aes(x = continent, y = gdpPercap, color = continent)) +
   geom_point() + ggtitle("GDP per cap by continent") 
 ```
-</div>
-<div class="clearer"></div>
-
-<style type="text/css">
-.twoC {width: 100%}
-.clearer {clear: both}
-.twoC .table {max-width: 50%; float: right}
-.twoC img {max-width: 50%; float: left}
-</style>
 
 #### (2) Try a table helper package (pander)
 
