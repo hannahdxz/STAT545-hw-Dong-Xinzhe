@@ -3,8 +3,7 @@ title: "hw03"
 author: "Xinzhe Dong"
 date: "September 26, 2017"
 output: 
-  html_document: 
-    keep_md: yes
+  github_document
 ---
 
 ### load the packages
@@ -176,9 +175,8 @@ gapminder %>%
 
 #### (1) Get table and figure side-by-side
 ```{r}
-library(ggplot2)
 suppressMessages(library(dplyr))
-#devtools::install_github("jennybc/gapminder")
+# devtools::install_github("jennybc/gapminder")
 library("gapminder")
 gtbl <- tbl_df(gapminder)
 ```
@@ -195,6 +193,15 @@ knitr::kable(tbl1)
 ggplot(gtbl, aes(x = continent, y = gdpPercap, color = continent)) +
   geom_point() + ggtitle("GDP per cap by continent") 
 ```
+</div>
+<div class="clearer"></div>
+
+<style type="text/css">
+.twoC {width: 100%}
+.clearer {clear: both}
+.twoC .table {max-width: 50%; float: right}
+.twoC img {max-width: 50%; float: left}
+</style>
 
 #### (2) Try a table helper package (pander)
 
