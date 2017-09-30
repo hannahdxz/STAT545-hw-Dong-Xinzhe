@@ -174,6 +174,7 @@ gapminder %>%
 
 
 #### (1) Get table and figure side-by-side
+
 <style type="text/css">
 .twoC {width: 100%}
 .clearer {clear: both}
