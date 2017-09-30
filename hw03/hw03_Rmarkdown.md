@@ -249,7 +249,7 @@ gapminder %>%
 
 ``` r
 suppressMessages(library(dplyr))
-# devtools::install_github("jennybc/gapminder")
+#devtools::install_github("jennybc/gapminder")
 library("gapminder")
 gtbl <- tbl_df(gapminder)
 ```
@@ -266,14 +266,14 @@ gtbl <- tbl_df(gapminder)
 | Europe    |        14469.476|          12081.749|
 | Oceania   |        18621.609|          17983.304|
 
-![](hw03_Rmarkdown_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-13-1.png)
-
 <style type="text/css">
 .twoC {width: 100%}
 .clearer {clear: both}
 .twoC .table {max-width: 50%; float: right}
 .twoC img {max-width: 50%; float: left}
 </style>
+![](hw03_Rmarkdown_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-13-1.png)
+
 #### (2) Try a table helper package (pander)
 
 ``` r
