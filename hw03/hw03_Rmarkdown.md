@@ -247,6 +247,12 @@ gapminder %>%
 
 #### (1) Get table and figure side-by-side
 
+<style type="text/css">
+.twoC {width: 100%}
+.clearer {clear: both}
+.twoC .table {max-width: 50%; float: right}
+.twoC img {max-width: 50%; float: left}
+</style>
 ``` r
 library(ggplot2)
 suppressMessages(library(dplyr))
@@ -269,12 +275,6 @@ gtbl <- tbl_df(gapminder)
 
 ![](hw03_Rmarkdown_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-13-1.png)
 
-<style type="text/css">
-.twoC {width: 100%}
-.clearer {clear: both}
-.twoC .table {max-width: 50%; float: right}
-.twoC img {max-width: 50%; float: left}
-</style>
 #### (2) Try a table helper package (pander)
 
 ``` r
