@@ -3,7 +3,8 @@ title: "hw03"
 author: "Xinzhe Dong"
 date: "September 26, 2017"
 output: 
-  github_document
+  html_document: 
+    keep_md: yes
 ---
 
 ### load the packages
