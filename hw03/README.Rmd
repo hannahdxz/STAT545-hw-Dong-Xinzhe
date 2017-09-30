@@ -16,5 +16,7 @@ output: github_document
 
 * The other exploration of the gapminder data with the *dplyr* and *ggplot2* package went well, we covered everything in class. 
 
+* When I worked on getting table and figure side-by-side, I used the given code but the table and figure are not side by side, I did not figure out how to fix it.
+
 * I referred to this [webpage](https://cran.r-project.org/web/packages/pander/README.html) when I was working on making a table with pander package.
 
