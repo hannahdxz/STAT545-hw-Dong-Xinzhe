@@ -1,0 +1,81 @@
+---
+title: "hw04"
+author: "Xinzhe Dong"
+date: "October 4, 2017"
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+### load the packages
+
+```{r echo=FALSE}
+library(gapminder)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(forcats)
+library(pander)
+```
+
+
+#### 1. General data reshaping and relationship to aggregation
+
+
+
+
+#### 2. Join, merge, look up
+Create a second data frame, complementary to Gapminder. Join this with (part of) Gapminder using a  dplyr join function and make some observations about the process and result. Explore the different types of joins. 
+
+*The second data frame*:
+One row per continent("Asia", "Oceania", "Europe"), a continent variable and two more variable with extra info. One is areas of continents, in square miles, and another one is northern versus southern hemisphere.
+
+```{r}
+(extra_infor <- data.frame(continent=c("Asia", "Oceania", "Europe"),
+                     areas=c(17139445, 2967909, 3997929),
+                     hemisphere = c("northern", "southern", "northern")) %>% 
+     as.tbl)
+```
+1. To the `gapminder` dataset, add the "areas" and "hemisphere" variable using the `extra_infor` tibble. 
+```{r}
+gapminder%>%
+  left_join(extra_infor)
+```
+
+
+2. To the `gapminder` dataset, add an `area` variable using the `areas` tibble, but only keeping obervations for which areas are available. 
+
+```{r}
+gapminder%>%
+  inner_join(areas)
+```
+
+3. Use a `_join` function to output the rows in `areas` corresponding to countries that _are not_ found in the `gapminder` dataset. 
+
+```{r}
+areas%>%
+  anti_join(gapminder)
+```
+4. Use a `_join` function to output the rows in `areas` corresponding to countries that _are_ found in the `gapminder` dataset. 
+```{r}
+areas%>%
+  semi_join(gapminder)
+```
+5. Construct a tibble that joins `gapminder` and `areas`, so that all rows found in each original tibble are also found in the final tibble. 
+```{r}
+full_join(gapminder,areas)
+```
+
+
+6. Subset the `gapminder` dataset to have countries that are only found in the `areas` data frame. 
+```{r}
+gapminder%>%
+  semi_join(areas)
+```
+
+7. Subset the `gapminder` dataset to have countries that are _not_ found in the `areas` data frame. 
+```{r}
+gapminder%>%
+  anti_join(areas)
+```
