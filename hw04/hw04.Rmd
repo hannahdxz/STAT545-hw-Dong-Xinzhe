@@ -49,12 +49,14 @@ gapminder%>%
 
 **2. To the `gapminder` dataset, add the "areas" and "hemisphere" variable using the `extra_infor` tibble, but only keeping obervations for which areas and hemisphere are available. **
 
+
 ```{r}
 gapminder%>%
   inner_join(extra_infor, by = "continent")
 ```
 
 **3. Output the rows in `extra_infor` corresponding to continents that _are not_ found in the `gapminder` dataset. **
+
 
 ```{r}
 extra_infor%>%
@@ -63,6 +65,7 @@ extra_infor%>%
 
 **4. Output the rows in `extra_infor` corresponding to continents that _are_ found in the `gapminder` dataset. **
 
+
 ```{r}
 extra_infor%>%
   semi_join(gapminder, by = "continent")
@@ -70,6 +73,7 @@ extra_infor%>%
 
 
 **5. Construct a tibble that joins `gapminder` and `extra_infor`, so that all rows found in each original tibble are also found in the final tibble. **
+
 
 ```{r}
 full_join(gapminder,extra_infor, by = "continent")
@@ -82,6 +86,7 @@ full_join(gapminder,extra_infor, by = "continent")
 gapminder%>%
   semi_join(extra_infor)
 ```
+
 
 **7. Subset the `gapminder` dataset to have continents that are _not_ found in the `extra_infor` data frame. **
 
