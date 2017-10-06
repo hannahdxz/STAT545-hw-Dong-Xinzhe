@@ -20,62 +20,66 @@ library(pander)
 ```
 
 
-#### 1. General data reshaping and relationship to aggregation
+### 1. General data reshaping and relationship to aggregation
 
 
 
 
-#### 2. Join, merge, look up
-Create a second data frame, complementary to Gapminder. Join this with (part of) Gapminder using a  dplyr join function and make some observations about the process and result. Explore the different types of joins. 
+### 2. Join, merge, look up
+Create a second data frame, complementary to Gapminder. Join this with Gapminder using a  dplyr join function and make some observations about the process and result. Explore the different types of joins. 
 
-*The second data frame*:
-One row per continent("Asia", "Oceania", "Europe"), a continent variable and two more variable with extra info. One is areas of continents, in square miles, and another one is northern versus southern hemisphere.
+**The second data frame**:
+
+One row per continent("Asia", "Oceania", "Europe", "Antarctica"), a continent variable and two more variable with extra info. One is areas of continents, in square miles, and another one is northern versus southern hemisphere.
 
 ```{r}
-(extra_infor <- data.frame(continent=c("Asia", "Oceania", "Europe"),
-                     areas=c(17139445, 2967909, 3997929),
-                     hemisphere = c("northern", "southern", "northern")) %>% 
+(extra_infor <- data.frame(continent=c("Asia", "Oceania", "Europe", "Antarctica"),
+                     areas=c(17139445, 2967909, 3997929, 5405000),
+                     hemisphere = c("northern", "southern", "northern", "southern")) %>% 
      as.tbl)
 ```
-1. To the `gapminder` dataset, add the "areas" and "hemisphere" variable using the `extra_infor` tibble. 
+**1. To the `gapminder` dataset, add the "areas" and "hemisphere" variable using the `extra_infor` tibble.**
 ```{r}
 gapminder%>%
-  left_join(extra_infor)
+  left_join(extra_infor, by = "continent")
 ```
 
 
-2. To the `gapminder` dataset, add an `area` variable using the `areas` tibble, but only keeping obervations for which areas are available. 
+**2. To the `gapminder` dataset, add the "areas" and "hemisphere" variable using the `extra_infor` tibble, but only keeping obervations for which areas and hemisphere are available. **
 
 ```{r}
 gapminder%>%
-  inner_join(areas)
+  inner_join(extra_infor, by = "continent")
 ```
 
-3. Use a `_join` function to output the rows in `areas` corresponding to countries that _are not_ found in the `gapminder` dataset. 
+**3. Output the rows in `extra_infor` corresponding to continents that _are not_ found in the `gapminder` dataset. **
 
 ```{r}
-areas%>%
-  anti_join(gapminder)
+extra_infor%>%
+  anti_join(gapminder, by = "continent")
 ```
-4. Use a `_join` function to output the rows in `areas` corresponding to countries that _are_ found in the `gapminder` dataset. 
+
+**4. Output the rows in `extra_infor` corresponding to continents that _are_ found in the `gapminder` dataset. **
 ```{r}
-areas%>%
-  semi_join(gapminder)
-```
-5. Construct a tibble that joins `gapminder` and `areas`, so that all rows found in each original tibble are also found in the final tibble. 
-```{r}
-full_join(gapminder,areas)
+extra_infor%>%
+  semi_join(gapminder, by = "continent")
 ```
 
 
-6. Subset the `gapminder` dataset to have countries that are only found in the `areas` data frame. 
+**5. Construct a tibble that joins `gapminder` and `extra_infor`, so that all rows found in each original tibble are also found in the final tibble. **
 ```{r}
-gapminder%>%
-  semi_join(areas)
+full_join(gapminder,extra_infor, by = "continent")
 ```
 
-7. Subset the `gapminder` dataset to have countries that are _not_ found in the `areas` data frame. 
+
+**6. Subset the `gapminder` dataset to have continents that are only found in the `extra_infor` data frame. **
 ```{r}
 gapminder%>%
-  anti_join(areas)
+  semi_join(extra_infor)
+```
+
+**7. Subset the `gapminder` dataset to have continents that are _not_ found in the `extra_infor` data frame. **
+```{r}
+gapminder%>%
+  anti_join(extra_infor)
 ```
