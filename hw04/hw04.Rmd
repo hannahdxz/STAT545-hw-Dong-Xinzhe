@@ -38,7 +38,9 @@ One row per continent("Asia", "Oceania", "Europe", "Antarctica"), a continent va
                      hemisphere = c("northern", "southern", "northern", "southern")) %>% 
      as.tbl)
 ```
+
 **1. To the `gapminder` dataset, add the "areas" and "hemisphere" variable using the `extra_infor` tibble.**
+
 ```{r}
 gapminder%>%
   left_join(extra_infor, by = "continent")
@@ -60,6 +62,7 @@ extra_infor%>%
 ```
 
 **4. Output the rows in `extra_infor` corresponding to continents that _are_ found in the `gapminder` dataset. **
+
 ```{r}
 extra_infor%>%
   semi_join(gapminder, by = "continent")
@@ -67,18 +70,21 @@ extra_infor%>%
 
 
 **5. Construct a tibble that joins `gapminder` and `extra_infor`, so that all rows found in each original tibble are also found in the final tibble. **
+
 ```{r}
 full_join(gapminder,extra_infor, by = "continent")
 ```
 
 
 **6. Subset the `gapminder` dataset to have continents that are only found in the `extra_infor` data frame. **
+
 ```{r}
 gapminder%>%
   semi_join(extra_infor)
 ```
 
 **7. Subset the `gapminder` dataset to have continents that are _not_ found in the `extra_infor` data frame. **
+
 ```{r}
 gapminder%>%
   anti_join(extra_infor)
