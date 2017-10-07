@@ -21,7 +21,32 @@ library(pander)
 
 ### 1. General data reshaping and relationship to aggregation
 
+Activity #2
 
+Make a tibble with one row per year and columns for life expectancy for two or more countries.
+Use knitr::kable() to make this table look pretty in your rendered homework.
+Take advantage of this new data shape to scatterplot life expectancy for one country against that of another.
+```{r}
+# get (average) life expectancy for two countries over years
+(lifeexp_Canada <- filter(gapminder,country=="Canada")%>%
+    group_by(year)%>%
+    summarize(lifeExp))
+
+(lifeexp_Australia <- filter(gapminder,country=="Australia")%>%
+    group_by(year)%>%
+    summarize(lifeExp))
+
+# Construct a tibble that joins `lifeexp_Canada` and `lifeexp_Australia`.
+
+year_lifeexp <- full_join(lifeexp_Canada,lifeexp_Australia, by="year")
+year_lifeexp
+```
+
+```{r}
+year_lifeexp%>%
+    kable("html",caption="Life Expectancy for Canada and Australia")%>%
+    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
 
 
 ### 2. Join, merge, look up
