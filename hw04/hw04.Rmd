@@ -62,6 +62,7 @@ year_lifeexp%>%
 ```
 We can tell from this plot that overs the years, Canada always has a greater (average) life expectancy than Gambia. 
 
+
 **3. Gather LifeExp_Canada and LifeExp_Gambia.**
 
 ```{r}
@@ -78,6 +79,7 @@ year_lifeexp_tidy%>%
     kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
 Tidy data ... mission accomplished!
+
 
 **5. Scatterplot life expectancy for one country against that of another.**
 
