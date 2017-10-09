@@ -60,7 +60,7 @@ year_lifeexp%>%
     kable("html",caption="Life Expectancy for Canada and Gambia")%>%
     kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
-We can tell from this plot that overs the years, Canada always has a greater (average) life expectancy than Gambia. 
+We can tell from this table that overs the years, Canada always has a greater (average) life expectancy than Gambia. 
 
 
 **3. Gather LifeExp_Canada and LifeExp_Gambia.**
@@ -68,7 +68,6 @@ We can tell from this plot that overs the years, Canada always has a greater (av
 ```{r}
 year_lifeexp_tidy <- year_lifeexp %>%
   gather(key = "LifeExp", value = "Years", LifeExp_Canada, LifeExp_Gambia)
-year_lifeexp_tidy
 ```
 
 **4. Again, use kable() to render the tidy table.**
@@ -81,7 +80,7 @@ year_lifeexp_tidy%>%
 Tidy data ... mission accomplished!
 
 
-**5. Scatterplot life expectancy for one country against that of another.**
+**5. Scatterplot life expectancy for Canada and Gambia.**
 
 ```{r}
 p1 <- year_lifeexp_tidy %>%
@@ -95,8 +94,6 @@ p1 + theme_bw() +
           axis.title = element_text(size=14),
           strip.text = element_text(size=14, face="bold"))
 ```
-
-* Taking advantege of this new data shape, we are able to scatterplot life expectancy for one country against that of another.
 
 * From this plot, we can tell that:
 
