@@ -65,7 +65,7 @@ year_lifeexp_tidy%>%
 ```
 
 
-##### 5. Scatterplot life expectancy for one country against that of another.
+#####5. Scatterplot life expectancy for one country against that of another.
 
 
 ```{r}
