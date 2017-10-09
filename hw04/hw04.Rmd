@@ -46,7 +46,7 @@ year_lifeexp%>%
     kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
 
-**(3)** Make the data **tidy** by gathering LifeExp_Canada, and LifeExp_Gambia.
+**(3)** Make the data  **tidy**  by gathering LifeExp_Canada, and LifeExp_Gambia.
 ```{r}
 year_lifeexp_tidy <- year_lifeexp %>%
   gather(key = "LifeExp", value = "Years", LifeExp_Canada, LifeExp_Gambia)
