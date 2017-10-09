@@ -37,7 +37,7 @@ General data reshaping and relationship to aggregation
 
 #### I choose to work on `Activity #2`
 
-1.Make a tibble with one row per year and columns for life expectancy for Canada and Gambia.
+**1. Make a tibble with one row per year and columns for life expectancy for Canada and Gambia.**
 
 ```{r}
 # get (average) life expectancy for Canada over years
@@ -53,7 +53,7 @@ year_lifeexp <- full_join(lifeexp_Canada, lifeexp_Gambia, by="year")
 colnames(year_lifeexp) <- c("year", "LifeExp_Canada", "LifeExp_Gambia")
 ```
 
-2.Use kable() to render the table.
+**2. Use kable() to render the table.**
 
 ```{r}
 year_lifeexp%>%
@@ -69,7 +69,7 @@ year_lifeexp_tidy <- year_lifeexp %>%
 year_lifeexp_tidy
 ```
 
-4.Again, use kable() to render the tidy table.
+**4. Again, use kable() to render the tidy table.**
 
 ```{r}
 year_lifeexp_tidy%>%
@@ -78,7 +78,7 @@ year_lifeexp_tidy%>%
 ```
 
 
-5.Scatterplot life expectancy for one country against that of another.
+**5. Scatterplot life expectancy for one country against that of another.**
 
 ```{r}
 p1 <- year_lifeexp_tidy %>%
