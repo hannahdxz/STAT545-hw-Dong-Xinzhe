@@ -165,7 +165,8 @@ full_join(gapminder,extra_infor, by = "continent")%>%
     filter(continent=="Antarctica")
 ```
 
-Since the continent **Antarctica** is not contained in the `gapminder` dataset, all variables except for **areas** and **hemisphere** takes the value **NA**.
+Note:
+Since the continent *Antarctica* is not contained in the `gapminder` dataset, all variables except for *areas* and *hemisphere* takes the value **NA**.
 
 
 **6. Subset the `gapminder` dataset to have continents that are only found in the `extra_infor` data frame.**
