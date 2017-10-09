@@ -98,7 +98,7 @@ p1 + theme_bw() +
 * From this plot, we can tell that:
 
      * The (average) life expectancy for Canada and Gambia is both increasing over the years.
-     * Even if the (average) life expectancy of Gambia is increasing at a greater rate than that of Canada, the (average) life expectancy of Gambia in 2017 is still lower than that of Canada in 1952.
+     * Even if the (average) life expectancy of Gambia is increasing at a greater rate than that of Canada, the (average) life expectancy of Gambia in 2007 is still lower than that of Canada in 1952.
 
 Join, merge, look up
 --------------------
@@ -141,6 +141,7 @@ gapminder%>%
 extra_infor%>%
   anti_join(gapminder, by = "continent")
 ```
+We can tell from the output that the continent **Antarctica** is not contained in the `gapminder` dataset.
 
 **4. Output the rows in `extra_infor` corresponding to continents that _are_ found in the `gapminder` dataset.**
 
@@ -164,8 +165,7 @@ full_join(gapminder,extra_infor, by = "continent")%>%
     filter(continent=="Antarctica")
 ```
 
-
-
+Since the continent **Antarctica** is not contained in the `gapminder` dataset, all variables except for **areas** and **hemisphere** takes the value **NA**.
 
 
 **6. Subset the `gapminder` dataset to have continents that are only found in the `extra_infor` data frame.**
