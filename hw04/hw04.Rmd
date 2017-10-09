@@ -23,7 +23,7 @@ library(pander)
 
 #### `Activity #2`
 
-**Make a tibble with one row per year and columns for life expectancy for Canada and Gambia.**
+1.Make a tibble with one row per year and columns for life expectancy for Canada and Gambia.
 
 ```{r}
 # get (average) life expectancy for two countries over years
@@ -40,7 +40,7 @@ year_lifeexp <- full_join(lifeexp_Canada, lifeexp_Gambia, by="year")
 colnames(year_lifeexp) <- c("year", "LifeExp_Canada", "LifeExp_Gambia")
 ```
 
-**Use kable() to render the table.**
+2.Use kable() to render the table.
 
 ```{r}
 year_lifeexp%>%
@@ -48,7 +48,7 @@ year_lifeexp%>%
     kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
 
-**Gather LifeExp_Canada and LifeExp_Gambia.**
+3.Gather LifeExp_Canada and LifeExp_Gambia.
 
 ```{r}
 year_lifeexp_tidy <- year_lifeexp %>%
@@ -56,7 +56,7 @@ year_lifeexp_tidy <- year_lifeexp %>%
 year_lifeexp_tidy
 ```
 
-**Again, use kable() to render the tidy table.**
+4.Again, use kable() to render the tidy table.
 
 ```{r}
 year_lifeexp_tidy%>%
@@ -65,7 +65,7 @@ year_lifeexp_tidy%>%
 ```
 
 
-**Scatterplot life expectancy for one country against that of another**
+##### 5. Scatterplot life expectancy for one country against that of another.
 
 ```{r}
 year_lifeexp_tidy %>%
