@@ -67,6 +67,7 @@ year_lifeexp_tidy%>%
 
 ##### 5. Scatterplot life expectancy for one country against that of another.
 
+
 ```{r}
 year_lifeexp_tidy %>%
     ggplot(aes(x=year, y=Years)) +
