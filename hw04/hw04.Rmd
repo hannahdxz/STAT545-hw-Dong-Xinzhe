@@ -188,6 +188,6 @@ Let’s check…. Asia should not be in there:
 
 ```{r}
 anti_join(gapminder, extra_infor) %>% 
-    filter(country=="Asia")
+    filter(continent=="Asia")
 ```
 
