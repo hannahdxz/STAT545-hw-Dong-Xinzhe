@@ -5,8 +5,18 @@ date: "October 4, 2017"
 output: 
  github_document 
 ---
+### Abstract
 
-### load the packages
+We are going to explore the gapminder data set included with R. We will be practicing data reshaping and join.
+
+#### Table of content
+
+-   [1 Installation of packages](#installation_of_packages)
+-   [2 General data reshaping and relationship to aggregation](#general_data_reshaping_and_relationship_to_aggregation)
+-   [3 Join, merge, look up](#join,_merge,_look up)
+
+1 Installation of packages
+--------------------------
 
 ```{r echo=FALSE}
 library(gapminder)
@@ -19,23 +29,25 @@ library(pander)
 ```
 
 
-### 1. General data reshaping and relationship to aggregation
+2 General data reshaping and relationship to aggregation
+--------------------------------------------------------
+
+[*Back to the top*](#abstract)
 
 #### `Activity #2`
 
 1.Make a tibble with one row per year and columns for life expectancy for Canada and Gambia.
 
 ```{r}
-# get (average) life expectancy for two countries over years
+# get (average) life expectancy for Canada over years
 (lifeexp_Canada <- filter(gapminder,country=="Canada")%>%
     group_by(year)%>%
     summarize(lifeExp))
-
+# get (average) life expectancy for Gambia over years
 (lifeexp_Gambia <- filter(gapminder,country=="Gambia")%>%
     group_by(year)%>%
     summarize(lifeExp))
-
-# Construct a tibble that joins `lifeexp_Canada`, and `lifeexp_Gambia`.
+# Construct a tibble that joins lifeexp_Canada, and lifeexp_Gambia.
 year_lifeexp <- full_join(lifeexp_Canada, lifeexp_Gambia, by="year")
 colnames(year_lifeexp) <- c("year", "LifeExp_Canada", "LifeExp_Gambia")
 ```
@@ -65,17 +77,33 @@ year_lifeexp_tidy%>%
 ```
 
 
-**5. Scatterplot life expectancy for one country against that of another.**
+5.Scatterplot life expectancy for one country against that of another.
 
 ```{r}
-year_lifeexp_tidy %>%
+p1 <- year_lifeexp_tidy %>%
     ggplot(aes(x=year, y=Years)) +
     geom_point() +
   facet_wrap( ~ LifeExp) +
     labs(title= "Scatterplot of life expectancy for Canada and Gambia") 
+
+p1 + theme_bw() +
+  theme(strip.background = element_rect(fill="orange"),
+          axis.title = element_text(size=14),
+          strip.text = element_text(size=14, face="bold"))
 ```
 
-### 2. Join, merge, look up
+* Taking advantege of this new data shape, we are able to scatterplot life expectancy for one country against that of another.
+
+* From this plot, we can tell that:
+
+     * The (average) life expectancy for Canada and Gambia is both increasing over the years.
+     * Even if the (average) life expectancy of Gambia is increasing at a greater rate than that of Canada, the (average) life expectancy of Gambia in 2017 is still lower than that of Canada in 1952.
+
+3 Join, merge, look up
+----------------------
+
+[*Back to the top*](#abstract)
+
 Create a second data frame, complementary to Gapminder. Join this with Gapminder using a  dplyr join function and make some observations about the process and result. Explore the different types of joins. 
 
 **The second data frame**:
