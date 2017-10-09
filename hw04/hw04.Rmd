@@ -112,7 +112,7 @@ Create a second data frame, complementary to Gapminder. Join this with Gapminder
 
 **The second data frame**:
 
-One row per continent("Asia", "Oceania", "Europe", "Antarctica"), a continent variable and two more variable with extra info. One is areas of continents, in square miles, and another one is northern versus southern hemisphere.
+One row per continent("Asia", "Oceania", "Europe", "Antarctica"), a continent variable and two more variable with extra info. One is `areas of continents`, in square miles, and another one is `northern versus southern hemisphere`.
 
 ```{r}
 (extra_infor <- data.frame(continent=c("Asia", "Oceania", "Europe", "Antarctica"),
@@ -161,6 +161,15 @@ extra_infor%>%
 full_join(gapminder,extra_infor, by = "continent")
 ```
 
+Here are the rows containing `Antarctica`:
+```{r}
+full_join(gapminder,extra_infor, by = "continent")%>% 
+    filter(continent=="Antarctica")
+```
+
+
+
+
 
 **6. Subset the `gapminder` dataset to have continents that are only found in the `extra_infor` data frame.**
 
@@ -176,3 +185,11 @@ gapminder%>%
 gapminder%>%
   anti_join(extra_infor)
 ```
+
+Let’s check…. Asia should not be in there:
+
+```{r}
+anti_join(gapminder, extra_infor) %>% 
+    filter(country=="Asia")
+```
+
