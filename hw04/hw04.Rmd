@@ -11,8 +11,8 @@ We are going to explore the gapminder data set. We will be practicing data resha
 
 #### Table of content
 -   [Load data and packages](#load-data-and-packages)
--   [2 General data reshaping and relationship to aggregation](#general-data-reshaping-and-relationship-to-aggregation)
--   [3 Join, merge, look up](#join-merge-look-up)
+-   [General data reshaping and relationship to aggregation](#general-data-reshaping-and-relationship-to-aggregation)
+-   [Join, merge, look up](#join-merge-look-up)
 
 Load data and packages
 ----------------------
@@ -30,8 +30,8 @@ library(pander)
 ```
 
 
-2 General data reshaping and relationship to aggregation
---------------------------------------------------------
+General data reshaping and relationship to aggregation
+------------------------------------------------------
 
 [*Back to the top*](#abstract)
 
@@ -100,8 +100,8 @@ p1 + theme_bw() +
      * The (average) life expectancy for Canada and Gambia is both increasing over the years.
      * Even if the (average) life expectancy of Gambia is increasing at a greater rate than that of Canada, the (average) life expectancy of Gambia in 2017 is still lower than that of Canada in 1952.
 
-3 Join, merge, look up
-----------------------
+Join, merge, look up
+--------------------
 
 [*Back to the top*](#abstract)
 
