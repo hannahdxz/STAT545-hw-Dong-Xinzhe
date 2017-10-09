@@ -7,18 +7,19 @@ output:
 ---
 ### Abstract
 
-We are going to explore the gapminder data set included with R. We will be practicing data reshaping and join.
+We are going to explore the gapminder data set. We will be practicing data reshaping and join.
 
 #### Table of content
-
--   [1 Installation of packages](#installation_of_packages)
--   [2 General data reshaping and relationship to aggregation](#general_data_reshaping_and_relationship_to_aggregation)
--   [3 Join, merge, look up](#join,_merge,_look up)
+-   [1 Installation of packages](#installation-of-packages)
+-   [2 General data reshaping and relationship to aggregation](#general-data-reshaping-and-relationship-to-aggregation)
+-   [3 Join, merge, look up](#join-merge-look-up)
 
 1 Installation of packages
 --------------------------
 
-```{r echo=FALSE}
+[*Back to the top*](#abstract)
+
+```{r}
 library(gapminder)
 library(tidyverse)
 library(knitr)
@@ -34,7 +35,7 @@ library(pander)
 
 [*Back to the top*](#abstract)
 
-#### `Activity #2`
+#### I choose to work on `Activity #2`
 
 1.Make a tibble with one row per year and columns for life expectancy for Canada and Gambia.
 
@@ -62,6 +63,7 @@ year_lifeexp%>%
 
 3.Gather LifeExp_Canada and LifeExp_Gambia.
 
+**3. Gather LifeExp_Canada and LifeExp_Gambia.**
 ```{r}
 year_lifeexp_tidy <- year_lifeexp %>%
   gather(key = "LifeExp", value = "Years", LifeExp_Canada, LifeExp_Gambia)
