@@ -60,8 +60,7 @@ year_lifeexp_tidy%>%
     kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
 
-
-**(5)**  Scatterplot life expectancy for one country against that of another.
+**(5)** Scatterplot life expectancy for one country against that of another.
 ```{r}
 year_lifeexp_tidy %>%
     ggplot(aes(x=year, y=Years)) +
