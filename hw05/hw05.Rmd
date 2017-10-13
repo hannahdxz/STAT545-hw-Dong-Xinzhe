@@ -1,0 +1,121 @@
+---
+title: "hw05"
+author: "Xinzhe Dong"
+date: "October 12, 2017"
+output: github_document
+---
+
+### Abstract
+
+We are going to explore the gapminder data set. We will be practicing data reshaping and join.
+
+#### Table of content
+-   [Load data and packages](#load-data-and-packages)
+-   [General data reshaping and relationship to aggregation](#general-data-reshaping-and-relationship-to-aggregation)
+-   [Join, merge, look up](#join-merge-look-up)
+
+Load data and packages
+----------------------
+
+[*Back to the top*](#abstract)
+
+```{r}
+library(gapminder)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(forcats)
+library(pander)
+```
+
+
+Factor management
+
+Get to know your factor before you start touching it!
+```{r}
+fct_count(gapminder$continent)
+```
+
+Drop all the rows corresponding to "Oceania".
+```{r}
+h_gap <- gapminder %>%
+  filter(continent != "Oceania")
+
+fct_count(h_gap$continent)
+nlevels(h_gap$continent)
+```
+We dropped 24 rows associated with "Oceania". However, the levels of the continent factor itself do not change. "Oceania" is still a level of "continent".
+
+Dropping "Oceania" level.
+```{r}
+h_gap_dropped <- h_gap %>% 
+  droplevels()
+fct_count(h_gap_dropped$continent)
+nlevels(h_gap_dropped$continent)
+```
+Now, we dropped 24 rows associated with "Oceania". Additionally, we also dropped the level "Oceania" of the factor "continent".
+
+
+Change order of the levels
+
+Reorder Gapminder continents by lifeExp
+```{r}
+## order continent according to minimum life exp
+fct_reorder(h_gap_dropped$continent, h_gap_dropped$lifeExp, min) %>% 
+  levels() %>% head()
+
+h_gap_dropped$continent<-fct_reorder(h_gap_dropped$continent, h_gap_dropped$lifeExp, min)
+
+h_gap_dropped%>%
+  group_by(continent)%>%
+  summarise(min(lifeExp))%>%
+  kable()
+```
+
+Common part:
+**While you’re here, practice writing to file and reading back in (see next section).**
+```{r}
+write_csv(h_gap_dropped, "h_gap_dropped.csv")
+read_csv("h_gap_dropped.csv")
+```
+
+
+**Characterize the (derived) data before and after your factor re-leveling.**
+
+Explore the effects of arrange().
+
+```{r}
+gap_asia_2007 <- gapminder %>% filter(year == 2007, continent == "Asia")
+# unarranged, reordered
+ggplot(gap_asia_2007, aes(x = lifeExp, y = country)) + geom_point() +
+        labs(title= "Plot of lifeExp of countries in Asian in 2007") 
+
+# arranged
+gap_asia_2007%>%
+  arrange(country, lifeExp)%>%
+    ggplot(aes(x = lifeExp, y = country)) + geom_point() +
+        labs(title= "Plot of lifeExp of countries(arranged) in Asian in 2007") 
+
+# reordered
+ggplot(gap_asia_2007, aes(x = lifeExp, y = fct_reorder(country, lifeExp, min))) +
+  geom_point() + labs(title= "Plot of lifeExp of countries(reordered) in Asian in 2007") 
+
+
+# first reordered, then arranged
+gap_asia_2007%>%
+  mutate(country=fct_reorder(country, lifeExp, min))%>%
+  arrange(country, lifeExp)%>%
+    ggplot(aes(x = lifeExp, y = country)) + geom_point() +
+        labs(title= "Plot of lifeExp of countries(reordered, arranged) in Asian in 2007") 
+```
+
+**Note**: 
+
+* Merely arranging the data has no effect on a figure.
+* Reordered factor levels makes plots much better.
+
+
+Explore the effects of reordering a factor and factor reordering coupled with arrange(). Especially, what effect does this have on a figure?
+These explorations should involve the data, the factor levels, and some figures.
+
