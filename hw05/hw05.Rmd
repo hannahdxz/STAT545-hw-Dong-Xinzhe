@@ -199,6 +199,22 @@ Now we try to load the plot we just saved to file.
 But I want to do more!
 ----------------------
 
+Pick a handful of countries, each of which you can associate with a stereotypical food (or any other non-controversial thing … sport? hobby? type of music, art or dance? animal? landscape feature?). Create an excerpt of the Gapminder data, filtered to just these countries. 
+
+Create a new factor – you pick the name! – by mapping the existing country factor levels to the new levels.
+Examples: Italy –> wine, Germany –> beer, Japan –> sake. (Austria, Germany) –> German, (Mexico, Spain) –> Spanish, (Portugal, Brazil) –> Portuguese. Let your creativity flourish.
+```{r}
+filter_country <- filter(gapminder, country%in% c("Canada","China","United States"))
+filter_country
+
+sport <- c("hockey","table tennis","basketball")
+
+# fct_recode(filter_country$country, sport) %>% levels()
+
+
+
+```
+
 [*Back to the top*](#abstract)
 
 
