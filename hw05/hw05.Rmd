@@ -11,8 +11,13 @@ We are going to explore the gapminder data set. We will be practicing data resha
 
 #### Table of content
 -   [Load data and packages](#load-data-and-packages)
--   [General data reshaping and relationship to aggregation](#general-data-reshaping-and-relationship-to-aggregation)
--   [Join, merge, look up](#join-merge-look-up)
+-   [Factor management](#factor-management)
+-   [File I/O](#file-io)
+-   [Visualization design](#visualization-design)
+-   [Writing figures to file](#writing-figures-to-file)
+-   [But I want to do more!](#but-i-want-to-do-more)
+
+
 
 Load data and packages
 ----------------------
@@ -31,6 +36,9 @@ library(pander)
 
 
 Factor management
+-----------------
+
+[*Back to the top*](#abstract)
 
 Get to know your factor before you start touching it!
 ```{r}
@@ -75,10 +83,6 @@ h_gap_dropped%>%
 
 Common part:
 **While you’re here, practice writing to file and reading back in (see next section).**
-```{r}
-write_csv(h_gap_dropped, "h_gap_dropped.csv")
-read_csv("h_gap_dropped.csv")
-```
 
 
 **Characterize the (derived) data before and after your factor re-leveling.**
@@ -116,6 +120,85 @@ gap_asia_2007%>%
 * Reordered factor levels makes plots much better.
 
 
-Explore the effects of reordering a factor and factor reordering coupled with arrange(). Especially, what effect does this have on a figure?
-These explorations should involve the data, the factor levels, and some figures.
+File I/O
+--------
+
+[*Back to the top*](#abstract)
+
+
+```{r}
+write_csv(h_gap_dropped, "h_gap_dropped.csv")
+h_gap_dropped_csv<-read_csv("h_gap_dropped.csv")
+
+h_gap_dropped_csv%>%
+  group_by(continent)%>%
+  summarise(min(lifeExp))%>%
+  kable()
+```
+
+We can tell that the order of continents changed. We ordered continent according to minimum life expectancy in the previous section. However, after `write_csv()`/`read_csv()`, the levels of the factor continent again become alphabetically ordered.
+
+```{r}
+saveRDS(h_gap_dropped, "h_gap_dropped2.csv")
+h_gap_dropped_csv2<-readRDS("h_gap_dropped2.csv")
+
+h_gap_dropped_csv2%>%
+  group_by(continent)%>%
+  summarise(min(lifeExp))%>%
+  kable()
+
+```
+
+`saveRDS()` and `readRDS()` preserve our work before! The reordered levels are preserved.
+
+
+Visualization design
+--------------------
+
+[*Back to the top*](#abstract)
+
+
+Remake at least one figure or create a new one, in light of something you learned in the recent class meetings about visualization design and color. Maybe juxtapose your first attempt and what you obtained after some time spent working on it. Reflect on the differences. If using Gapminder, you can use the country or continent color scheme that ships with Gapminder.
+
+```{r}
+
+p1 <- ggplot(data = gapminder) + 
+  geom_point(mapping = aes(x = year, y = lifeExp))
+
+p2 <- ggplot(data = gapminder) + 
+  geom_point(mapping = aes(x = year, y = lifeExp,color=continent)) + 
+  facet_wrap(~ continent, nrow = 2) + 
+        labs(title= "Plot of life expectancy over time on different continents") 
+
+p3 <- p2 + theme_bw() +
+  theme(strip.background = element_rect(fill="orange"),
+          axis.title = element_text(size=14),
+          strip.text = element_text(size=14, face="bold"))
+
+```
+
+Writing figures to file
+-----------------------
+
+[*Back to the top*](#abstract)
+
+Use ggsave() to explicitly save a plot to file.
+```{r}
+ggsave(filename="Plot of life expectancy over time on different continents",
+       plot=p3,device =  "png",width = 8, height = 8)
+
+```
+
+**Note**: Explicit provision of the plot object p is not necessary since p3 is the last plot we have. And thie is the only plot we will save to file.
+
+Now we try to load the plot we just saved to file.
+
+[Plot of life expectancy over time on different continents](/Users/hannahdong/Desktop/Stat545/STAT545-hw-Dong-Xinzhe/hw05/Plot\ of\ life\ expectancy\ over\ time\ on\ different\ continents)
+
+
+But I want to do more!
+----------------------
+
+[*Back to the top*](#abstract)
+
 

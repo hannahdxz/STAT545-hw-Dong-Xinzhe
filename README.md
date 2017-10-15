@@ -7,3 +7,9 @@
 * [hw03 folder](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw03)
 
 * [hw04 folder](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw04)
+
+|    **homework**    | **Status** |
+|--------------------|------------|
+| [hw02 folder](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2002)     | :thumbsup: |
+| [hw03 folder](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw03)          | :bowtie:   |
+| [hw04 folder](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw04)     | :octocat:  |
