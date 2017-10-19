@@ -14,3 +14,5 @@ October 12, 2017
 * In the section *Visualization design*, if I render the plots side by side, the plots become very narrow and parts of the plots will be lost. So I rendered them on top of each other.
 
 * I am a little bit confused about what we should do in the *I want to do more* section, I did the task based on my own understanding of the problem.
+
+* I used the funcion `multiplot()` on [this website](http://stat545.com/block020_multiple-plots-on-a-page.html) to render two of my plots together.

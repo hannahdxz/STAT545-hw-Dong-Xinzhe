@@ -24,7 +24,7 @@ Load data and packages
 
 [*Back to the top*](#abstract)
 
-```{r,echo=FALSE}
+```{r,warning=FALSE, message=FALSE}
 library(gapminder)
 library(tidyverse)
 library(knitr)
@@ -44,7 +44,7 @@ Factor management
 
 **Gapminder version:**
 
-**(1)** Get to know your factor before you start touching it!
+**(1)** Get to know the factor before start touching it!
 ```{r}
 fct_count(gapminder$continent)
 ```
@@ -71,12 +71,10 @@ Now, we dropped 24 rows associated with "Oceania". Additionally, we also dropped
 
 **(4)** Change order of the levels: reorder Gapminder continents by lifeExp.
 ```{r}
-## order continent according to minimum life exp
-fct_reorder(h_gap_dropped$continent, h_gap_dropped$lifeExp, min) %>% 
-  levels() %>% head()
-
+## order the factor continent according to minimum life exp
 h_gap_dropped$continent<-fct_reorder(h_gap_dropped$continent, h_gap_dropped$lifeExp, min)
 
+## let's check if the reorder works
 h_gap_dropped%>%
   group_by(continent)%>%
   summarise(min(lifeExp))%>%
@@ -92,25 +90,49 @@ h_gap_dropped%>%
 
 ```{r}
 gap_asia_2007 <- gapminder %>% filter(year == 2007, continent == "Asia")
-# unarranged, reordered
+# unarranged, reordered data
 ggplot(gap_asia_2007, aes(x = lifeExp, y = country)) + geom_point() +
         labs(title= "Plot of lifeExp of countries in Asian in 2007") 
+```
 
-# arranged
+Arrange the data based on life expectancy.
+```{r}
 gap_asia_2007%>%
-  arrange(country, lifeExp)%>%
+  arrange(lifeExp)%>%
+  kable("html",caption="Data of Asia in 2007(arranged)")%>%
+    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+
+# see if the arrange has effect on plots
+gap_asia_2007%>%
+  arrange(lifeExp)%>%
     ggplot(aes(x = lifeExp, y = country)) + geom_point() +
         labs(title= "Plot of lifeExp of countries(arranged) in Asian in 2007") 
+```
 
-# reordered
-ggplot(gap_asia_2007, aes(x = lifeExp, y = fct_reorder(country, lifeExp, min))) +
-  geom_point() + labs(title= "Plot of lifeExp of countries(reordered) in Asian in 2007") 
-
-
-# first reordered, then arranged
+Reorder the countries based on minimum of life expectancy.
+```{r}
 gap_asia_2007%>%
   mutate(country=fct_reorder(country, lifeExp, min))%>%
-  arrange(country, lifeExp)%>%
+  kable("html",caption="Data of Asia in 2007(reordered)")%>%
+    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+
+# see if the reorder has effect on plots
+ggplot(gap_asia_2007, aes(x = lifeExp, y = fct_reorder(country, lifeExp, min))) +
+  geom_point() + labs(title= "Plot of lifeExp of countries(reordered) in Asian in 2007") 
+```
+
+First reorder the countries based on minimum of life expectancy, then arranged the data based on life expectancy.
+```{r}
+gap_asia_2007%>%
+  mutate(country=fct_reorder(country, lifeExp, min))%>%
+  arrange(lifeExp)%>%
+  kable("html",caption="Data of Asia in 2007(reordered and rearranged)")%>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+
+# see if the reorder and arrange has effect on plots
+gap_asia_2007%>%
+  mutate(country=fct_reorder(country, lifeExp, min))%>%
+  arrange(lifeExp)%>%
     ggplot(aes(x = lifeExp, y = country)) + geom_point() +
         labs(title= "Plot of lifeExp of countries(reordered, arranged) in Asian in 2007") 
 ```
@@ -128,7 +150,7 @@ File I/O
 
 **(1)** Experiment with `write_csv()`/`read_csv()`.
 
-```{r}
+```{r,message=FALSE}
 write_csv(h_gap_dropped, "h_gap_dropped.csv")
 h_gap_dropped_csv<-read_csv("h_gap_dropped.csv")
 
@@ -140,7 +162,7 @@ h_gap_dropped_csv%>%
 
 We can tell that the order of continents changed. We ordered continent according to minimum life expectancy in the previous section. However, after `write_csv()`/`read_csv()`, the levels of the factor continent again become alphabetically ordered.
 
-**(1)** Experiment with `saveRDS()`/`readRDS()`.
+**(2)** Experiment with `saveRDS()`/`readRDS()`.
 ```{r}
 saveRDS(h_gap_dropped, "h_gap_dropped2.csv")
 h_gap_dropped_csv2<-readRDS("h_gap_dropped2.csv")
@@ -180,6 +202,8 @@ p2<- ggplot(gapminder, aes(x = lifeExp, color = continent)) + geom_density() +
           strip.text = element_text(size=14, face="bold"))
 p2
 ```
+I facetted the density plots wrt continents, I changed the color of the plots by changing the color scheme to "Dark2", I also added a title to my plot, and I changed the theme of the plot.
+
 
 **(2)** Juxtapose (using the `multiplot()` function) the first attempt and what I obtained after some time spent working on it. 
 ```{r}
@@ -287,7 +311,7 @@ filter_country_sport%>%
     kable("html",caption="Filtered gapminder with a factor sport added")%>%
     kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
-There is a new factor sport added.
+There is a new factor "sport" added.
 
 **(3)** Take a look at the new added factor.
 
