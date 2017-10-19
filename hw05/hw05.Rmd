@@ -274,7 +274,7 @@ ggsave("myplot2.png",
        device =  "png",width = 5, height = 4)
 
 ggsave("myplot1.png", plot=p1,
-       device =  "png",width = 5, height = 3.5)
+       device =  "png",width = 5, height = 3)
 
 ```
 
