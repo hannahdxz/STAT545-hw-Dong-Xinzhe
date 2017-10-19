@@ -7,7 +7,7 @@ output: github_document
 
 ### Abstract
 
-We are going to explore the gapminder data set, uncluding:
+We are going to explore the gapminder data set, including:
 
 * Reorder a factor using the `forcats` package, and explore its effects on figures 
 * Improve a figure made previously, implement visualization design principles
@@ -116,16 +116,31 @@ gap_asia_2007%>%
         labs(title= "Plot of lifeExp of countries(arranged) in Asian in 2007") 
 ```
 
-**b.** Reorder the countries based on life expectancy, and see if the reorder has effect on plots.
+**b.** Reorder the countries based on life expectancy.
 ```{r}
-ggplot(gap_asia_2007, aes(x = lifeExp, y = fct_reorder(country, lifeExp, min))) +
+fct_reorder(gap_asia_2007$country, gap_asia_2007$lifeExp) %>% 
+  levels() %>% head()
+```
+
+See if the reorder has effect on plots.
+```{r}
+ggplot(gap_asia_2007, aes(x = lifeExp, y = fct_reorder(country, lifeExp))) +
   geom_point() + labs(title= "Plot of lifeExp of countries(reordered) in Asian in 2007") 
 ```
 
-**c.** First reorder the countries based on minimum of life expectancy, then arranged the data based on life expectancy, and see if the reorder and arrange has effect on plots.
+**c.** First reorder the countries based on life expectancy, then arranged the data based on life expectancy.
 ```{r}
 gap_asia_2007%>%
-  mutate(country=fct_reorder(country, lifeExp, min))%>%
+  mutate(country=fct_reorder(country, lifeExp))%>%
+  arrange(lifeExp)%>%
+  kable("html",caption="Data of Asia in 2007(reordered and arranged)")%>%
+    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+See if the reorder and arrange has effect on plots.
+```{r}
+gap_asia_2007%>%
+  mutate(country=fct_reorder(country, lifeExp))%>%
   arrange(lifeExp)%>%
     ggplot(aes(x = lifeExp, y = country)) + geom_point() +
         labs(title= "Plot of lifeExp of countries(reordered, arranged) in Asian in 2007") 
