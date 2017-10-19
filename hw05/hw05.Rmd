@@ -270,7 +270,7 @@ filter_country%>%
   kable("html",caption="Filtered gapminder")%>%
     kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
-
+Now the gapminder dataset is filtered to observations of Canada, China and United States. 
 
 **(2)** Create a new factor `sport`. By mapping the existing country factor levels to the new levels.
 
@@ -287,14 +287,17 @@ filter_country_sport%>%
     kable("html",caption="Filtered gapminder with a factor sport added")%>%
     kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
+There is a new factor `sport` added.
 
 **(3)** Take a look at the new added factor.
 
 ```{r}
 filter_country_sport%>%
-  count(sport)
+  count(sport)%>%
+  kable()
 
 ```
+It is a factor with 3 levels :hockey, table tennis and basketball. Each level has 12 observations.
 
 [*Back to the top*](#abstract)
 
