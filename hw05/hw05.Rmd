@@ -24,7 +24,7 @@ Load data and packages
 
 [*Back to the top*](#abstract)
 
-```{r}
+```{r,echo=FALSE}
 library(gapminder)
 library(tidyverse)
 library(knitr)
@@ -42,12 +42,14 @@ Factor management
 
 [*Back to the top*](#abstract)
 
-Get to know your factor before you start touching it!
+**Gapminder version:**
+
+**(1)** Get to know your factor before you start touching it!
 ```{r}
 fct_count(gapminder$continent)
 ```
 
-Drop all the rows corresponding to "Oceania".
+**(2)** Drop all the rows corresponding to "Oceania".
 ```{r}
 h_gap <- gapminder %>%
   filter(continent != "Oceania")
@@ -57,7 +59,7 @@ nlevels(h_gap$continent)
 ```
 We dropped 24 rows associated with "Oceania". However, the levels of the continent factor itself do not change. "Oceania" is still a level of "continent".
 
-Dropping "Oceania" level.
+**(3)** Dropping "Oceania" level.
 ```{r}
 h_gap_dropped <- h_gap %>% 
   droplevels()
@@ -67,9 +69,7 @@ nlevels(h_gap_dropped$continent)
 Now, we dropped 24 rows associated with "Oceania". Additionally, we also dropped the level "Oceania" of the factor "continent".
 
 
-Change order of the levels
-
-Reorder Gapminder continents by lifeExp
+**(4)** Change order of the levels: reorder Gapminder continents by lifeExp.
 ```{r}
 ## order continent according to minimum life exp
 fct_reorder(h_gap_dropped$continent, h_gap_dropped$lifeExp, min) %>% 
@@ -83,13 +83,12 @@ h_gap_dropped%>%
   kable()
 ```
 
-Common part:
-**While you’re here, practice writing to file and reading back in (see next section).**
 
+**Common part:**
 
-**Characterize the (derived) data before and after your factor re-leveling.**
+**(1)** While you’re here, practice writing to file and reading back in (see next section).
 
-Explore the effects of arrange().
+**(2)** Explore the effects of `arrange()` and `reorder()`.
 
 ```{r}
 gap_asia_2007 <- gapminder %>% filter(year == 2007, continent == "Asia")
@@ -127,6 +126,7 @@ File I/O
 
 [*Back to the top*](#abstract)
 
+**(1)** Experiment with `write_csv()`/`read_csv()`.
 
 ```{r}
 write_csv(h_gap_dropped, "h_gap_dropped.csv")
@@ -140,6 +140,7 @@ h_gap_dropped_csv%>%
 
 We can tell that the order of continents changed. We ordered continent according to minimum life expectancy in the previous section. However, after `write_csv()`/`read_csv()`, the levels of the factor continent again become alphabetically ordered.
 
+**(1)** Experiment with `saveRDS()`/`readRDS()`.
 ```{r}
 saveRDS(h_gap_dropped, "h_gap_dropped2.csv")
 h_gap_dropped_csv2<-readRDS("h_gap_dropped2.csv")
@@ -160,12 +161,14 @@ Visualization design
 [*Back to the top*](#abstract)
 
 
-Remake at least one figure or create a new one, in light of something you learned in the recent class meetings about visualization design and color. Maybe juxtapose your first attempt and what you obtained after some time spent working on it. Reflect on the differences. If using Gapminder, you can use the country or continent color scheme that ships with Gapminder.
+**(1)** Remake one figure I made in my earlier assignment.
 
 ```{r}
 # a plot from my hw02
 p1<- ggplot(gapminder, aes(x = lifeExp, color = continent)) + geom_density()
+p1
 
+# Remake the plot with visualization design and color I learned in the recent class.
 p2<- ggplot(gapminder, aes(x = lifeExp, color = continent)) + geom_density() +
       facet_wrap(~ continent) +
       scale_color_manual(values=brewer.pal(n=5, "Dark2")) +
@@ -175,7 +178,11 @@ p2<- ggplot(gapminder, aes(x = lifeExp, color = continent)) + geom_density() +
   theme(strip.background = element_rect(fill="orange"),
           axis.title = element_text(size=14,face="bold"),
           strip.text = element_text(size=14, face="bold"))
+p2
+```
 
+**(2)** Juxtapose (using the `multiplot()` function) the first attempt and what I obtained after some time spent working on it. 
+```{r}
 # Multiple plot function
 #
 # ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
@@ -224,7 +231,6 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 
 
 multiplot(p1, p2, cols = 1)
-
 ```
 
 Writing figures to file
@@ -232,36 +238,53 @@ Writing figures to file
 
 [*Back to the top*](#abstract)
 
-Use ggsave() to explicitly save a plot to file.
+**(1)** Use ggsave() to explicitly save p2 and p1 to file.
 ```{r}
-ggsave(filename="Density plot of lifeExp on different continents",
-       plot=p2,device =  "png",width = 8, height = 8)
+ggsave("myplot2.png", 
+       device =  "png",width = 8, height = 8)
+
+ggsave("myplot1.png", plot=p1,
+       device =  "png",width = 8, height = 8)
 
 ```
 
-**Note**: Explicit provision of the plot object p is not necessary since p2 is the last plot we have. And thie is the only plot we will save to file.
+**Note**: Explicit provision of the plot object p2 is not necessary since p2 is the last plot displayed. However, it is necessary for p1 because p1 is a plot we made earlier.
 
-Now we try to load the plot we just saved to file.
+**(2)** Now we try to load the plots we just saved to file.
 
-![Density plot of lifeExp on different continents](/Users/hannahdong/Desktop/Stat545/STAT545-hw-Dong-Xinzhe/hw05/Plot\ of\ life\ expectancy\ over\ time\ on\ different\ continents)
+![Plot2](myplot2.png)
+![Plot1](myplot1.png)
+
 
 
 But I want to do more!
 ----------------------
 
-Pick a handful of countries, each of which you can associate with a stereotypical food (or any other non-controversial thing … sport? hobby? type of music, art or dance? animal? landscape feature?). Create an excerpt of the Gapminder data, filtered to just these countries. 
-
-Create a new factor – you pick the name! – by mapping the existing country factor levels to the new levels.
-Examples: Italy –> wine, Germany –> beer, Japan –> sake. (Austria, Germany) –> German, (Mexico, Spain) –> Spanish, (Portugal, Brazil) –> Portuguese. Let your creativity flourish.
+**(1)** Create an excerpt of the Gapminder data, filtered to Canada, China and United States. 
 ```{r}
 filter_country <- filter(gapminder, country%in% c("Canada","China","United States"))
-filter_country
+filter_country%>%
+  kable("html",caption="Filtered gapminder")%>%
+    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
 
-sport <- c("hockey","table tennis","basketball")
+**(2)** Create a new factor `sport`. By mapping the existing country factor levels to the new levels.
+```{r}
+filter_country_sport<-
+filter_country %>%
+  mutate(sport = fct_recode(country,
+    "hockey"    = "Canada",
+    "table tennis"      = "China",
+    "basketball" = "United States"
+  ))
 
-# fct_recode(filter_country$country, sport) %>% levels()
+filter_country_sport%>%
+    kable("html",caption="Filtered gapminder with a factor sport added")%>%
+    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 
-
+# take a look at the new added factor
+filter_country_sport%>%
+  count(sport)
 
 ```
 
