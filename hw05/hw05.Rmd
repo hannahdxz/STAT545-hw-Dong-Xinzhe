@@ -32,6 +32,8 @@ library(kableExtra)
 library(ggplot2)
 library(forcats)
 library(pander)
+library(RColorBrewer)
+
 ```
 
 
@@ -161,19 +163,67 @@ Visualization design
 Remake at least one figure or create a new one, in light of something you learned in the recent class meetings about visualization design and color. Maybe juxtapose your first attempt and what you obtained after some time spent working on it. Reflect on the differences. If using Gapminder, you can use the country or continent color scheme that ships with Gapminder.
 
 ```{r}
+# a plot from my hw02
+p1<- ggplot(gapminder, aes(x = lifeExp, color = continent)) + geom_density()
 
-p1 <- ggplot(data = gapminder) + 
-  geom_point(mapping = aes(x = year, y = lifeExp))
-
-p2 <- ggplot(data = gapminder) + 
-  geom_point(mapping = aes(x = year, y = lifeExp,color=continent)) + 
-  facet_wrap(~ continent, nrow = 2) + 
-        labs(title= "Plot of life expectancy over time on different continents") 
-
-p3 <- p2 + theme_bw() +
+p2<- ggplot(gapminder, aes(x = lifeExp, color = continent)) + geom_density() +
+      facet_wrap(~ continent) +
+      scale_color_manual(values=brewer.pal(n=5, "Dark2")) +
+      labs(title= "Density plot of lifeExp on different continents") +
+  
+  theme_bw() +
   theme(strip.background = element_rect(fill="orange"),
-          axis.title = element_text(size=14),
+          axis.title = element_text(size=14,face="bold"),
           strip.text = element_text(size=14, face="bold"))
+
+# Multiple plot function
+#
+# ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
+# - cols:   Number of columns in layout
+# - layout: A matrix specifying the layout. If present, 'cols' is ignored.
+#
+# If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
+# then plot 1 will go in the upper left, 2 will go in the upper right, and
+# 3 will go all the way across the bottom.
+#
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  require(grid)
+
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+
+
+multiplot(p1, p2, cols = 1)
 
 ```
 
@@ -184,16 +234,16 @@ Writing figures to file
 
 Use ggsave() to explicitly save a plot to file.
 ```{r}
-ggsave(filename="Plot of life expectancy over time on different continents",
-       plot=p3,device =  "png",width = 8, height = 8)
+ggsave(filename="Density plot of lifeExp on different continents",
+       plot=p2,device =  "png",width = 8, height = 8)
 
 ```
 
-**Note**: Explicit provision of the plot object p is not necessary since p3 is the last plot we have. And thie is the only plot we will save to file.
+**Note**: Explicit provision of the plot object p is not necessary since p2 is the last plot we have. And thie is the only plot we will save to file.
 
 Now we try to load the plot we just saved to file.
 
-[Plot of life expectancy over time on different continents](/Users/hannahdong/Desktop/Stat545/STAT545-hw-Dong-Xinzhe/hw05/Plot\ of\ life\ expectancy\ over\ time\ on\ different\ continents)
+![Density plot of lifeExp on different continents](/Users/hannahdong/Desktop/Stat545/STAT545-hw-Dong-Xinzhe/hw05/Plot\ of\ life\ expectancy\ over\ time\ on\ different\ continents)
 
 
 But I want to do more!
