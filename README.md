@@ -16,23 +16,40 @@
 
 ## Contents of homeworks:
 * hw01 : 
+
        * Create a New Repo, and edit README.md as a self introduction
+       
        * Add R Markdown and Markdown for Gapminder exploration
+
 * hw02 :
        * Explore the data, get to know the variables
+       
        * Explore various plot types
+       
        * Use `filter()`, `select()` and `%>%`
+       
 * hw03 :
+
        * Manipulate and explore a dataset with the `dplyr` package
+       
        * Visualizations made with `ggplot2`
+       
 * hw04 :
+
        * Reshape a data frame using `gather()` and `spread()` function from `tidyr`
+       
        * Practice `join()` functions
+       
 * hw05 :
+
        * Reorder a factor using the `forcats` package, and explore its effects on figures 
+       
        * Improve a figure made previously, implement visualization design principles
+       
        * Write some data to file and load it back into R using `write_csv()`/`read_csv()`, and `saveRDS()`/`readRDS()`
+       
        * Writing figures to file using `ggsave()`
+       
        * Organise the github
 
  
