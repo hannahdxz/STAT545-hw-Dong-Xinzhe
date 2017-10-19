@@ -51,15 +51,19 @@ Factor management
 
 **(1)** Get to know the factor before start touching it!
 ```{r}
-fct_count(gapminder$continent)
+fct_count(gapminder$continent)%>%
+  kable()
 ```
-
+The factor "continent" has 5 levels: *Africa*, *Americas*, *Asia*, *Europe* and *Oceania*.
+ 
 **(2)** Drop all the rows corresponding to "Oceania".
 ```{r}
 h_gap <- gapminder %>%
   filter(continent != "Oceania")
 
-fct_count(h_gap$continent)
+fct_count(h_gap$continent)%>%
+  kable()
+
 nlevels(h_gap$continent)
 ```
 We dropped 24 rows associated with "Oceania". However, the levels of the "continent" factor itself do not change. "Oceania" is still a level of "continent".
@@ -68,7 +72,10 @@ We dropped 24 rows associated with "Oceania". However, the levels of the "contin
 ```{r}
 h_gap_dropped <- h_gap %>% 
   droplevels()
-fct_count(h_gap_dropped$continent)
+
+fct_count(h_gap_dropped$continent)%>%
+  kable()
+
 nlevels(h_gap_dropped$continent)
 ```
 Now, we dropped 24 rows associated with "Oceania". Additionally, we also dropped the level "Oceania" of the factor "continent".
@@ -89,7 +96,7 @@ h_gap_dropped%>%
 
 **Common part:**
 
-**(1)** While you’re here, practice writing to file and reading back in (see next section).
+**(1)** Practice writing data to file and reading back in (see next section).
 
 **(2)** Explore the effects of `arrange()` and `reorder()` on plots.
 
@@ -216,7 +223,7 @@ I facetted the density plots wrt continents, I changed the color of the plots by
 
 
 **(2)** Juxtapose (using the `multiplot()` function) the first attempt and what I obtained after some time spent working on it. 
-```{r,fig.height=5,fig.width=12}
+```{r,fig.height=5,fig.width=12,message=FALSE}
 # Multiple plot function
 #
 # ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
@@ -275,7 +282,7 @@ Writing figures to file
 **(1)** Use ggsave() to explicitly save p2 and p1 to file.
 ```{r}
 ggsave("myplot2.png", 
-       device =  "png",width = 5, height = 4)
+       device =  "png",width = 6, height = 4.5)
 
 ggsave("myplot1.png", plot=p1,
        device =  "png",width = 5, height = 3)

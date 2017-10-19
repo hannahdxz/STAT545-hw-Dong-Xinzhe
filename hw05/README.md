@@ -7,7 +7,7 @@ October 12, 2017
 
 **Report of my process:**
 
-* At first I had difficulty load the figure I previously saved to file. They after I added `.png` after the name of the saved plot, it works!
+* At first I had difficulty load the figure I previously saved to file. They after I added `.png` after the name of the saved plot, it worked!
 
 * This tutorial about the [forcats package](https://blog.rstudio.com/2016/08/31/forcats-0-1-0/) is really helpful.
 
