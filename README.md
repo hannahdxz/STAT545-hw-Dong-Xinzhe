@@ -59,3 +59,5 @@
 * A [tutorial](https://cran.r-project.org/web/packages/pander/README.html) about making a table with pander package.
 
 * Jenny's [notes and example](https://github.com/jennybc/lotr-tidy/blob/master/02-gather.md) about the gather() function.
+
+* The tutorial about the [forcats package](https://blog.rstudio.com/2016/08/31/forcats-0-1-0/).
