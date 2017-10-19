@@ -54,6 +54,7 @@ Factor management
 fct_count(gapminder$continent)%>%
   kable()
 ```
+
 The factor "continent" has 5 levels: *Africa*, *Americas*, *Asia*, *Europe* and *Oceania*.
  
 **(2)** Drop all the rows corresponding to "Oceania".
