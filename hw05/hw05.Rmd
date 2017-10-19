@@ -88,7 +88,7 @@ h_gap_dropped%>%
 
 **(1)** While you’re here, practice writing to file and reading back in (see next section).
 
-**(2)** Explore the effects of `arrange()` and `reorder()`.
+**(2)** Explore the effects of `arrange()` and `reorder()` on plots.
 
 ```{r}
 gap_asia_2007 <- gapminder %>% filter(year == 2007, continent == "Asia")
@@ -260,6 +260,9 @@ ggsave("myplot1.png", plot=p1,
 But I want to do more!
 ----------------------
 
+[*Back to the top*](#abstract)
+
+
 **(1)** Create an excerpt of the Gapminder data, filtered to Canada, China and United States. 
 ```{r}
 filter_country <- filter(gapminder, country%in% c("Canada","China","United States"))
@@ -268,7 +271,9 @@ filter_country%>%
     kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
 
+
 **(2)** Create a new factor `sport`. By mapping the existing country factor levels to the new levels.
+
 ```{r}
 filter_country_sport<-
 filter_country %>%
@@ -281,8 +286,11 @@ filter_country %>%
 filter_country_sport%>%
     kable("html",caption="Filtered gapminder with a factor sport added")%>%
     kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
 
-# take a look at the new added factor
+**(3)** Take a look at the new added factor.
+
+```{r}
 filter_country_sport%>%
   count(sport)
 
