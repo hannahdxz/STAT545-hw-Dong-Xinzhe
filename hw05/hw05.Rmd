@@ -7,7 +7,12 @@ output: github_document
 
 ### Abstract
 
-We are going to explore the gapminder data set. We will be practicing data reshaping and join.
+We are going to explore the gapminder data set, uncluding:
+
+* Reorder a factor using the `forcats` package, and explore its effects on figures 
+* Improve a figure made previously, implement visualization design principles
+* Write some data to file and load it back into R using `write_csv()`/`read_csv()`, and `saveRDS()`/`readRDS()`
+* Writing figures to file using `ggsave()`
 
 #### Table of content
 -   [Load data and packages](#load-data-and-packages)
@@ -57,7 +62,7 @@ h_gap <- gapminder %>%
 fct_count(h_gap$continent)
 nlevels(h_gap$continent)
 ```
-We dropped 24 rows associated with "Oceania". However, the levels of the continent factor itself do not change. "Oceania" is still a level of "continent".
+We dropped 24 rows associated with "Oceania". However, the levels of the "continent" factor itself do not change. "Oceania" is still a level of "continent".
 
 **(3)** Dropping "Oceania" level.
 ```{r}
@@ -69,7 +74,7 @@ nlevels(h_gap_dropped$continent)
 Now, we dropped 24 rows associated with "Oceania". Additionally, we also dropped the level "Oceania" of the factor "continent".
 
 
-**(4)** Change order of the levels: reorder Gapminder continents by lifeExp.
+**(4)** Change order of the levels: reorder Gapminder continents by minimum of lifeExp.
 ```{r}
 ## order the factor continent according to minimum life exp
 h_gap_dropped$continent<-fct_reorder(h_gap_dropped$continent, h_gap_dropped$lifeExp, min)
@@ -90,7 +95,7 @@ h_gap_dropped%>%
 
 ```{r}
 gap_asia_2007 <- gapminder %>% filter(year == 2007, continent == "Asia")
-# unarranged, reordered data
+# unarranged, unreordered data
 ggplot(gap_asia_2007, aes(x = lifeExp, y = country)) + geom_point() +
         labs(title= "Plot of lifeExp of countries in Asian in 2007") 
 ```
@@ -111,30 +116,13 @@ gap_asia_2007%>%
         labs(title= "Plot of lifeExp of countries(arranged) in Asian in 2007") 
 ```
 
-**b.** Reorder the countries based on minimum of life expectancy.
-```{r}
-gap_asia_2007%>%
-  mutate(country=fct_reorder(country, lifeExp, min))%>%
-  kable("html",caption="Data of Asia in 2007(reordered)")%>%
-    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
-```
-
-See if the reorder has effect on plots.
+**b.** Reorder the countries based on life expectancy, and see if the reorder has effect on plots.
 ```{r}
 ggplot(gap_asia_2007, aes(x = lifeExp, y = fct_reorder(country, lifeExp, min))) +
   geom_point() + labs(title= "Plot of lifeExp of countries(reordered) in Asian in 2007") 
 ```
 
-**c.** First reorder the countries based on minimum of life expectancy, then arranged the data based on life expectancy.
-```{r}
-gap_asia_2007%>%
-  mutate(country=fct_reorder(country, lifeExp, min))%>%
-  arrange(lifeExp)%>%
-  kable("html",caption="Data of Asia in 2007(reordered and rearranged)")%>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
-```
-
-See if the reorder and arrange has effect on plots.
+**c.** First reorder the countries based on minimum of life expectancy, then arranged the data based on life expectancy, and see if the reorder and arrange has effect on plots.
 ```{r}
 gap_asia_2007%>%
   mutate(country=fct_reorder(country, lifeExp, min))%>%
@@ -196,7 +184,7 @@ Visualization design
 p1<- ggplot(gapminder, aes(x = lifeExp, color = continent)) + geom_density()
 p1
 
-# Remake the plot with visualization design and color I learned in the recent class.
+# Remake the plot with visualization design and color learned in the recent class.
 p2<- ggplot(gapminder, aes(x = lifeExp, color = continent)) + geom_density() +
       facet_wrap(~ continent) +
       scale_color_manual(values=brewer.pal(n=5, "Dark2")) +
@@ -208,6 +196,7 @@ p2<- ggplot(gapminder, aes(x = lifeExp, color = continent)) + geom_density() +
           strip.text = element_text(size=10, face="bold"))
 p2
 ```
+
 I facetted the density plots wrt continents, I changed the color of the plots by changing the color scheme to "Dark2", I also added a title to my plot, and I changed the theme of the plot.
 
 
@@ -302,7 +291,7 @@ filter_country%>%
 ```
 Now the gapminder dataset is filtered to observations of Canada, China and United States. 
 
-**(2)** Create a new factor `sport`. By mapping the existing country factor levels to the new levels.
+**(2)** Create a new factor "sport". By mapping the existing country factor levels to the new levels.
 
 ```{r}
 filter_country_sport<-
@@ -317,7 +306,7 @@ filter_country_sport%>%
     kable("html",caption="Filtered gapminder with a factor sport added")%>%
     kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
-There is a new factor "sport" added.
+There is a new factor "sport" added to the filtered gapminder data.
 
 **(3)** Take a look at the new added factor.
 
@@ -328,7 +317,7 @@ filter_country_sport%>%
 
 ```
 
-It is a factor with 3 levels :hockey, table tennis and basketball. Each level has 12 observations.
+It is a factor with 3 levels :*hockey*, *table tennis* and *basketball*. Each level has 12 observations.
 
 [*Back to the top*](#abstract)
 

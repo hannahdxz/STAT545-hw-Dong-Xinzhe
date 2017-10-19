@@ -23,7 +23,7 @@
 **hw02** :
 
 * Explore the data, get to know the variables
-* Explore various plot types
+* Explore various plot types with `ggplot2`
 * Use `filter()`, `select()` and `%>%`
        
 **hw03** :

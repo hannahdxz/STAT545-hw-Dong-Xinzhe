@@ -13,4 +13,4 @@ October 12, 2017
 
 * I am a little bit confused about what we should do in the *I want to do more* section, I did the task based on my own understanding of the problem.
 
-* I used the funcion `multiplot()` on [this website](http://stat545.com/block020_multiple-plots-on-a-page.html) to render two of my plots together.
+* I used the funcion `multiplot()` from [this website](http://stat545.com/block020_multiple-plots-on-a-page.html) to render two of my plots together.
