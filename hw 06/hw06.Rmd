@@ -25,6 +25,10 @@ Load data and packages
 library(tidyverse)
 library(stringr)
 library(glue)
+library(gapminder)
+library(ggplot2)
+library(MASS)
+
 ```
 
 Character data
@@ -82,6 +86,66 @@ Writing functions
 
 [*Back to the top*](#abstract)
 
+**Summary:** I will write two functions in this section, `le_lin_fit` and `le_r_fit`. The input and output for both functions are summarised as follow:
+
+**Input:** both function take in a data.frame that contains (at least) a lifeExp variable and a variable for year
+
+**Output:** 
+
+* `le_lin_fit`: a list of estimated intercept and slope, with the estimated mspe, from a linear regression of lifeExp on year
+
+* `le_r_fit`: a list of estimated intercept and slope, with the estimated mspe, from a robust regression of lifeExp on year
+
+**(1)** Get a subset of gapminder so that it only contains entries of China. And plot the lifeExp against year.
+```{r}
+j_country <- "China"
+j_dat <- gapminder %>% 
+  filter(country == j_country)
+
+p <- ggplot(j_dat, aes(x = year, y = lifeExp))
+p + geom_point() + geom_smooth(method = "lm", se = FALSE)
+```
+
+**(2)** Split data into a training and a test set.
+```{r}
+set.seed(123456)
+n <- nrow(j_dat)
+ii <- sample(n, floor(n/4))
+dat.te <- j_dat[ ii, ]
+dat.tr <- j_dat[ -ii, ]
+```
+
+**(3)** Fit a linear model to the training set. And calculate the estimated mspe on the test set. 
+```{r}
+le_lin_fit <- function(dat, offset = 1952) {
+  the_fit <- lm(lifeExp ~ I(year - offset), dat)
+  # predict on the test set
+  pr.to <- predict(the_fit, newdata=dat.te)
+  mspe <- with(dat.te, mean((dat.te$lifeExp - pr.to)^2) )
+  return(list(the_fit,"mspe"=mspe))
+}
+le_lin_fit(dat.tr)
+```
+
+**(4)** Fit a robust regression model to the training set. And calculate the estimated mspe on the test set. 
+```{r}
+le_r_fit <- function(dat, offset = 1952) {
+  the_fit <- MASS::rlm(formula = lifeExp ~ I(year - offset), data=dat)
+  # predict on the test set
+  pr.to <- predict(the_fit, newdata=dat.te)
+  mspe <- with(dat.te, mean((dat.te$lifeExp - pr.to)^2) )
+  return(list(the_fit,"mspe"=mspe))
+}
+
+le_r_fit(dat.tr)
+```
 
 
+**Note:**
+
+* The two regression functions return slightly different intercept and slopes.
+
+* The robust regression model returns a smaller estimated mspe, which means it is more robust to the existence of outliers.
+
+* The training set has 9 observations while the test set has 3 observations. Therefore the sample size is relatively small to make some concrete conclusions. However, the major point of this task is to recognize that the robust regression model is less likely to be influenced by extreme values.
 
