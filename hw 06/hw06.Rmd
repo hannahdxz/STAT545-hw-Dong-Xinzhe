@@ -1,0 +1,87 @@
+---
+title: "hw 06"
+author: "Xinzhe Dong"
+date: "November 2, 2017"
+output: github_document
+---
+
+### Abstract
+
+We are going to 
+
+
+#### Table of content
+-   [Load data and packages](#load-data-and-packages)
+-   [Character data](#character-data)
+-   [Writing functions](#writing-functions)
+
+
+Load data and packages
+----------------------
+
+[*Back to the top*](#abstract)
+
+```{r message=FALSE}
+library(tidyverse)
+library(stringr)
+library(glue)
+```
+
+Character data
+--------------
+
+[*Back to the top*](#abstract)
+
+**Exercise 1** Use `str_length()` and `str_sub()` to extract the middle character from a string. If the string has an even number of characters, extract the middle two characters.
+```{r}
+my_string1 <- "statistics"  # a string with an even number of characters
+my_string2 <- "hello"       # a string with an odd number of characters 
+
+# a function string_extract() which takes in a string and return the middle character(s) from a string
+string_extract <- function(x){
+  x_length <- str_length(x)
+  if((x_length %% 2) == 0) {
+  str_sub(x, start=x_length/2, end=x_length/2+1)} 
+  else {
+  str_sub(x, x_length/2+0.5, end=x_length/2+0.5)} 
+}
+
+# let's test our function
+string_extract(my_string1)
+string_extract(my_string2)
+```
+
+
+**Exercise 2** What does `str_trim()` do? What’s the opposite of str_trim()?
+
+```{r}
+# str_trim()
+str_trim("  hello November  ")
+str_trim("  hello November  ", side = "left")
+
+# str_pad()
+str_pad("hello November",width=20,side = "left")
+str_pad("hello November",width=30,side = "both")
+
+```
+
+```{r}
+
+```
+
+**We can tell that:** 
+
+* `str_trim()` trim whitespace from start and end of string.
+
+* The opposite of `str_trim()` is `str_pad()`, it is used to add whitespace. 
+
+
+
+Writing functions
+-----------------
+
+[*Back to the top*](#abstract)
+
+
+
+
