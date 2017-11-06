@@ -7,13 +7,21 @@ output: github_document
 
 ### Abstract
 
-We are going to 
+**We are going to:**
+
+* **Writing functions** Write two functions that do linear regression and robust regression on the Gapminder data, and compare their estimated mspe.
+
+* **Work with a nested data frame** Create a nested data frame and map a linear regression function and a robust regression function over the list column holding the nested data, and
+make some exploration to get information out of the linear models.
+
+* **Character data** Practice two of the exercises from the string chapter. 
 
 
 #### Table of content
 -   [Load data and packages](#load-data-and-packages)
--   [Character data](#character-data)
 -   [Writing functions](#writing-functions)
+-   [Work with a nested data frame](#work-with-a-nested-data-frame)
+-   [Character data](#character-data)
 
 
 Load data and packages
@@ -28,8 +36,332 @@ library(glue)
 library(gapminder)
 library(ggplot2)
 library(MASS)
+library(singer)
+library(ggmap)
+library(broom)
+library(kableExtra)
+library(knitr)
 
 ```
+
+
+Writing functions
+-----------------
+
+[*Back to the top*](#abstract)
+
+I will write two functions in this section, `le_lin_fit` and `le_r_fit`. The input and output for both functions are summarised as follow:
+
+* Input: both function take in a data.frame that contains (at least) a lifeExp variable and a variable for year
+
+* Output:
+
+     * `le_lin_fit`: a list of estimated intercept and slope, with the estimated mspe, from a linear regression of lifeExp on year
+
+     * `le_r_fit`: a list of estimated intercept and slope, with the estimated mspe, from a robust regression of lifeExp on year
+
+**(1)** Get a subset of gapminder so that it only contains entries of China. And plot the lifeExp against year.
+```{r}
+j_country <- "China"
+j_dat <- gapminder %>% 
+  filter(country == j_country)
+
+p <- ggplot(j_dat, aes(x = year, y = lifeExp))
+p + geom_point() + geom_smooth(method = "lm", se = FALSE)
+```
+
+**(2)** Split data into a training and a test set. (so that we can calculate estimated mspe for these two functions)
+```{r}
+set.seed(123456)
+n <- nrow(j_dat)
+ii <- sample(n, floor(n/4))
+dat.te <- j_dat[ ii, ]
+dat.tr <- j_dat[ -ii, ]
+```
+
+**(3)** Fit a linear model to the training set. And calculate the estimated mspe on the test set. 
+```{r}
+le_lin_fit <- function(dat, offset = 1952) {
+  dat$year = dat$year - offset
+  # fit a linear regression model
+  the_fit <- lm(lifeExp ~ year, dat)
+  # predict on the test set
+  dat.te$year = dat.te$year - offset
+  pr.to <- predict(the_fit, newdata=dat.te)
+  # calculate the mspe
+  mspe <- with(dat.te, mean((dat.te$lifeExp - pr.to)^2) )
+  # return the estimates with the mspe
+  return(c("intercept"=the_fit$coefficients[[1]],
+              "slope"=the_fit$coefficients[[2]],"mspe"=mspe))
+}
+kable(le_lin_fit(dat.tr))
+```
+
+**(4)** Fit a robust regression model to the training set. And calculate the estimated mspe on the test set. 
+```{r}
+le_r_fit <- function(dat, offset = 1952) {
+  dat$year = dat$year - offset
+  # fit a robust regression model
+  the_fit <- MASS::rlm(formula = lifeExp ~ year, data=dat)
+  # predict on the test set
+  dat.te$year = dat.te$year - offset
+  pr.to <- predict(the_fit, newdata=dat.te)
+  # calculate the mspe
+  mspe <- with(dat.te, mean((dat.te$lifeExp - pr.to)^2) )
+  # return the estimates with the mspe
+    return(c("intercept"=the_fit$coefficients[[1]],
+              "slope"=the_fit$coefficients[[2]],"mspe"=mspe))
+}
+
+kable(le_r_fit(dat.tr))
+```
+
+
+**Note:**
+
+* The two regression functions return slightly different intercept and slopes.
+
+* The robust regression model returns a smaller estimated mspe, which means it is more robust to the existence of outliers.
+
+* The training set has 9 observations while the test set has 3 observations. Therefore the sample size is relatively small to make some concrete conclusions. However, the major point of this task is to recognize that the robust regression model is less likely to be influenced by extreme values.
+
+
+Work with a nested data frame
+-----------------------------
+
+[*Back to the top*](#abstract)
+
+Create a nested data frame and map a function over the list column holding the nested data. Use list extraction or other functions to pull interesting information out of these results and work your way back to a simple data frame you can visualize and explore.
+
+**(1)** Creat a nested subset of gapminder dataframe. 
+```{r}
+gap_nested <- gapminder %>% 
+  group_by(continent, country) %>% 
+  nest()
+```
+
+**Note: **`nest()` is an extension of `group()` which support more general group-wise computation. The non-grouping variables are packaged into group-specific data frames that are held in a special variable called a list-column.
+
+**(2)** Define a robust regression model of life expectancy against year.
+```{r}
+le_vs_yr <- function(df) {
+  MASS::rlm(lifeExp ~ I(year - 1950), data = df)
+}
+```
+
+**(3)** use `map()` inside `mutate()`, store the model inside gap_nested in another two list-columns.
+```{r}
+(gap_nested <- gap_nested %>% 
+   mutate(fit = map(data, le_vs_yr)))
+```
+
+**(4)** Apply `tidy()` to the model for each country with the same map() inside mutate() strategy as above.
+```{r}
+(gap_nested <- gap_nested %>% 
+  mutate(tidy = map(fit, tidy)))
+```
+**Note:** The function `tidy()`: constructs a data frame that summarizes the model's statistical findings.
+
+**(5)** Simplify, preferably back to a normal tibble using `unnest()`.
+```{r}
+(gap_coefs <- gap_nested %>% 
+   dplyr::select(continent, country, tidy) %>% 
+   unnest(tidy))
+```
+
+**(6)** Recode the variable corresponding to “intercept” vs “slope”.
+```{r}
+(gap_coefs <- gap_coefs %>%
+   mutate(term = recode(term,
+                        `(Intercept)` = "intercept",
+                        `I(year - 1950)` = "slope")))
+``` 
+**Note:** The intercepts here correspond to expected life expectancy in 1950. 
+
+**(7)** Reshape `gap_ests` for numerical summarization and visualization.
+```{r}
+(gap_ests <- gap_coefs %>% 
+   dplyr::select(continent:estimate) %>% 
+   spread(key = term, value = estimate))
+```
+
+**(8)** Numerical and graphical summarization of the intercept and slope.
+```{r}
+gap_ests %>% 
+  dplyr::select(intercept, slope) %>% 
+  summary()%>%
+  kable()
+
+ggplot(gap_coefs, aes(x = estimate)) +
+  geom_density() + geom_rug() + facet_wrap(~ term, scales = "free")
+```
+
+###Challenge: 
+Find countries with interesting stories. - Sudden, substantial departures from the temporal trend is interesting. 
+
+Our work in the previous section shows that robust regression is more resistent to outliers. Therefore, we will repeat the above steps but this time fit a linear regression which could be influenced by extreme values. Then we will compare the slopes to determine which country has substantial departures from the temporal trend.
+
+**(1)** Define a linear regression function
+```{r}
+le_l_yr <- function(df) {
+  lm(lifeExp ~ I(year - 1950), data = df)
+}
+```
+
+**(2)** Repeat the above steps
+```{r}
+gap_nested2 <- gapminder %>% 
+  group_by(continent, country) %>% 
+  nest()
+
+gap_coefs2 <- gap_nested2 %>% 
+  mutate(fit = map(data, le_l_yr),
+         tidy = map(fit, tidy)) %>% 
+  dplyr::select(continent, country, tidy) %>% 
+  unnest(tidy)
+
+gap_coefs2 <- gap_coefs2 %>%
+   mutate(term = recode(term,
+                        `(Intercept)` = "intercept",
+                        `I(year - 1950)` = "slope"))
+
+gap_ests2 <- gap_coefs2 %>% 
+   dplyr::select(continent:estimate) %>% 
+   spread(key = term, value = estimate)
+
+gap_ests2 %>% 
+  dplyr::select(intercept, slope) %>% 
+  summary()%>%
+  kable()
+
+ggplot(gap_coefs2, aes(x = estimate)) +
+  geom_density() + geom_rug() + facet_wrap(~ term, scales = "free")
+```
+
+
+**(3)** Compare the slopes to see which country has substantial departures from the temporal trend. 
+
+I will regard the "difference" between slopes to be "significant" if it is greater than the mean of difference plus 3 times the standard deviation, or it is smaller than the mean of difference minus 3 times the standard deviation
+
+```{r}
+# get the difference between the slopes calculated using two different methods
+diff <- gap_ests$slope - gap_ests2$slope
+# calculate the mean and sd of the differences
+mean_diff <- mean(diff)
+sd_diff <- sd(diff)
+# see which country has significantly different slopes calculated using the two method
+filtered_ro <- filter(gap_ests, diff>(mean_diff+3*sd_diff) | diff<3*(mean_diff-3*sd_diff))
+filtered_li <- filter(gap_ests2, diff>(mean_diff+3*sd_diff) | diff<3*(mean_diff-3*sd_diff))
+
+filtered_full <- full_join(filtered_ro,filtered_li,by = c("country","continent"))
+colnames(filtered_full)[3] <- "intercept_robust"
+colnames(filtered_full)[4] <- "slope_robust"
+colnames(filtered_full)[5] <- "intercept_linear"
+colnames(filtered_full)[6] <- "slope_linear"
+
+kable(filtered_full)  
+
+```
+
+The table shows that Lesotho, Rwanda, South Africa, and Swaziland has significantly different sloped under the two regression methods, which shows that there might be substantial departures from the temporal trend for these countries. 
+
+
+**(4)** Plot the lifeExp against year for the four countries found above. And juxtapose (using the `multiplot()` function) the four plots.
+
+```{r,fig.height=10,fig.width=18,message=FALSE}
+# lifeExp against year for Lesotho
+filter_Lesotho <- gapminder %>% 
+  filter(country == "Lesotho")
+
+p1 <- ggplot(filter_Lesotho, aes(x = year, y = lifeExp))+ 
+  geom_point() + geom_smooth(method = "lm", se = FALSE)+
+      labs(title= "Plot of lifeExp against year for Lesotho")
+
+# lifeExp against year for Rwanda
+filter_Rwanda <- gapminder %>% 
+  filter(country == "Rwanda")
+
+p2 <- ggplot(filter_Rwanda, aes(x = year, y = lifeExp))+
+  geom_point() + geom_smooth(method = "lm", se = FALSE)+
+      labs(title= "Plot of lifeExp against year for Rwanda")
+
+# lifeExp against year for South Africa
+filter_South_Africa <- gapminder %>% 
+  filter(country == "South Africa")
+
+p3 <- ggplot(filter_South_Africa, aes(x = year, y = lifeExp))+
+  geom_point() + geom_smooth(method = "lm", se = FALSE)+
+      labs(title= "Plot of lifeExp against year for South Africa")
+
+# lifeExp against year for Swaziland
+filter_Swaziland <- gapminder %>% 
+  filter(country == "Swaziland")
+
+p4 <- ggplot(filter_Swaziland, aes(x = year, y = lifeExp))+
+  geom_point() + geom_smooth(method = "lm", se = FALSE)+
+      labs(title= "Plot of lifeExp against year for Swaziland")
+
+## Juxtapose (using the `multiplot()` function) the four plots.
+
+# Multiple plot function
+#
+# ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
+# - cols:   Number of columns in layout
+# - layout: A matrix specifying the layout. If present, 'cols' is ignored.
+#
+# If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
+# then plot 1 will go in the upper left, 2 will go in the upper right, and
+# 3 will go all the way across the bottom.
+#
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  require(grid)
+
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+
+
+multiplot(p1, p2, p3, p4, cols = 2)
+
+```
+**From the plot, we can tell that:**
+
+* There is sudden, substantial departures from the temporal trend of the lifeExp for the four countries. 
+
+* Before 1992, the life expectancy for Lesotho, South Africa, and Swaziland are constantly growing. There is sudden drop of life expectancy for these three countries since around 1992, which is likely to be caused by same reason due to the coincidence in the time of occurence.  
+
+* There is obnormal values of lifeExp in Rwanda between 1990 to 2000, which significantly influenced the slope of the linear regression. 
+
+
 
 Character data
 --------------
@@ -69,9 +401,6 @@ str_pad("hello November",width=30,side = "both")
 
 ```
 
-```{r}
-
-```
 
 **We can tell that:** 
 
@@ -79,73 +408,5 @@ str_pad("hello November",width=30,side = "both")
 
 * The opposite of `str_trim()` is `str_pad()`, it is used to add whitespace. 
 
-
-
-Writing functions
------------------
-
 [*Back to the top*](#abstract)
-
-**Summary:** I will write two functions in this section, `le_lin_fit` and `le_r_fit`. The input and output for both functions are summarised as follow:
-
-**Input:** both function take in a data.frame that contains (at least) a lifeExp variable and a variable for year
-
-**Output:** 
-
-* `le_lin_fit`: a list of estimated intercept and slope, with the estimated mspe, from a linear regression of lifeExp on year
-
-* `le_r_fit`: a list of estimated intercept and slope, with the estimated mspe, from a robust regression of lifeExp on year
-
-**(1)** Get a subset of gapminder so that it only contains entries of China. And plot the lifeExp against year.
-```{r}
-j_country <- "China"
-j_dat <- gapminder %>% 
-  filter(country == j_country)
-
-p <- ggplot(j_dat, aes(x = year, y = lifeExp))
-p + geom_point() + geom_smooth(method = "lm", se = FALSE)
-```
-
-**(2)** Split data into a training and a test set.
-```{r}
-set.seed(123456)
-n <- nrow(j_dat)
-ii <- sample(n, floor(n/4))
-dat.te <- j_dat[ ii, ]
-dat.tr <- j_dat[ -ii, ]
-```
-
-**(3)** Fit a linear model to the training set. And calculate the estimated mspe on the test set. 
-```{r}
-le_lin_fit <- function(dat, offset = 1952) {
-  the_fit <- lm(lifeExp ~ I(year - offset), dat)
-  # predict on the test set
-  pr.to <- predict(the_fit, newdata=dat.te)
-  mspe <- with(dat.te, mean((dat.te$lifeExp - pr.to)^2) )
-  return(list(the_fit,"mspe"=mspe))
-}
-le_lin_fit(dat.tr)
-```
-
-**(4)** Fit a robust regression model to the training set. And calculate the estimated mspe on the test set. 
-```{r}
-le_r_fit <- function(dat, offset = 1952) {
-  the_fit <- MASS::rlm(formula = lifeExp ~ I(year - offset), data=dat)
-  # predict on the test set
-  pr.to <- predict(the_fit, newdata=dat.te)
-  mspe <- with(dat.te, mean((dat.te$lifeExp - pr.to)^2) )
-  return(list(the_fit,"mspe"=mspe))
-}
-
-le_r_fit(dat.tr)
-```
-
-
-**Note:**
-
-* The two regression functions return slightly different intercept and slopes.
-
-* The robust regression model returns a smaller estimated mspe, which means it is more robust to the existence of outliers.
-
-* The training set has 9 observations while the test set has 3 observations. Therefore the sample size is relatively small to make some concrete conclusions. However, the major point of this task is to recognize that the robust regression model is less likely to be influenced by extreme values.
 
