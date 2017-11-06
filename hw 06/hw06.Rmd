@@ -52,13 +52,13 @@ Writing functions
 
 I will write two functions in this section, `le_lin_fit` and `le_r_fit`. The input and output for both functions are summarized as follow:
 
-* Input: both function take in a data.frame that contains (at least) a lifeExp variable and a variable for year
+* Input: both functions take in a data.frame that contains (at least) a lifeExp variable and a variable for year
 
 * Output:
 
-     * `le_lin_fit`: a list of estimated intercept and slope, with the estimated mspe, from a linear regression of lifeExp on year
+     * `le_lin_fit`: a list of estimated intercept, slope, and the estimated mean square prediction error (mspe), from a linear regression of lifeExp on year
 
-     * `le_r_fit`: a list of estimated intercept and slope, with the estimated mspe, from a robust regression of lifeExp on year
+     * `le_r_fit`: a list of estimated intercept, slope, and the estimated estimated mean square prediction error (mspe), from a robust regression of lifeExp on year
 
 **(1)** Get a subset of gapminder so that it only contains entries of China. And plot the lifeExp against year.
 ```{r}
@@ -67,7 +67,9 @@ j_dat <- gapminder %>%
   filter(country == j_country)
 
 p <- ggplot(j_dat, aes(x = year, y = lifeExp))
-p + geom_point() + geom_smooth(method = "lm", se = FALSE)
+p + geom_point() + geom_smooth(method = "lm", se = FALSE)+
+        labs(title= "Plot of lifeExp against year for China")
+
 ```
 
 From the plot, we can tell that there are two outliers of lifeExp in year 1952 and 1962. 
@@ -202,7 +204,8 @@ gap_ests %>%
   kable()
 
 ggplot(gap_coefs, aes(x = estimate)) +
-  geom_density() + geom_rug() + facet_wrap(~ term, scales = "free")
+  geom_density() + geom_rug() + facet_wrap(~ term, scales = "free")+
+  labs(title= "Density plot of the estimated intercept and slope(robust regression)")
 ```
 
 ###Challenge: 
@@ -217,7 +220,7 @@ le_l_yr <- function(df) {
 }
 ```
 
-**(2)** Repeat the above steps
+**(2)** Repeat the above steps to get numerical and graphical summarization of the estimated intercept and slope from the linear regression.
 ```{r}
 gap_nested2 <- gapminder %>% 
   group_by(continent, country) %>% 
@@ -244,7 +247,9 @@ gap_ests2 %>%
   kable()
 
 ggplot(gap_coefs2, aes(x = estimate)) +
-  geom_density() + geom_rug() + facet_wrap(~ term, scales = "free")
+  geom_density() + geom_rug() + facet_wrap(~ term, scales = "free")+
+    labs(title= "Density plot of the estimated intercept and slope(linear regression)")
+
 ```
 
 
@@ -472,11 +477,11 @@ str_subset(c("h\\i", "hi"), fixed("\\"))
 
 * Find duplicated strings. `stri_duplicated()`
 
-* Generate random text. `stri_rand_()` functions generate randome text. `stri_rand_lipsum()` generates (pseudo)random lorem ipsum text consisting of a given number of text paragraphs, `stri_rand_strings()` generates random strings of desired lengths, `stri_rand_shuffle()` generates a (pseudo)random permutation of code points in each string.
+* Generate random text. `stri_rand_()` functions generate randome text. `stri_rand_lipsum()` generates (pseudo) random lorem ipsum text consisting of a given number of text paragraphs, `stri_rand_strings()` generates random strings of desired lengths, `stri_rand_shuffle()` generates a (pseudo) random permutation of code points in each string.
 
 **2.** How do you control the language that stri_sort() uses for sorting?
 
-Use the `locale` argument to the `opts_collator` argument.
+`stri_sort` sorts the vector according to a lexicographic order. The `locale` argument in the `opts_collator` argument is used to control the language that `stri_sort()` uses for sorting.
 
 
 [*Back to the top*](#abstract)
