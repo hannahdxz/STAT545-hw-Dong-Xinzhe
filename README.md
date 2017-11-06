@@ -10,6 +10,7 @@
 | [hw03](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw03) Use dplyr to manipulate and explore data (also use ggplot2)| [hw03.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw03/hw03_Rmarkdown.md) |:white_check_mark:|
 | [hw04](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw04) Tidy data and joins|  [hw04.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw04/hw04.md)|:white_check_mark:|
 | [hw05](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw05) Factor and figure management; Repo hygiene| [hw05.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw05/hw05.md)|:white_check_mark:|
+| [hw06](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2006) Data wrangling wrap up| [hw06.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2006/hw06.md)|:white_check_mark:|
 
 
 
@@ -43,7 +44,15 @@
 * Write some data to file and load it back into R using `write_csv()`/`read_csv()`, and `saveRDS()`/`readRDS()`
 * Writing figures to file using `ggsave()`
 
- 
+**hw06** :
+
+* Writing functions. Write two functions that do linear regression and robust regression on the Gapminder data, and compare their estimated mspe.
+
+* Work with a nested data frame. Create a nested data frame using the function `nest()` and map a function over the list column holding the nested data. Get information out of the linear models using the `tidy()` functions. Use the usual `dplyr`, `tidyr`, and `ggplot2` workflows to make explorations.
+
+* Working on two of the exercises from the [String chapter](http://r4ds.had.co.nz/strings.html). 
+
+
 
 
 ## Useful links:

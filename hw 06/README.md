@@ -3,7 +3,7 @@ README
 Xinzhe Dong
 November 2, 2017
 
-**Here is a link to the rendered [homework06](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw06/hw06.md).** :tada:
+**Here is a link to the rendered [homework06](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2006/hw06.md).** :tada:
 
 **Report of my process:**
 
