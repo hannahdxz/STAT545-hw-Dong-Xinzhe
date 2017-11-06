@@ -58,7 +58,7 @@ I will write two functions in this section, `le_lin_fit` and `le_r_fit`. The inp
 
      * `le_lin_fit`: a list of estimated intercept, slope, and the estimated mean square prediction error (mspe), from a linear regression of lifeExp on year
 
-     * `le_r_fit`: a list of estimated intercept, slope, and the estimated estimated mean square prediction error (mspe), from a robust regression of lifeExp on year
+     * `le_r_fit`: a list of estimated intercept, slope, and the estimated mean square prediction error (mspe), from a robust regression of lifeExp on year
 
 **(1)** Get a subset of gapminder so that it only contains entries of China. And plot the lifeExp against year.
 ```{r}
@@ -72,7 +72,7 @@ p + geom_point() + geom_smooth(method = "lm", se = FALSE)+
 
 ```
 
-From the plot, we can tell that there are two outliers of lifeExp in year 1952 and 1962. 
+From the plot, we notice that there are two outliers of lifeExp in year 1952 and 1962. 
 
 
 **(2)** Split data into a training set and a test set. (so that we can calculate estimated mspe for the two functions)
@@ -97,7 +97,8 @@ le_lin_fit <- function(dat, offset = 1952) {
   mspe <- with(dat.te, mean((dat.te$lifeExp - pr.to)^2) )
   # return the intercept, slope and the mspe
   return(c("intercept"=the_fit$coefficients[[1]],
-              "slope"=the_fit$coefficients[[2]],"mspe"=mspe))
+           "slope"=the_fit$coefficients[[2]],
+           "mspe"=mspe))
 }
 le_lin_fit(dat.tr)
 ```
@@ -115,7 +116,8 @@ le_r_fit <- function(dat, offset = 1952) {
   mspe <- with(dat.te, mean((dat.te$lifeExp - pr.to)^2) )
   # return the intercept, slope and the mspe
     return(c("intercept"=the_fit$coefficients[[1]],
-              "slope"=the_fit$coefficients[[2]],"mspe"=mspe))
+              "slope"=the_fit$coefficients[[2]],
+              "mspe"=mspe))
 }
 
 le_r_fit(dat.tr)
@@ -123,6 +125,8 @@ le_r_fit(dat.tr)
 
 
 **Note:**
+
+* The function `rlm()` fit a linear model by robust regression using an M estimator.
 
 * The two regression functions return slightly different intercepts and slopes.
 
@@ -160,7 +164,7 @@ le_vs_yr <- function(df) {
 }
 ```
 
-**(3)** Use `map()` inside `mutate()` to store the model inside `gap_nested` in another two list-columns.
+**(3)** Use `map()` inside `mutate()` to store the model inside `gap_nested` in another list-column.
 ```{r, warning=FALSE}
 (gap_nested <- gap_nested %>% 
    mutate(fit = map(data, le_vs_yr)))
@@ -196,16 +200,16 @@ le_vs_yr <- function(df) {
    spread(key = term, value = estimate))
 ```
 
-**(8)** Numerical and graphical summarization of the intercept and slope.
+**(8)** Numerical and graphical summarization of the estimated intercept and slope.
 ```{r}
 gap_ests %>% 
   dplyr::select(intercept, slope) %>% 
   summary()%>%
-  kable()
+  kable("html", caption="Numerical summary of the estimated intercept and slope (robust regression)")
 
 ggplot(gap_coefs, aes(x = estimate)) +
   geom_density() + geom_rug() + facet_wrap(~ term, scales = "free")+
-  labs(title= "Density plot of the estimated intercept and slope(robust regression)")
+  labs(title= "Density plot of the estimated intercept and slope (robust regression)")
 ```
 
 ###Challenge: 
@@ -244,7 +248,7 @@ gap_ests2 <- gap_coefs2 %>%
 gap_ests2 %>% 
   dplyr::select(intercept, slope) %>% 
   summary()%>%
-  kable()
+  kable("html", caption="Numerical summary of the estimated intercept and slope (linear regression)")
 
 ggplot(gap_coefs2, aes(x = estimate)) +
   geom_density() + geom_rug() + facet_wrap(~ term, scales = "free")+
@@ -275,7 +279,7 @@ setnames(filtered_full, old = colnames(filtered_full[,c(3,4,5,6)]),
          new = c("intercept_robust","slope_robust",
                  "intercept_linear","slope_linear"))
 
-kable(filtered_full)  
+kable(filtered_full,"html",caption = "Countries with significantly different slopes calculated using the two method")  
 
 ```
 

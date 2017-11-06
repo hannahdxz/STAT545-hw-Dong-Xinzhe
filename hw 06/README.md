@@ -11,9 +11,9 @@ November 2, 2017
 
 * I referred to our [course webpage](http://stat545.com/block012_function-regress-lifeexp-on-year.html) when I tried to write linear and robust regression functions. 
 
-* This [Split-Apply-Combine tutorial](http://stat545.com/block024_group-nest-split-map.html) is very helpful, the inspiration of my work in the section "work with a nested dataframe" is from this tutorial.
+* This [Split-Apply-Combine tutorial](http://stat545.com/block024_group-nest-split-map.html) is very helpful, the inspiration of my work in the section "Work with a nested dataframe" is from this tutorial.
 
-* I used the funcion `multiplot()` from [this webpage](http://stat545.com/block020_multiple-plots-on-a-page.html) to render two of my plots together.
+* I used the funcion `multiplot()` from [this webpage](http://stat545.com/block020_multiple-plots-on-a-page.html) to render multiple plots together.
 
 * I tried some of the exercises from the [Strings chapter](http://r4ds.had.co.nz/strings.html). I will return to this and work on more problems from this chapter in the future. 
 
