@@ -14,7 +14,7 @@ In this homework, we are going to:
 * Create a nested data frame and map a linear regression function and a robust regression function over the list column holding the nested data, and
 make some exploration to get information out of the linear models.
 
-* Practice two of the exercises from the Strings chapter. 
+* Practice some of the exercises from the Strings chapter. 
 
 
 #### Table of content
@@ -368,7 +368,33 @@ Character data
 
 [*Back to the top*](#abstract)
 
-**Exercise 1** Use `str_length()` and `str_sub()` to extract the middle character from a string. If the string has an even number of characters, extract the middle two characters.
+**14.2.5 Exercises**
+
+**(1)** In code that doesn’t use `stringr`, you’ll often see `paste()` and `paste0()`. What’s the difference between the two functions? What stringr function are they equivalent to? How do the functions differ in their handling of NA?
+```{r}
+paste("hello", "world")
+paste0("hello", "world")
+str_c("hello", "world")
+
+```
+
+The function `paste` seperates strings by spaces by default, while `paste0` does not seperate strings with spaces by default. Since `str_c` does not seperate strings with spaces by default it is closer in behabior to `paste0`.
+
+
+```{r}
+str_c("hello", NA)
+paste("hello", NA)
+paste0("hello", NA)
+```
+
+`str_c` and the `paste` functions handle NA differently. The function `str_c` returns NA if any of its argument is NA. However, the `paste` functions treat NA as the string "NA".
+
+**(2)** In your own words, describe the difference between the `sep` and `collapse` arguments to `str_c()`.
+
+The sep argument is the string used to insert between arguments, while collapse is the string used to seperate the elements of the combined single string.
+
+
+**(3)** Use `str_length()` and `str_sub()` to extract the middle character from a string. If the string has an even number of characters, extract the middle two characters.
 ```{r}
 my_string1 <- "statistics"  # a string with an even number of characters
 my_string2 <- "hello"       # a string with an odd number of characters 
@@ -387,8 +413,12 @@ string_extract(my_string1)
 string_extract(my_string2)
 ```
 
+**(4)** What does str_wrap() do? When might you want to use it?
 
-**Exercise 2** What does `str_trim()` do? What’s the opposite of str_trim()?
+The function `str_wrap` wraps text so that it fits within a certain width. This is useful for wrapping long strings into nicely formatted paragraphs.
+
+
+**(5)** What does `str_trim()` do? What’s the opposite of str_trim()?
 
 ```{r}
 # str_trim()
@@ -401,12 +431,31 @@ str_pad("hello November",width=30,side = "both")
 
 ```
 
-
-**We can tell that:** 
-
 * `str_trim()` trim whitespace from start and end of string.
 
 * The opposite of `str_trim()` is `str_pad()`, it is used to add whitespace. 
+
+**(6)** Write a function that turns (e.g.) a vector `c("a", "b", "c")` into the string `a, b, and c`. Think carefully about what it should do if given a vector of length 0, 1, or 2.
+
+```{r}
+str_combine <- function(x) {
+  if (length(x) < 2)  {
+    x
+  }
+  else 
+    {str_c(str_c(x[-length(x)], collapse = ", "),
+                x[length(x)],
+                sep = ", and ")}
+}
+
+str_combine("") 
+str_combine("a") 
+str_combine(c("a", "b"))
+str_combine(c("a", "b", "c"))
+```
+
+
+
 
 [*Back to the top*](#abstract)
 

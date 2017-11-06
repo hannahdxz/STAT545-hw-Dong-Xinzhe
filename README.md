@@ -50,7 +50,7 @@
 
 * Work with a nested data frame. Create a nested data frame using the function `nest()` and map a function over the list column holding the nested data. Get information out of the linear models using the `tidy()` functions. Use the usual `dplyr`, `tidyr`, and `ggplot2` workflows to make explorations.
 
-* Working on two of the exercises from the [String chapter](http://r4ds.had.co.nz/strings.html). 
+* Working on some of the exercises from the [String chapter](http://r4ds.had.co.nz/strings.html). 
 
 
 
