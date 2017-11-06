@@ -15,5 +15,5 @@ November 2, 2017
 
 * I used the funcion `multiplot()` from [this webpage](http://stat545.com/block020_multiple-plots-on-a-page.html) to render two of my plots together.
 
-* I tried some of the exercises from the [String chapter](http://r4ds.had.co.nz/strings.html). I will return to this and work on more problems from this chapter in the future. 
+* I tried some of the exercises from the [Strings chapter](http://r4ds.had.co.nz/strings.html). I will return to this and work on more problems from this chapter in the future. 
 
