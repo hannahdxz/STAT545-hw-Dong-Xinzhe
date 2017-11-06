@@ -7,14 +7,14 @@ output: github_document
 
 ### Abstract
 
-**We are going to:**
+In this homework, we are going to:
 
-* **Writing functions** Write two functions that do linear regression and robust regression on the Gapminder data, and compare their estimated mspe.
+* Write two functions that do linear regression and robust regression on the Gapminder data, and compare their estimated mspe.
 
-* **Work with a nested data frame** Create a nested data frame and map a linear regression function and a robust regression function over the list column holding the nested data, and
+* Create a nested data frame and map a linear regression function and a robust regression function over the list column holding the nested data, and
 make some exploration to get information out of the linear models.
 
-* **Character data** Practice two of the exercises from the string chapter. 
+* Practice two of the exercises from the Strings chapter. 
 
 
 #### Table of content
