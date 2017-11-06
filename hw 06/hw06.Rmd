@@ -41,6 +41,7 @@ library(ggmap)
 library(broom)
 library(kableExtra)
 library(knitr)
+library(data.table)
 
 ```
 
@@ -252,18 +253,17 @@ sd_diff <- sd(diff)
 # see which country has significantly different slopes calculated using the two method
 filtered_ro <- filter(gap_ests, diff>(mean_diff+3*sd_diff) | diff<3*(mean_diff-3*sd_diff))
 filtered_li <- filter(gap_ests2, diff>(mean_diff+3*sd_diff) | diff<3*(mean_diff-3*sd_diff))
-
+# join the dataframes together to compare the slopes and intercepts
 filtered_full <- full_join(filtered_ro,filtered_li,by = c("country","continent"))
-colnames(filtered_full)[3] <- "intercept_robust"
-colnames(filtered_full)[4] <- "slope_robust"
-colnames(filtered_full)[5] <- "intercept_linear"
-colnames(filtered_full)[6] <- "slope_linear"
+setnames(filtered_full, old = colnames(filtered_full[,c(3,4,5,6)]), 
+         new = c("intercept_robust","slope_robust",
+                 "intercept_linear","slope_linear"))
 
 kable(filtered_full)  
 
 ```
 
-The table shows that Lesotho, Rwanda, South Africa, and Swaziland has significantly different sloped under the two regression methods, which shows that there might be substantial departures from the temporal trend for these countries. 
+The table shows that Lesotho, Rwanda, South Africa, and Swaziland has significantly different slopes under the two regression methods, which shows that there might be substantial departures from the temporal trend for these countries. 
 
 
 **(4)** Plot the lifeExp against year for the four countries found above. And juxtapose (using the `multiplot()` function) the four plots.
