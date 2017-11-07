@@ -46,7 +46,7 @@
 
 **hw06** :
 
-* Writing functions. Write two functions that do linear regression and robust regression on the Gapminder data, and compare their estimated mspe.
+* Writing functions. Write two functions that do linear regression and robust regression on the Gapminder data, and compare their estimated mean square prediction error (mspe).
 
 * Work with a nested data frame. Create a nested data frame using the function `nest()` and map a function over the list column holding the nested data. Get information out of the linear models using the `tidy()` functions. Use the usual `dplyr`, `tidyr`, and `ggplot2` workflows to make explorations.
 

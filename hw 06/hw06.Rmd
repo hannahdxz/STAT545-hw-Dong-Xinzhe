@@ -56,9 +56,9 @@ I will write two functions in this section, `le_lin_fit` and `le_r_fit`. The inp
 
 * Output:
 
-     * `le_lin_fit`: a list of estimated intercept, slope, and the estimated mean square prediction error (mspe), from a linear regression of lifeExp on year
+     * `le_lin_fit`: a list of estimated intercept, slope, and the mean square prediction error (mspe), from a linear regression of lifeExp on year
 
-     * `le_r_fit`: a list of estimated intercept, slope, and the estimated mean square prediction error (mspe), from a robust regression of lifeExp on year
+     * `le_r_fit`: a list of estimated intercept, slope, and the mean square prediction error (mspe), from a robust regression of lifeExp on year
 
 **(1)** Get a subset of gapminder so that it only contains entries of China. And plot the lifeExp against year.
 ```{r}
@@ -72,7 +72,7 @@ p + geom_point() + geom_smooth(method = "lm", se = FALSE)+
 
 ```
 
-From the plot, we notice that there are two outliers of lifeExp in year 1952 and 1962. 
+From the plot, we notice that there is an outlier of lifeExp in year 1962. 
 
 
 **(2)** Split data into a training set and a test set. (so that we can calculate estimated mspe for the two functions)
@@ -132,7 +132,7 @@ le_r_fit(dat.tr)
 
 * The robust regression model returns a smaller estimated mspe, which means it is more resistent to the existence of outliers. 
 
-* The training set has 9 observations while the test set has 3 observations. Therefore the sample size is relatively small to make concrete conclusions. However, the major point of this task is to recognize that the robust regression model is less likely to be influenced by extreme values.
+* The training set has 9 observations while the test set has 3 observations. Therefore the sample size is relatively small to make concrete conclusions. However, the main purpose of this task is to recognize that the robust regression model is less likely to be influenced by extreme values.
 
 
 Work with a nested data frame
@@ -206,6 +206,8 @@ gap_ests %>%
   dplyr::select(intercept, slope) %>% 
   summary()%>%
   kable("html", caption="Numerical summary of the estimated intercept and slope (robust regression)")
+
+
 
 ggplot(gap_coefs, aes(x = estimate)) +
   geom_density() + geom_rug() + facet_wrap(~ term, scales = "free")+
