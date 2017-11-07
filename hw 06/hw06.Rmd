@@ -294,8 +294,8 @@ kable(filtered_full,"html",caption = "Countries with significantly different slo
 The table shows that Lesotho, Rwanda, South Africa, and Swaziland has significantly different slopes under the two regression methods, which shows that there might be substantial departures from the temporal trend for these countries. 
 
 
-**(4)** Plot the lifeExp against year for the four countries found above. Juxtapose the four plots using the `multiplot()` function.
 
+**(4)** Plot the lifeExp against year for the four countries found above. Juxtapose the four plots using the `multiplot()` function.
 ```{r,fig.height=10,fig.width=18,message=FALSE}
 # lifeExp against year for Lesotho
 filter_Lesotho <- gapminder %>% 
