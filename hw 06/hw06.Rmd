@@ -253,7 +253,11 @@ gap_ests2 %>%
   dplyr::select(intercept, slope) %>% 
   summary()%>%
   kable("html", caption="Numerical summary of the estimated intercept and slope (linear regression)")
+```
 
+
+Graphical summarization of the estimated intercept and slope.
+```{r}
 ggplot(gap_coefs2, aes(x = estimate)) +
   geom_density() + geom_rug() + facet_wrap(~ term, scales = "free")+
     labs(title= "Density plot of the estimated intercept and slope(linear regression)")
