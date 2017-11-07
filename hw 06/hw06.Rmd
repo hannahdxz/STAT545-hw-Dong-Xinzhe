@@ -200,15 +200,17 @@ le_vs_yr <- function(df) {
    spread(key = term, value = estimate))
 ```
 
-**(8)** Numerical and graphical summarization of the estimated intercept and slope.
+**(8)** Numerical summarization of the estimated intercept and slope.
 ```{r}
 gap_ests %>% 
   dplyr::select(intercept, slope) %>% 
   summary()%>%
   kable("html", caption="Numerical summary of the estimated intercept and slope (robust regression)")
+```
 
 
-
+Graphical summarization of the estimated intercept and slope.
+```{r}
 ggplot(gap_coefs, aes(x = estimate)) +
   geom_density() + geom_rug() + facet_wrap(~ term, scales = "free")+
   labs(title= "Density plot of the estimated intercept and slope (robust regression)")
