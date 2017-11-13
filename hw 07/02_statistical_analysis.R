@@ -83,28 +83,32 @@ country_large_se <- list(country_africa,country_asia,country_america,country_eur
 p_africa <- gapminder%>%
   filter(country %in% c("Zimbabwe", "Swaziland","Rwanda","Botswana"))%>%
   ggplot(aes(x = year, y=lifeExp)) + geom_point() + geom_smooth(se=FALSE, method="lm") +
-  facet_wrap(~ country)
+  facet_wrap(~ country) + 
+	labs(title="scatterplots of lifeExp vs. year for 4 countries with large sd in Africa")
 ggsave("countries_in_Africa_with_large_se.png", p_africa)
 
 # for Asia
 p_asia <- gapminder%>%
   filter(country %in% c("Cambodia", "Iraq","Korea, Dem. Rep.","China"))%>%
   ggplot(aes(x = year, y=lifeExp)) + geom_point() + geom_smooth(se=FALSE, method="lm") +
-  facet_wrap(~ country)
+  facet_wrap(~ country) + 
+	labs(title="scatterplots of lifeExp vs. year for 4 countries with large sd in Asia")
 ggsave("countries_in_Asia_with_large_se.png", p_asia)
 
 # for Americas
 p_americas <- gapminder%>%
   filter(country %in% c("Jamaica", "El Salvador","Cuba","Trinidad and Tobago"))%>%
   ggplot(aes(x = year, y=lifeExp)) + geom_point() + geom_smooth(se=FALSE, method="lm") +
-  facet_wrap(~ country)
+  facet_wrap(~ country) + 
+	labs(title="scatterplots of lifeExp vs. year for 4 countries with large sd in Americas")
 ggsave("countries_in_Americas_with_large_se.png", p_americas)
 
 # for Europe
 p_europe <- gapminder%>%
   filter(country %in% c("Montenegro", "Bulgaria","Bosnia and Herzegovina","Albania"))%>%
   ggplot(aes(x = year, y=lifeExp)) + geom_point() + geom_smooth(se=FALSE, method="lm") +
-  facet_wrap(~ country)
+  facet_wrap(~ country) + 
+	labs(title="scatterplots of lifeExp vs. year for 4 countries with large sd in Europe")
 ggsave("countries_in_europe_with_large_se.png", p_europe)
 
 

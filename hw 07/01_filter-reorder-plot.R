@@ -8,11 +8,13 @@ gapminder <- read.delim("gapminder.tsv")
 ## make some plots
 
 # a boxplot of lifeExp and continents
-p1 <- ggplot(gapminder, aes(x = continent, y = lifeExp, color=continent)) + geom_boxplot()
+p1 <- ggplot(gapminder, aes(x = continent, y = lifeExp, color=continent)) + geom_boxplot() +
+	labs(title="a boxplot of lifeExp and continents")
 ggsave("boxplot_of_lifeExp_and_continents.png", p1)
 
 # a scatterplot of lifeExp vs. year
-p2 <- ggplot(gapminder, aes(x=year, y=lifeExp)) + geom_point(aes(color=continent),alpha=0.5)
+p2 <- ggplot(gapminder, aes(x=year, y=lifeExp)) + geom_point(aes(color=continent),alpha=0.5) +
+	labs(title="a scatterplot of lifeExp vs. year")
 ggsave("scatterplot_of_lifeExp_vs._year.png", p2)
 
 ## reorder Gapminder continents by minimum of lifeExp.

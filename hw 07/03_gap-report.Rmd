@@ -3,23 +3,172 @@ title: "03_gap-report"
 author: "Xinzhe Dong"
 date: "November 12, 2017"
 output: 
-  html_document: 
-    keep_md: yes
+  github_document
 ---
 
-This is an R Markdown document. In this example, its purpose is to allow us to demonstrate how to use `rmarkdown::render()` without the help of RStudio's buttons. We will, in fact, call `rmarkdown::render()` from within a `Makefile`.
+This is an R Markdown document. It is a combination of the Rscripts in `00_download-data.R`, `01_filter-reorder-plot.R`, `02_statistical_analysis.R`,`03_gap-report.Rmd`. 
 
-```{r}
-library(ggplot2)
-library(dplyr)
+I will demonstrate how to use `rmarkdown::render()` without the help of RStudio's buttons. We will, in fact, call `rmarkdown::render()` from within a `Makefile`.
+
+### Download the required packages
+```{r message=FALSE}
 library(forcats)
+library(ggplot2)
+library(plyr)
+library(dplyr)
+library(broom)
+library(tidyverse)
+library(kableExtra)
+library(knitr)
+library(MASS)
 
-# bring the data in as data frame
-gapminder <- read.delim("gapminder_reorder.tsv")
+```
 
-## make some plots
+### 00_download-data.R
+```{r}
+download.file("https://raw.githubusercontent.com/jennybc/gapminder/master/inst/extdata/gapminder.tsv", destfile="gapminder.tsv")
+ 
+```
 
+### 01_filter-reorder-plot.R
+
+**1.** bring the data in as data frame
+```{r}
+gapminder <- read.delim("gapminder.tsv")
+```
+
+**2.** make some plots
+```{r}
 # a boxplot of lifeExp and continents
 p1 <- ggplot(gapminder, aes(x = continent, y = lifeExp, color=continent)) + geom_boxplot()
-ggsave("boxplot_of_lifeExp_and_continents.png", p1)
+# ggsave("boxplot_of_lifeExp_and_continents.png", p1)
+p1
+
+# a scatterplot of lifeExp vs. year
+p2 <- ggplot(gapminder, aes(x=year, y=lifeExp)) + geom_point(aes(color=continent),alpha=0.5)
+# ggsave("scatterplot_of_lifeExp_vs._year.png", p2)
+p2
 ```
+
+**3.** reorder Gapminder continents by minimum of lifeExp.
+```{r}
+new_continent<-fct_reorder(gapminder$continent, gapminder$lifeExp, min)
+
+## implement the new continent ordering, 
+## order the data frame by year, then by life expectancy,
+## rearrange the variables so that year comes first, followed by life expectancy,
+## drop least frequent continents
+gapminder <- gapminder%>%
+  mutate(continent = new_continent)%>%
+  arrange(year, lifeExp) %>% 
+  dplyr::select(year, lifeExp, everything())%>%
+  filter(continent != "Oceania")%>%
+  droplevels()
+```
+
+### 02_statistical_analysis.R
+
+**1.** Use the data created in the first script, make sure the new continent order is still in force.
+```{r}
+gapminder%>%
+  group_by(continent)%>%
+  summarise(min(lifeExp))
+```
+
+**2.** Fit a linear regression of life expectancy on year within each country. Write the estimated intercepts, slopes, and residual error variance (or sd) to file. 
+```{r}
+le_l_yr <- function(df) {
+  lm(lifeExp ~ I(year - 1950), data = df)
+}
+
+gap_nested2 <- gapminder %>% 
+  group_by(continent, country) %>% 
+  nest()
+
+gap_coefs2 <- gap_nested2 %>% 
+  mutate(fit = map(data, le_l_yr),
+         tidy = map(fit, tidy)) %>% 
+  dplyr::select(continent, country, tidy) %>% 
+  unnest(tidy)
+
+gap_coefs2 <- gap_coefs2 %>%
+  mutate(term = recode(term,
+                       `(Intercept)` = "intercept",
+                       `I(year - 1950)` = "slope"))
+
+gap_ests2 <- gap_coefs2 %>% 
+  dplyr::select(continent:std.error) %>% 
+  spread(key = term, value = estimate)
+
+gap_ests2
+```
+
+
+**3.** Find the 3 or 4 “worst” and “best” countries for each continent.
+I will choose 4 countries in each continent with the largest std.error as the "worst" 
+countries. Since large residual std.error indicates that the linear model fit the data poorly.
+```{r}
+large_sd_africa <- gap_ests2%>%
+  filter(continent=="Africa")%>%
+  arrange(desc(std.error))
+
+country_africa <- head(large_sd_africa,4)[,c("continent","country","std.error")]
+
+
+large_sd_asia <- gap_ests2%>%
+  filter(continent=="Asia")%>%
+  arrange(desc(std.error))
+country_asia <- head(large_sd_asia,4)[,c("continent","country","std.error")]
+
+  
+large_sd_america <- gap_ests2%>%
+  filter(continent=="Americas")%>%
+  arrange(desc(std.error))
+country_america <- head(large_sd_america,4)[,c("continent","country","std.error")]
+
+
+large_sd_europe <- gap_ests2%>%
+  filter(continent=="Europe")%>%
+  arrange(desc(std.error))
+country_europe <- head(large_sd_europe,4)[,c("continent","country","std.error")]
+
+
+country_large_se <- list(country_africa,country_asia,country_america,country_europe) %>%
+  Reduce(function(dtf1,dtf2) full_join(dtf1,dtf2,by = c("continent", "country", "std.error")), .)
+
+country_large_se%>%
+	knitr::kable()
+```
+
+
+**4.** Create a figure for each continent, and write one file per continent, with an informative name. The figure should give scatterplots of life expectancy vs. year for the 4 countries for each continent above, faceting on country, fitted line overlaid.
+```{r}
+# for Africa
+p_africa <- gapminder%>%
+  filter(country %in% c("Zimbabwe", "Swaziland","Rwanda","Botswana"))%>%
+  ggplot(aes(x = year, y=lifeExp)) + geom_point() + geom_smooth(se=FALSE, method="lm") +
+  facet_wrap(~ country)
+p_africa
+
+# for Asia
+p_asia <- gapminder%>%
+  filter(country %in% c("Cambodia", "Iraq","Korea, Dem. Rep.","China"))%>%
+  ggplot(aes(x = year, y=lifeExp)) + geom_point() + geom_smooth(se=FALSE, method="lm") +
+  facet_wrap(~ country)
+p_asia
+
+# for Americas
+p_americas <- gapminder%>%
+  filter(country %in% c("Jamaica", "El Salvador","Cuba","Trinidad and Tobago"))%>%
+  ggplot(aes(x = year, y=lifeExp)) + geom_point() + geom_smooth(se=FALSE, method="lm") +
+  facet_wrap(~ country)
+p_americas
+
+# for Europe
+p_europe <- gapminder%>%
+  filter(country %in% c("Montenegro", "Bulgaria","Bosnia and Herzegovina","Albania"))%>%
+  ggplot(aes(x = year, y=lifeExp)) + geom_point() + geom_smooth(se=FALSE, method="lm") +
+  facet_wrap(~ country)
+p_europe
+```
+

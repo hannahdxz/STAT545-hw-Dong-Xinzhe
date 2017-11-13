@@ -18,5 +18,5 @@ estimated_intercepts_slopes_and_sd.tsv: gapminder_reorder.tsv 02_statistical_ana
 	Rscript 02_statistical_analysis.R
 	rm Rplots.pdf
 	
-03_gap-report.html: 03_gap-report.Rmd gapminder_reorder.tsv boxplot_of_lifeExp_and_continents.png
+03_gap-report.html: 03_gap-report.Rmd gapminder.tsv gapminder_reorder.tsv
 	Rscript -e "rmarkdown::render('03_gap-report.Rmd')"
