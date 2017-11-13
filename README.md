@@ -11,6 +11,7 @@
 | [hw04](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw04) Tidy data and joins|  [hw04.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw04/hw04.md)|:white_check_mark:|
 | [hw05](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw05) Factor and figure management; Repo hygiene| [hw05.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw05/hw05.md)|:white_check_mark:|
 | [hw06](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2006) Data wrangling wrap up| [hw06.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2006/hw06.md)|:white_check_mark:|
+| [hw07](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2007) Automating Data-analysis Pipelines| [hw07.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2007/03_gap-report.md)|:white_check_mark:|
 
 
 
@@ -52,7 +53,13 @@
 
 * Working on some of the exercises from the [Strings chapter](http://r4ds.had.co.nz/strings.html). 
 
+**hw07** :
 
+* Write three Rscripts and one Rmarkdown to carry out a small data analysis.
+
+* Build an automated data analysis pipeline. 
+
+* Automate the pipeline using two methods: the master R script `Makefile.R` and `Makefile`.
 
 
 ## Useful links:

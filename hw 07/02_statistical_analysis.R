@@ -5,7 +5,7 @@ library(broom)
 library(tidyverse)
 
 # import the data created in the first script
-gapminder <- read.delim("gapminder_reorder.tsv")
+gapminder <- readRDS("gapminder_reorder.tsv")
 
 ## make sure the new continent order is still in force
 gapminder%>%

@@ -32,5 +32,4 @@ gapminder <- gapminder%>%
   droplevels()
 
 ## write data to file
-write.table(gapminder, "gapminder_reorder.tsv", quote = FALSE,
-            sep = "\t", row.names = FALSE)
+saveRDS(gapminder, "gapminder_reorder.tsv")
