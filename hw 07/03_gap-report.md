@@ -3,7 +3,7 @@
 Xinzhe Dong
 November 12, 2017
 
-This is an R Markdown document. It is a combination of the Rscripts in `00_download-data.R`, `01_filter-reorder-plot.R`, `02_statistical_analysis.R`,`03_gap-report.Rmd`.
+This is an R Markdown document. It is a combination of the Rscripts in `00_download-data.R`, `01_filter-reorder-plot.R`, and `02_statistical_analysis.R`.
 
 I will demonstrate how to use `rmarkdown::render()` without the help of RStudio's buttons. We will, in fact, call `rmarkdown::render()` from within a `Makefile`.
 
@@ -39,7 +39,8 @@ gapminder <- read.delim("gapminder.tsv")
 
 ``` r
 # a boxplot of lifeExp and continents
-p1 <- ggplot(gapminder, aes(x = continent, y = lifeExp, color=continent)) + geom_boxplot()
+p1 <- ggplot(gapminder, aes(x = continent, y = lifeExp, color=continent)) + geom_boxplot() +
+    labs(title="a boxplot of lifeExp and continents")
 # ggsave("boxplot_of_lifeExp_and_continents.png", p1)
 p1
 ```
@@ -48,7 +49,8 @@ p1
 
 ``` r
 # a scatterplot of lifeExp vs. year
-p2 <- ggplot(gapminder, aes(x=year, y=lifeExp)) + geom_point(aes(color=continent),alpha=0.5)
+p2 <- ggplot(gapminder, aes(x=year, y=lifeExp)) + geom_point(aes(color=continent),alpha=0.5) +
+    labs(title="a scatterplot of lifeExp vs. year")
 # ggsave("scatterplot_of_lifeExp_vs._year.png", p2)
 p2
 ```
@@ -90,7 +92,7 @@ gapminder%>%
     ## 3  Americas         37.579
     ## 4    Europe         43.585
 
-**2.** Fit a linear regression of life expectancy on year within each country. Write the estimated intercepts, slopes, and residual error variance (or sd) to file.
+**2.** Fit a linear regression of life expectancy on year within each country.
 
 ``` r
 le_l_yr <- function(df) {
@@ -195,7 +197,8 @@ country_large_se%>%
 p_africa <- gapminder%>%
   filter(country %in% c("Zimbabwe", "Swaziland","Rwanda","Botswana"))%>%
   ggplot(aes(x = year, y=lifeExp)) + geom_point() + geom_smooth(se=FALSE, method="lm") +
-  facet_wrap(~ country)
+  facet_wrap(~ country) + 
+    labs(title="scatterplots of lifeExp vs. year for 4 countries with large sd in Africa")
 p_africa
 ```
 
@@ -206,7 +209,8 @@ p_africa
 p_asia <- gapminder%>%
   filter(country %in% c("Cambodia", "Iraq","Korea, Dem. Rep.","China"))%>%
   ggplot(aes(x = year, y=lifeExp)) + geom_point() + geom_smooth(se=FALSE, method="lm") +
-  facet_wrap(~ country)
+  facet_wrap(~ country) + 
+    labs(title="scatterplots of lifeExp vs. year for 4 countries with large sd in Asia")
 p_asia
 ```
 
@@ -217,7 +221,8 @@ p_asia
 p_americas <- gapminder%>%
   filter(country %in% c("Jamaica", "El Salvador","Cuba","Trinidad and Tobago"))%>%
   ggplot(aes(x = year, y=lifeExp)) + geom_point() + geom_smooth(se=FALSE, method="lm") +
-  facet_wrap(~ country)
+  facet_wrap(~ country) + 
+    labs(title="scatterplots of lifeExp vs. year for 4 countries with large sd in Americas")
 p_americas
 ```
 
@@ -228,7 +233,8 @@ p_americas
 p_europe <- gapminder%>%
   filter(country %in% c("Montenegro", "Bulgaria","Bosnia and Herzegovina","Albania"))%>%
   ggplot(aes(x = year, y=lifeExp)) + geom_point() + geom_smooth(se=FALSE, method="lm") +
-  facet_wrap(~ country)
+  facet_wrap(~ country) + 
+    labs(title="scatterplots of lifeExp vs. year for 4 countries with large sd in Europe")
 p_europe
 ```
 

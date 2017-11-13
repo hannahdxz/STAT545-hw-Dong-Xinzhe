@@ -13,8 +13,7 @@ gapminder%>%
   summarise(min(lifeExp))
 
 ## Fit a linear regression of life expectancy on year within each country. 
-## Write the estimated intercepts, slopes, and residual error variance (or sd) to file. 
-## The R package broom may be useful here.
+## Write the estimated intercepts, slopes, and std.error to file. 
 le_l_yr <- function(df) {
   lm(lifeExp ~ I(year - 1950), data = df)
 }
@@ -76,8 +75,8 @@ country_large_se <- list(country_africa,country_asia,country_america,country_eur
 
 ## Create a figure for each continent, and write one file per continent, 
 ## with an informative name. The figure should give scatterplots of 
-## life expectancy vs. year, faceting on country, fitted line overlaid.
-###### the 4 countries above
+## life expectancy vs. year for the 4 countries found above in each continent,
+## faceting on country, fitted line overlaid.
 
 # for Africa
 p_africa <- gapminder%>%

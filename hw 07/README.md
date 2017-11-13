@@ -3,12 +3,9 @@ README
 Xinzhe Dong
 November 13, 2017
 
-In this assignment, I will build an automated data analysis pipeline. I will write three Rscripts and one Rmarkdown. I will automate the pipeline using two methods: the master R script `Makefile.R` and `Makefile`. Here is the [link](http://stat545.com/hw07_automation.html) to the homework on the course webpage.
+In this assignment, I will build an automated data analysis pipline using two methods: the master R script `Makefile.R` and `Makefile`. Here is the [link](http://stat545.com/hw07_automation.html) to the homework on the course webpage.
 
-### Links to Project files:
-
-**Main report:**
-[`03_gap-report.md`](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2007/03_gap-report.md)
+**Link to Project files:**
 
 **R scripts:**
 
@@ -24,15 +21,17 @@ In this assignment, I will build an automated data analysis pipeline. I will wri
 
 [`02_statistical_analysis.R`](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2007/02_statistical_analysis.R) 
 
-* Fit a linear regression of life expectancy on year within each country. Write the estimated intercepts, slopes, and residual error variance (or sd) to file. 
+* Fit a linear regression of life expectancy on year within each country. Write the estimated intercepts, slopes, and std.error to file. 
 
 * Create a scatterplots of life expectancy vs. year for the 4 countries with large sd found in each continent, faceting on countries, fitted line overlaid, and write these plots to file.
 
 [`03_gap-report.Rmd`](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2007/03_gap-report.Rmd) 
 
-* a Rmarkdown document, which combines the code in the three Rscripts.  
+* a Rmarkdown document. 
 
 * Its purpose is to allow us to demonstrate how to use `rmarkdown::render()` without the help of RStudio's buttons. We will call `rmarkdown::render()` from within a `Makefile`.
+
+[`03_gap-report.md`](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2007/03_gap-report.md) is the rendered report.
 
 **Master R scripts:**
 
