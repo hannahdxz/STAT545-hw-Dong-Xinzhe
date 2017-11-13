@@ -11,7 +11,7 @@
 | [hw04](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw04) Tidy data and joins|  [hw04.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw04/hw04.md)|:white_check_mark:|
 | [hw05](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw05) Factor and figure management; Repo hygiene| [hw05.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw05/hw05.md)|:white_check_mark:|
 | [hw06](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2006) Data wrangling wrap up| [hw06.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2006/hw06.md)|:white_check_mark:|
-| [hw07](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2007) Automating Data-analysis Pipelines| [hw07.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2007/03_gap-report.md)|:white_check_mark:|
+| [hw07](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2007) Automating Data-analysis Pipelines|[README.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2007)   [report.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2007/03_gap-report.md)|:white_check_mark:|
 
 
 
