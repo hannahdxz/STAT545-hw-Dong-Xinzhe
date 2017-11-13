@@ -3,6 +3,10 @@ README
 Xinzhe Dong
 November 13, 2017
 
+In this assignment, I will build an automated data analysis pipline using two methods: the master R script `Makefile.R` and `Makefile`. Here is the [link](http://stat545.com/hw07_automation.html) to the homework on the course webpage.
+
+**Link to Project files:**
+
 **R scripts:**
 
 [`00_download-data.R`](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2007/00_download-data.R) download the raw data for our example, `gapminder.tsv`.
