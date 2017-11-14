@@ -35,7 +35,7 @@ In this assignment, I will build an automated data analysis pipline using two me
 
 **Master R scripts:**
 
-[`Makefile.R`](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2007/Makefile.R) is a master R script that simply `source()`s the three scripts(`00_download-data.R`, `01_filter-reorder-plot.R`, and `02_statistical_analysis.R`), one after the other, with a second “clean up / reset” script that deletes all the output the scripts leave behind.
+[`Makefile.R`](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2007/Makefile.R) is a master R script that simply `source()`s the three scripts (`00_download-data.R`, `01_filter-reorder-plot.R`, and `02_statistical_analysis.R`), one after the other, with a “clean up / reset” line that deletes all the output the scripts leave behind.
 
 [`render_r_scripts.R`](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2007/render_r_scripts.R) render the `Makefile.R` and emulate RStudio’s “Compile Notebook” button.
 
@@ -43,8 +43,8 @@ In this assignment, I will build an automated data analysis pipline using two me
 
 [`Makefile`](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2007/Makefile) to automate the pipeline using `make`. 
 
-* run the R scripts (`00_download-data.R`, `01_filter-reorder-plot.R`, `02_statistical_analysis.R`,`03_gap-report.Rmd`) 
+* run the Rscripts (`00_download-data.R`, `01_filter-reorder-plot.R`, `02_statistical_analysis.R`,`03_gap-report.Rmd`) 
 
-* render an R script, use `Rscript -e "rmarkdown::render('01_filter-reorder-plot.R')"` 
+* render an Rscript, use `Rscript -e "rmarkdown::render('01_filter-reorder-plot.R')"` 
 
 * render an RMarkdown report, use `Rscript -e "rmarkdown::render('03_gap-report.Rmd')"`

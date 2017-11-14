@@ -7,7 +7,7 @@ This is an R Markdown document. It is a combination of the Rscripts in `00_downl
 
 I will demonstrate how to use `rmarkdown::render()` without the help of RStudio's buttons. We will, in fact, call `rmarkdown::render()` from within a `Makefile`.
 
-### Download the required packages
+### Load the required packages
 
 ``` r
 library(forcats)
