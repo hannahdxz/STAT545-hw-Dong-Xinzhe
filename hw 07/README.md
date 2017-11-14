@@ -37,7 +37,7 @@ In this assignment, I will build an automated data analysis pipline using two me
 
 [`Makefile.R`](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2007/Makefile.R) is a master R script that simply `source()`s the three scripts (`00_download-data.R`, `01_filter-reorder-plot.R`, and `02_statistical_analysis.R`), one after the other, with a “clean up / reset” line that deletes all the output the scripts leave behind.
 
-[`render_r_scripts.R`](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2007/render_r_scripts.R) render the `Makefile.R` and emulate RStudio’s “Compile Notebook” button.
+[`render_r_scripts.R`](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2007/render_r_scripts.R) render the `Makefile.R` and `03_gap-report.Rmd` and emulate RStudio’s “Compile Notebook” and “Compile Notebook” button. 
 
 **Makefile:**
 
