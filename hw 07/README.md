@@ -5,6 +5,10 @@ November 13, 2017
 
 In this assignment, I will build an automated data analysis pipline using two methods: the master R script `Makefile.R` and `Makefile`. Here is the [link](http://stat545.com/hw07_automation.html) to the homework on the course webpage.
 
+**Dependency Diagram:**
+
+![](out.png)
+
 **Link to Project files:**
 
 **R scripts:**
