@@ -190,7 +190,7 @@ country_large_se%>%
 | Europe    | Bosnia and Herzegovina |  1.2899756|
 | Europe    | Albania                |  1.1335758|
 
-**4.** Create a figure for each continent, and write one file per continent, with an informative name. The figure should give scatterplots of life expectancy vs. year for the 4 countries for each continent above, faceting on country, fitted line overlaid.
+**4.** Create a figure for each continent, and write one file per continent, with an informative name. The figure should give scatterplots of life expectancy vs. year for the 4 countries found above for each continent, fitted line overlaid.
 
 ``` r
 # for Africa

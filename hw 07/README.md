@@ -23,7 +23,7 @@ In this assignment, I will build an automated data analysis pipline using two me
 
 * Fit a linear regression of life expectancy on year within each country. Write the estimated intercepts, slopes, and std.error to file. 
 
-* Create a scatterplots of life expectancy vs. year for the 4 countries with large sd found in each continent, faceting on countries, fitted line overlaid, and write these plots to file.
+* Create a scatterplots of life expectancy vs. year for the 4 countries with large std.error found in each continent, fitted line overlaid, and write these plots to file.
 
 [`03_gap-report.Rmd`](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2007/03_gap-report.Rmd) 
 
@@ -31,7 +31,7 @@ In this assignment, I will build an automated data analysis pipline using two me
 
 * Its purpose is to allow us to demonstrate how to use `rmarkdown::render()` without the help of RStudio's buttons. We will call `rmarkdown::render()` from within a `Makefile`.
 
-[`03_gap-report.md`](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2007/03_gap-report.md) is the rendered report.
+* This [`03_gap-report.md`](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2007/03_gap-report.md) is the rendered report.
 
 **Master R scripts:**
 

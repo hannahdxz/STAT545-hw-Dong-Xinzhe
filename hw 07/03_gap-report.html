@@ -244,7 +244,7 @@ country_large_se<span class="op">%&gt;%</span>
 </tr>
 </tbody>
 </table>
-<p><strong>4.</strong> Create a figure for each continent, and write one file per continent, with an informative name. The figure should give scatterplots of life expectancy vs. year for the 4 countries for each continent above, faceting on country, fitted line overlaid.</p>
+<p><strong>4.</strong> Create a figure for each continent, and write one file per continent, with an informative name. The figure should give scatterplots of life expectancy vs. year for the 4 countries found above for each continent, fitted line overlaid.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># for Africa</span>
 p_africa &lt;-<span class="st"> </span>gapminder<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(country <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Zimbabwe&quot;</span>, <span class="st">&quot;Swaziland&quot;</span>,<span class="st">&quot;Rwanda&quot;</span>,<span class="st">&quot;Botswana&quot;</span>))<span class="op">%&gt;%</span>
