@@ -3,7 +3,15 @@ README
 Xinzhe Dong
 November 18, 2017
 
-This week we created the BC Liquor Store app in class. In this homework, I will add more features to this app and publish it on `shinyapps.io`.
+This week we created the BC Liquor Store app in class. In this homework, I will add more features to this app and publish it on `shinyapps.io`. :beer: :cocktail: :wine_glass:
+
+**Here is [the link](https://hannahdxz.shinyapps.io/hw_08_liquor_webpage/) to the app on `shinyapps.io`**
+
+**R code for the app:**
+
+* [server.R](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2008/server.R)
+* [ui.R](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2008/ui.R)
+* [app.R](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2008/app.R)
 
 **Here are the features I added:**
 

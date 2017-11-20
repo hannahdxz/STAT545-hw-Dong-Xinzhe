@@ -5,7 +5,7 @@ ui <- fluidPage(theme = shinytheme("sandstone"),
   # Application title
   titlePanel("My liquor webpage"),
   
-  sidebarPanel("Have fun exploring your favourite drinks",
+  sidebarPanel("Have fun exploring your favourite drinks!",
                img(src = "liquor.png", width = "100%"),
                br(),br(),              
               
@@ -19,8 +19,12 @@ ui <- fluidPage(theme = shinytheme("sandstone"),
               checkboxInput("check", "sort by price", FALSE),
               span("Data source:", 
                    tags$a("OpenDataBC",
-                          href = "https://www.opendatabc.ca/dataset/bc-liquor-store-product-price-list-current-prices"))
-               ),
+                          href = "https://www.opendatabc.ca/dataset/bc-liquor-store-product-price-list-current-prices")),
+              br(),
+                span("Created by Xinzhe Dong"),
+                HTML("&bull;"),
+                span("Code", a(href = "https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2008", "on GitHub"))
+              ),
   
   mainPanel(
             h3(textOutput("summaryText")),
