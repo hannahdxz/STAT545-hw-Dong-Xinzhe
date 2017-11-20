@@ -12,6 +12,7 @@
 | [hw05](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw05) Factor and figure management; Repo hygiene| [hw05.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw05/hw05.md)|:white_check_mark:|
 | [hw06](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2006) Data wrangling wrap up| [hw06.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2006/hw06.md)|:white_check_mark:|
 | [hw07](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2007) Automating Data-analysis Pipelines| [hw07.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2007)|:white_check_mark:|
+| [hw08](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2008) Building Shiny apps| [webpage](https://hannahdxz.shinyapps.io/hw_08_liquor_webpage/)|:white_check_mark:|
 
 
 
@@ -60,6 +61,12 @@
 * Build an automated data analysis pipeline. 
 
 * Automate the pipeline using two methods: the master R script `Makefile.R` and `Makefile`.
+
+**hw08** :
+
+* Add more features to the BC Liquor Store app we created in class.
+
+* Publish the app on `shinyapps.io`.
 
 
 ## Useful links:
