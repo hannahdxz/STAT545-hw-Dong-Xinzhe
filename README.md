@@ -13,7 +13,7 @@
 | [hw06](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2006) Data wrangling wrap up| [hw06.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2006/hw06.md)|:white_check_mark:|
 | [hw07](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2007) Automating Data-analysis Pipelines| [hw07.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2007)|:white_check_mark:|
 | [hw08](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2008) Building Shiny apps| [webpage](https://hannahdxz.shinyapps.io/hw_08_liquor_webpage/)|:white_check_mark:|
-
+| [hw09](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2008) Building your own R package| [webpage](https://hannahdxz.shinyapps.io/hw_08_liquor_webpage/)|:white_check_mark:|
 
 
 
@@ -67,6 +67,14 @@
 * Add more features to the BC Liquor Store app we created in class.
 
 * Publish the app on `shinyapps.io`.
+
+**hw09** :
+
+* Develop the `powers()` package.
+
+* Define and export two new functions: `box_cox()` and `my_log()`. 
+
+* Document all exported functions and push the package to GitHub.
 
 
 ## Useful links:

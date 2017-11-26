@@ -1,0 +1,31 @@
+README
+================
+Xinzhe Dong
+November 26, 2017
+
+HomeWork 09 Building your own R package
+---------------------------------------
+
+This is [the link](https://github.com/hannahdxz/powers) to the `powers()` package on github.
+
+In class we developed a package called `powers`. In this homework I will continue developing the `powers` package developed in class.
+
+Here is the process of my work:
+
+-   Define and export two new functions: `box_cox()` and `my_log()`.
+-   Give function arguments sensible defaults, where relevant.
+-   Use assertions to add some validity checks of function input.
+-   Add special features to the functions: an `na.omit` option that removes `NA`s.
+-   Document all exported functions.
+-   Include at least three unit tests for every function that is exported.
+-   The package pass `check()` without errors (warnings and notes are OK, though it would be great if there were none).
+-   Keep updating the README and vignette to show usage of all the functions in the package.
+-   Push the package to GitHub.
+
+Reflections of my work:
+
+-   I find that one of the most difficult things when writing functions is to make sure that the function can deal with all types of input. I spent quite a long time to add validity check of the function input.
+
+-   I think the unit tests are very useful, since you can design them to check all possible outcomes of your function and make sure everything works fine.
+
+-   The Box Cox transformation is a way to transform non-normal dependent variables into a normal shape. The parameter lambda1 is estimated using the [profile likelihood function](https://en.wikipedia.org/wiki/Profile_likelihood). I would regard the lambda1 in my `box_cox()` function as given. In the future maybe I will return to this and define another function to calculate lambda1 using profile likelihood.
