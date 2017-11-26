@@ -13,7 +13,7 @@
 | [hw06](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2006) Data wrangling wrap up| [hw06.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw%2006/hw06.md)|:white_check_mark:|
 | [hw07](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2007) Automating Data-analysis Pipelines| [hw07.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2007)|:white_check_mark:|
 | [hw08](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2008) Building Shiny apps| [webpage](https://hannahdxz.shinyapps.io/hw_08_liquor_webpage/)|:white_check_mark:|
-| [hw09](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2008) Building your own R package| [webpage](https://hannahdxz.shinyapps.io/hw_08_liquor_webpage/)|:white_check_mark:|
+| [hw09](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw09) Building your own R package| [powers](https://github.com/hannahdxz/powers)|:white_check_mark:|
 
 
 
@@ -49,31 +49,24 @@
 **hw06** :
 
 * Writing functions. Write two functions that do linear regression and robust regression on the Gapminder data, and compare their estimated mean square prediction error (mspe).
-
 * Work with a nested data frame. Create a nested data frame using the function `nest()` and map a function over the list column holding the nested data. Get information out of the linear models using the `tidy()` functions. Use the usual `dplyr`, `tidyr`, and `ggplot2` workflows to make explorations.
-
 * Working on some of the exercises from the [Strings chapter](http://r4ds.had.co.nz/strings.html). 
 
 **hw07** :
 
 * Write three Rscripts and one Rmarkdown to carry out a small data analysis.
-
 * Build an automated data analysis pipeline. 
-
 * Automate the pipeline using two methods: the master R script `Makefile.R` and `Makefile`.
 
 **hw08** :
 
 * Add more features to the BC Liquor Store app we created in class.
-
 * Publish the app on `shinyapps.io`.
 
 **hw09** :
 
 * Develop the `powers()` package.
-
 * Define and export two new functions: `box_cox()` and `my_log()`. 
-
 * Document all exported functions and push the package to GitHub.
 
 
