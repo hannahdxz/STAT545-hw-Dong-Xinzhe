@@ -19,7 +19,7 @@ In class we developed a package called `powers`. In this homework I will continu
 * Add special features to the functions: an `na.omit` option that removes `NA`s.
 * Document all exported functions.
 * Include at least three unit tests for every function that is exported.
-* The package pass `check()` without errors (warnings and notes are OK, though it would be great if there were none).
+* The package pass `check()` without errors.
 * Keep updating the README and vignette to show usage of all the functions in the package.
 * Push the package to GitHub.
 
@@ -27,8 +27,8 @@ In class we developed a package called `powers`. In this homework I will continu
 
 * I find that one of the most difficult things when writing functions is to make sure that the function can deal with all types of input. I spent quite a long time to add validity check of the function input.
 
-* I think the unit tests are very useful, since you can design them to check all possible outcomes of your function and make sure everything works fine.
+* I think the unit tests are very useful, since one can design them to check all possible outcomes of the function and make sure everything works fine.
 
-* The Box Cox transformation is a way to transform non-normal dependent variables into a normal shape. The parameter lambda1  is estimated using the [profile likelihood function](https://en.wikipedia.org/wiki/Profile_likelihood). I would regard the lambda1 in my `box_cox()` function as given. In the future maybe I will return to this and define another function to calculate lambda1 using profile likelihood.
+* The Box Cox transformation is a way to transform non-normal dependent variables into a normal shape. In theory, the parameter `lambda1`  is estimated using the [profile likelihood function](https://en.wikipedia.org/wiki/Profile_likelihood). I would regard the `lambda1` in my `box_cox()` function as given. In the future maybe I will return to this and define another function to calculate `lambda1` using profile likelihood.
 
 
