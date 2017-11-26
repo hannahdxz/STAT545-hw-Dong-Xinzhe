@@ -7,11 +7,11 @@ output: github_document
 
 ## HomeWork 09 Building your own R package
 
-This is [the link](https://github.com/hannahdxz/powers) to the `powers()` package on github.
+**This is [the link](https://github.com/hannahdxz/powers) to the `powers()` package on github.**
 
 In class we developed a package called `powers`. In this homework I will continue developing the `powers` package developed in class.
 
-Here is the process of my work:
+**Here is the process of my work:**
 
 * Define and export two new functions: `box_cox()` and `my_log()`. 
 * Give function arguments sensible defaults, where relevant.
@@ -23,7 +23,7 @@ Here is the process of my work:
 * Keep updating the README and vignette to show usage of all the functions in the package.
 * Push the package to GitHub.
 
-Reflections of my work:
+**Reflections of my work:**
 
 * I find that one of the most difficult things when writing functions is to make sure that the function can deal with all types of input. I spent quite a long time to add validity check of the function input.
 
