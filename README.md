@@ -14,7 +14,7 @@
 | [hw07](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2007) Automating Data-analysis Pipelines| [hw07.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2007)|:white_check_mark:|
 | [hw08](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw%2008) Building Shiny apps| [webpage](https://hannahdxz.shinyapps.io/hw_08_liquor_webpage/)|:white_check_mark:|
 | [hw09](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw09) Building your own R package| [powers](https://github.com/hannahdxz/powers)|:white_check_mark:|
-
+| [hw10](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/tree/master/hw10) Data from the Web| [hw10.md](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw10/hw10.md)|:white_check_mark:|
 
 
 ## Contents of homeworks:
@@ -68,6 +68,12 @@
 * Develop the `powers()` package.
 * Define and export two new functions: `box_cox()` and `my_log()`. 
 * Document all exported functions and push the package to GitHub.
+
+**hw10** :
+
+* Get data from the internet into R using two methods:
+* Make API queries “by hand” using httr.
+* Scrape the web.
 
 
 ## Useful links:
