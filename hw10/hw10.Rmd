@@ -47,7 +47,7 @@ Make API queries by hand using httr
 
 [*Back to the top*](#abstract)
 
-**(1)** I will write a function called `get_movie_TY` that get the information above movies from the Internet, this is [the website](http://www.imdb.com/) I got data from.
+**(1)** I will write a function called `get_movie_TY` that get the information about movies from the Internet, this is [the website](http://www.imdb.com/) I got data from.
 ```{r}
 get_movie_TY <- function(title,year){
   query_string <- glue("http://www.omdbapi.com/?t={title}&y={year}/?i=tt3896198&apikey=6f820a12")%>%
@@ -110,7 +110,7 @@ Scrape the web
 
 [*Back to the top*](#abstract)
 
-**(1)** Let's try to get some information about the movie Big Hero 6 using `read_html`.
+**(1)** Let's try to get some information about the movie **Big Hero 6** using `read_html`.
 ```{r}
 my_url <- "http://www.imdb.com/title/tt2245084/?ref_=nv_sr_1"
 
@@ -170,14 +170,14 @@ get_rate <- function(movie_link){
 }
 ```
 
-**(4)** Try my function `get_cast` `get_director` and `get_rate` on the movie Big Hero 6.
+**(4)** Try my function `get_cast` `get_director` and `get_rate` on the movie **Big Hero 6**.
 ```{r}
 get_cast(my_url)
 get_director(my_url)
 get_rate(my_url)
 ```
 
-**(5)** How about the movie Frozen?
+**(5)** How about the movie **Frozen**?
 ```{r}
 my_url_frozen <- "http://www.imdb.com/title/tt2294629/?ref_=fn_al_tt_1"
 get_cast(my_url_frozen)
@@ -185,7 +185,7 @@ get_director(my_url_frozen)
 get_rate(my_url_frozen)
 ```
 
-Transformers: The Last Knight
+**Transformers: The Last Knight**
 ```{r}
 my_url_transformer <- "http://www.imdb.com/title/tt3371366/?ref_=nv_sr_1"
 get_cast(my_url_transformer)
