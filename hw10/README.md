@@ -5,8 +5,8 @@ Xinzhe Dong
 
 ### Report of My progress:
 
--   Here is my [hw10]().
+-   **Here is my [hw10](https://github.com/hannahdxz/STAT545-hw-Dong-Xinzhe/blob/master/hw10/hw10.md).**
 -   In this homework, I will practice with getting data from the web, I will start my work from what we did in class, and try to get some interesting information about some of my favourite movies.
 -   I will practice both *Make API queries “by hand” using httr* and *Scrape the web*.
 -   When I do *Scrape the web*, I find the `selectorGadget` is a very useful tool to identify CSS selector combinations. [This tutorial](https://github.com/ropensci/user2016-tutorial/blob/master/03-scraping-data-without-an-api.pdf) here gives detailed guidance about how to install and use it.
--   I think the most difficult part of this assignement is to figure out `css` for the information I am tring to get, and `selectorGadget` make the process much easier.
+-   I think the most difficult part of this assignement is to figure out `css` for the information I am tring to get, but `selectorGadget` make the process much easier.
