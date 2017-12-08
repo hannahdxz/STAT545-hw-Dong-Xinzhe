@@ -1,0 +1,196 @@
+---
+title: "hw10"
+author: "Xinzhe Dong"
+date: "11/30/2017"
+output: github_document
+---
+
+### Abstract
+
+There are three ways to get data from the internet into R:
+
+* Make API queries “by hand” using httr.
+* Scrape the web.
+* Use an R package that wraps an API.
+
+In this homework, I will practice with the first two methods.
+
+
+#### Table of content
+-   [Load data and packages](#load-data-and-packages)
+-   [Make API queries by hand using httr](#make-api-queries-by-hand-using-httr)
+-   [Scrape the web](#scrape-the-web)
+
+
+
+Load data and packages
+----------------------
+
+[*Back to the top*](#abstract)
+
+```{r,warning=FALSE, message=FALSE}
+library(httr)
+library(stringr)
+library(tidyverse)
+library(glue)
+library(kableExtra)
+library(knitr)
+library(magrittr)
+library(purrr)
+library(xml2)
+library(rvest)
+```
+
+
+Make API queries by hand using httr
+-----------------------------------
+
+[*Back to the top*](#abstract)
+
+**(1)** I will write a function called `get_movie_TY` that get the information above movies from the Internet, this is [the website](http://www.imdb.com/) I got data from.
+```{r}
+get_movie_TY <- function(title,year){
+  query_string <- glue("http://www.omdbapi.com/?t={title}&y={year}/?i=tt3896198&apikey=6f820a12")%>%
+    str_replace_all(" ","-")
+  movie_request <- GET(query_string)
+  movie_content <- content(movie_request)
+  return(movie_content)
+}
+```
+
+**(2)** Use the function defined above, I will try to get some data about some of my favourite movies, and make a dataframe using `join` function.
+```{r,warning=FALSE, message=FALSE}
+frozen <- get_movie_TY("frozen","2013") 
+
+flipped <- get_movie_TY("flipped","2010")
+
+Despicable_Me <- get_movie_TY("Despicable Me","2010")
+
+Big_Hero_6 <- get_movie_TY("Big Hero 6","2014")
+
+Avatar <- get_movie_TY("Avatar","2009")
+
+spirited_away <- get_movie_TY("spirited away","2001")
+
+movie <- data.frame(Big_Hero_6)%>%
+  full_join(data.frame(frozen))%>%
+  full_join(data.frame(Despicable_Me))%>%
+  full_join(data.frame(flipped))%>%
+  full_join(data.frame(Avatar))%>%
+  full_join(data.frame(spirited_away))
+```
+
+**(3)** Write this dataset to file, and try read it back in.
+```{r, message=FALSE}
+write_csv(movie, "movie.csv")
+my_movie_data <-read_csv("movie.csv")
+```
+
+**(4)** Let's take a look at some columns of `my_movie_data`.
+```{r}
+movie_info <- my_movie_data[c("Title","Year", "Runtime", "Genre", "Director", "Actors","Language","Country")]
+movie_info%>%kable()
+```
+
+**(5)** Let's compare the rating of these movies.
+```{r}
+my_movie_data[c("Title","Ratings.Value")]%>%kable()
+```
+
+Spirited Away has the highest rating score!
+
+And here are the directors!
+```{r}
+my_movie_data[c("Title","Director")][6,2]%>%kable()
+```
+
+
+Scrape the web
+--------------
+
+[*Back to the top*](#abstract)
+
+**(1)** Let's try to get some information about the movie Big Hero 6 using `read_html`.
+```{r}
+my_url <- "http://www.imdb.com/title/tt2245084/?ref_=nv_sr_1"
+
+my_movie <- read_html(my_url)
+```
+
+**(2)** Get the cast , the director and the rating of the movie.
+```{r}
+my_movie %>%
+  html_nodes(css="#titleCast span.itemprop") %>%
+  html_text()%>%
+  collapse(sep = "\n")
+
+my_movie %>%
+  html_nodes(css=".credit_summary_item:nth-child(2)") %>%
+  html_text()%>%
+  str_replace_all("[\r\n]" , "")%>%
+  str_replace_all("     " , " ")%>%
+  str_trim()
+
+my_movie %>%
+  html_nodes(css=".ratingValue span") %>%
+  html_text()%>%
+  paste(collapse = '')
+
+```
+
+**(3)** I will now define a function `get_cast` to get the cast of movies, a function `get_director` to get the director of movies, and a function `get_rate` to get the rate of a movie. 
+```{r}
+get_cast <- function(movie_link){
+  movie_link %>%
+    read_html()%>%
+    html_nodes(css="#titleCast span.itemprop")%>%
+    html_text()%>%
+    collapse(sep = "\n") %>%
+    return()
+}
+
+get_director <- function(movie_link){
+  movie_link %>%
+    read_html()%>%
+    html_nodes(css=".credit_summary_item:nth-child(2)")%>%
+    html_text()%>%
+    str_replace_all("[\r\n]" , "")%>%
+    str_replace_all("     " , " ")%>%
+    str_trim() %>%
+    return()
+}
+
+get_rate <- function(movie_link){
+  movie_link %>%
+    read_html()%>%
+    html_nodes(css=".ratingValue span")%>%
+    html_text()%>%
+    paste(collapse = '')%>%
+    return()
+}
+```
+
+**(4)** Try my function `get_cast` `get_director` and `get_rate` on the movie Big Hero 6.
+```{r}
+get_cast(my_url)
+get_director(my_url)
+get_rate(my_url)
+```
+
+**(5)** How about the movie Frozen?
+```{r}
+my_url_frozen <- "http://www.imdb.com/title/tt2294629/?ref_=fn_al_tt_1"
+get_cast(my_url_frozen)
+get_director(my_url_frozen)
+get_rate(my_url_frozen)
+```
+
+Transformers: The Last Knight
+```{r}
+my_url_transformer <- "http://www.imdb.com/title/tt3371366/?ref_=nv_sr_1"
+get_cast(my_url_transformer)
+get_director(my_url_transformer)
+get_rate(my_url_frozen)
+```
+
+[*Back to the top*](#abstract)
